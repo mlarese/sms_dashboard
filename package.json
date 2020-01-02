@@ -1,0 +1,33 @@
+{
+  "name": "sms_dashboard",
+  "version": "1.0.0",
+  "description": "SMS Dashboard",
+  "author": "mauro larese",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.9.1",
+    "axios-mock-adapter": "^1.17.0",
+    "browser-locale": "^1.0.3",
+    "cross-env": "^5.2.0",
+    "nuxt": "^2.0.0",
+    "vue2-datepicker": "^3.3.0",
+    "vuetify": "^1.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "babel-eslint": "^8.2.1",
+    "eslint": "^5.0.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-vue": "^4.0.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2"
+  }
+}
