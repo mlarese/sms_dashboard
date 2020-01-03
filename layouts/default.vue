@@ -57,7 +57,7 @@
   export default {
     head () {
       return {
-        title: 'Click2SMS Tracker',
+        title: 'SMS Dashboard',
       }
     },
     computed: {

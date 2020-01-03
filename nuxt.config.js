@@ -1,5 +1,8 @@
 const pkg = require('./package')
-
+let routerBase = '/'
+if (process.env.NODE_ENV === 'production') {
+    routerBase = '/campaigns/'
+}
 module.exports = {
   mode: 'spa',
 
@@ -23,7 +26,59 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
-
+    auth: {
+        redirect: {
+            logout: '/login',
+            callback: '/callback'
+        },
+        resetOnError: true,
+        strategies: {
+            dev: {
+                _scheme: 'local',
+                endpoints: {
+                    login: { baseURL: 'http://localhost', url: '/api/auth/login', method: 'post', propertyName: 'token' },
+                    logout: {baseURL: 'http://localhost', url: '/api/auth/logout', method: 'post' },
+                    user: {baseURL: 'http://localhost', url: '/api/auth/user', method: 'get', propertyName: 'user' }
+                },
+                tokenRequired: true,
+                tokenType: 'bearer'
+            },
+            devip: {
+                _scheme: 'local',
+                endpoints: {
+                    login: { baseURL: 'http://192.168.1.86', url: '/api/auth/login', method: 'post', propertyName: 'token' },
+                    logout: {baseURL: 'http://192.168.1.86', url: '/api/auth/logout', method: 'post' },
+                    user: {baseURL: 'http://192.168.1.86', url: '/api/auth/user', method: 'get', propertyName: 'user' }
+                },
+                tokenRequired: true,
+                tokenType: 'bearer'
+            },
+            prod: {
+                _scheme: 'local',
+                endpoints: {
+                    login: { baseURL: 'http://138.197.11.140/public/index.php', url: '/auth/login', method: 'post', propertyName: 'token' },
+                    logout: {baseURL: 'http://138.197.11.140/public/index.php', url: '/auth/logout', method: 'post' },
+                    user: {baseURL: 'http://138.197.11.140/public/index.php', url: '/auth/user', method: 'get', propertyName: 'user' }
+                },
+                tokenRequired: true,
+                tokenType: 'bearer'
+            },
+            local: {
+                endpoints: {
+                    login: { baseURL: 'http://localhost', url: '/api/auth/login', method: 'post', propertyName: 'token' },
+                    logout: {baseURL: 'http://localhost', url: '/api/auth/logout', method: 'post' },
+                    user: {baseURL: 'http://localhost', url: '/api/auth/user', method: 'get', propertyName: 'user' }
+                },
+                tokenRequired: true,
+                tokenType: 'bearer'
+            }
+        }
+    },
+    router: {
+        mode: 'hash',
+        base: routerBase,
+        middleware: ['acl', 'auth']
+    },
   /*
   ** Global CSS
   */
@@ -43,7 +98,8 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
   /*
   ** Axios module configuration
