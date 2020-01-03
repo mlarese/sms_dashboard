@@ -2,14 +2,13 @@ import MockAdapter from 'axios-mock-adapter'
 import axios from 'axios'
 import users from '../fixtures/users.json'
 import roles from '../fixtures/roles.json'
-import channels from '../fixtures/channels.json'
 import brand from '../fixtures/brand.json'
 import badwords from '../fixtures/badwords'
 import clicks from '../fixtures/clicks.json'
 import usersRoles from '../fixtures/usersRoles.json'
 import usersBrandsChannels from '../fixtures/usersBrandsChannels.json'
 import landingPages from '../fixtures/landingPages.json'
-import brandLandingPages from '../fixtures/brandLandingPages.json'
+
 
 const mock = new MockAdapter(axios, {delayResponse: 300})
 const success = {success: true}

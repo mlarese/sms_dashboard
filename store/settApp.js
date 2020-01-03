@@ -8,12 +8,9 @@ import _has from 'lodash/has'
  */
 const settingTabs = [
   {to: 'settings/brands', label: 'Brands'},
-  {to: 'settings/channels', label: 'Channels'},
   {to: 'settings/users', label: 'Users'},
-  {to: 'settings/userbrandchannels', label: 'Users Brands Channels'},
-  {to: 'settings/smsmotemplates', label: 'SMS MO Templates'},
-  {to: 'settings/brandchannelcpa', label: 'Brand Channel CPA'},
-  {to: 'settings/badwords', label: 'Bad Words'}
+  {to: 'settings/userbrand', label: 'Users Brands '},
+  {to: 'settings/configuration', label: 'Configuration'}
 ]
 
 export const state = () => ({

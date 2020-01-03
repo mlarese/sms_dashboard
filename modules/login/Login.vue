@@ -6,7 +6,7 @@
                 <v-card-text>
 
                     <div class="text-xs-center mb-4">
-                        <img src="c2sms_logo.png" alt="logo c2sms" width="240" class="ml-4">
+                        <!--<img src="c2sms_logo.png" alt="logo c2sms" width="240" class="ml-4">-->
                     </div>
                     <v-form>
                         <v-text-field  prepend-icon="person" v-model="username" label="Login" type="text"></v-text-field>

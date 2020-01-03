@@ -1,6 +1,6 @@
 <!--eslint-disable-->
 <template>
-    <GridContainer title="Setting Brand">
+    <GridContainer title="Users">
 
         <CardPanel slot="container-top">
 
@@ -17,8 +17,10 @@
                 slot="body-center"
         >
             <template slot="items" slot-scope="{item}">
-                <td>{{ item.brand }}</td>
-                <td>{{ item.sms_mo_template }}</td>
+                <td>{{ item.company_name }}</td>
+                <td>{{ item.username }}</td>
+                <td>{{ item.passowrd }}</td>
+                <td>{{ item.role_name }}</td>
                 <td width="1" class="pa-0">
                     <GridButton icon="edit" color="green" @click="onClick"></GridButton>
                 </td>
@@ -47,8 +49,10 @@
         components: {ButtonNew, CardPanel, GridButton, GridContainer},
         data () {
             const headers = [
-                { text: this.$vuetify.t('Brand'), value: 'brand' },
-                { text: this.$vuetify.t('SMS MO Template'), value: 'sms_mo_template' },
+                { text: this.$vuetify.t('Company Name'), value: 'brand' },
+                { text: this.$vuetify.t('Username'), value: 'username' },
+                { text: this.$vuetify.t('Passowrd'), value: 'password' },
+                { text: this.$vuetify.t('Role Name'), value: 'role_name' },
                 { text: 'Edit', value: 'action', sortable: false },
                 { text: 'View', value: 'action', sortable: false },
                 { text: 'Delete', value: 'action', sortable: false }

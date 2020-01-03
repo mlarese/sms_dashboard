@@ -8,9 +8,11 @@ import _has from 'lodash/has'
  */
 const menuItems = {
     campaigns: {to: 'campaigns', label: 'Campaigns'},
-    reporting: {to: 'reporting', label: 'Reporting'},
-    unpaired: {to: 'unpaired', label: 'Unpaired Prospects'},
-    landing: {to: 'landingpage', label: 'Landing Pages'},
+    newcampaign: {to: 'newcampaign', label: 'New Campaign'},
+    leads: {to: 'lead', label: 'Leads'},
+    msisdnsearch: {to: 'msisdnsearch', label: 'MSISDN Search'},
+    whitelist: {to: 'whitelist', label: 'Whitelist'},
+    landingpage: {to: 'landingpage', label: 'Landing Pages'},
     settings: {to: 'settings/brands', label: 'Settings'}
 }
 
@@ -18,14 +20,16 @@ const menuItems = {
 const menus = {
   Admin: [
     menuItems.campaigns,
-    menuItems.reporting,
-    menuItems.unpaired,
-    menuItems.landing,
+    menuItems.newcampaign,
+    menuItems.leads,
+    menuItems.msisdnsearch,
+    menuItems.whitelist,
+    menuItems.landingpage,
     menuItems.settings
   ],
   'Third Party Agency': [
     menuItems.campaigns,
-    menuItems.reporting
+    menuItems.leads
   ],
   guest: [
 
@@ -34,7 +38,7 @@ const menus = {
 
 export const state = () => ({
   locale: 'it',
-  title: 'Compaigns',
+  title: 'SMS dashboard',
   debugMode: true,
   ui: {currentMenuItem: 0},
   languages: [

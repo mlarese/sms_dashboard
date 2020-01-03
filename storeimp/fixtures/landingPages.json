@@ -1,0 +1,6 @@
+[
+  { "lp_id": 1, "background_rgb": "blue", "lp_banner_element": 6, "text_rgb": "cool blue", "text": "diamond is blue", "button_element": "is blue"},
+  { "lp_id": 2, "background_rgb": "blurr", "lp_banner_element": 3, "text_rgb": "cool blurr", "text": "diamond is blurr", "button_element": "is blurr"},
+  { "lp_id": 3, "background_rgb": "red", "lp_banner_element": 7, "text_rgb": "cool red", "text": "diamond is red", "button_element": "is red"}
+]
+

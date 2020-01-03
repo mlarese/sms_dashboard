@@ -19,8 +19,8 @@
             <template slot="items" slot-scope="{item}">
                 <td>{{ item.brand_id }}</td>
                 <td>{{ item.brand }}</td>
-                <td>{{ item.sms_mo_recipient }}</td>
-                <td>{{ item.sms_mo_key_string }}</td>
+                <td>{{ item.sms_mt_text_message }}</td>
+                <td>{{ item.conversion_grace_period }}</td>
                 <td width="1" class="pa-0">
                     <GridButton icon="edit" color="green" @click="onClick"></GridButton>
                 </td>
@@ -51,8 +51,8 @@
             const headers = [
                 { text: this.$vuetify.t('Brand ID'), value: 'brand_id' },
                 { text: this.$vuetify.t('Brand'), value: 'brand' },
-                { text: this.$vuetify.t('SMS MO Recipient'), value: 'sms_mo_recipient' },
-                { text: this.$vuetify.t('SMS MO Key String'), value: 'sms_mo_key_string' },
+                { text: this.$vuetify.t('SMS MT Message'), value: 'sms_mt_text_message' },
+                { text: this.$vuetify.t('Conversion grace period'), value: 'conversion_grace_period' },
                 { text: 'Edit', value: 'action', sortable: false },
                 { text: 'View', value: 'action', sortable: false },
                 { text: 'Delete', value: 'action', sortable: false }

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import {mapState, mapGetters} from 'vuex'
+  import {mapState} from 'vuex'
   import GridContainer from '../components/General/GridContainer'
 
 
