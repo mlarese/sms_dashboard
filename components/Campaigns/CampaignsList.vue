@@ -1,7 +1,10 @@
 <!--eslint-disable-->
 <template>
     <GridContainer title="Campaigns">
-        <CardPanel slot="container-top">
+        <div slot="header-right">
+            <ButtonNew title="New Campaign"/>
+        </div>
+        <CardPanel slot_="container-top">
             <div class="">
                 <v-layout rows wrap>
 
@@ -140,25 +143,41 @@
     export default {
         components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
         data () {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             const headers = [
-                { text: this.$vuetify.t('Click Date'), value: 'click_date' },
+                { text: this.$vuetify.t('Campaign ID'), value: 'click_date' },
                 { text: this.$vuetify.t('Brand'), value: 'brand_name' },
-                { text: this.$vuetify.t('Channel'), value: 'channel_name' },
-                { text: this.$vuetify.t('Adv Format'), value: 'adv_format_name' },
-                { text: this.$vuetify.t('Campaign Name'), value: 'campaign_name' },
-                { text: this.$vuetify.t('Bid Price'), value: 'bid_price' },
-                { text: this.$vuetify.t('Creative Id'), value: 'creative_id' },
-                { text: this.$vuetify.t('SMS Template'), value: 'sms_template_text' },
-                { text: this.$vuetify.t('Country'), value: 'country' },
-                { text: this.$vuetify.t('Region'), value: 'region' },
-                { text: this.$vuetify.t('City'), value: 'city' },
-                { text: this.$vuetify.t('Os Only'), value: 'os_only' },
-                { text: this.$vuetify.t('User Ip'), value: 'user_ip' },
-                { text: this.$vuetify.t('Msisdn'), value: 'msisdns' },
-                { text: this.$vuetify.t('Token Id'), value: 'token_id' },
-                { text: this.$vuetify.t('SMS MO Date'), value: 'sms_mo_date' },
-                { text: this.$vuetify.t('SMS MO Text'), value: 'sms_mo_final_text' },
-                { text: this.$vuetify.t('Status'), value: 'conversion_status_id' },
+                { text: this.$vuetify.t('Status'), value: 'channel_name' },
+                { text: this.$vuetify.t('Campaign Type'), value: 'adv_format_name' },
+                { text: this.$vuetify.t('CB Selection'), value: 'campaign_name' },
+                { text: this.$vuetify.t('Creation Datetime'), value: 'bid_price' },
+                { text: this.$vuetify.t('Start Datetime'), value: 'creative_id' },
+                { text: this.$vuetify.t('End Datetime'), value: 'sms_template_text' },
+                { text: this.$vuetify.t('Landing Page Name'), value: 'country' },
+                { text: this.$vuetify.t('Landing Page Type'), value: 'region' },
+                { text: this.$vuetify.t('Age Range'), value: 'city' },
+                { text: this.$vuetify.t('CB Activity Level'), value: 'os_only' },
+                { text: this.$vuetify.t('Target CB Quantity'), value: 'user_ip' },
+                { text: this.$vuetify.t('Processed CB Quantity'), value: 'msisdns' },
+                { text: this.$vuetify.t('Leads'), value: 'token_id' },
+                { text: this.$vuetify.t('Conversion'), value: 'sms_mo_date' }
             ]
             return {
                 sms_mo_date: null,

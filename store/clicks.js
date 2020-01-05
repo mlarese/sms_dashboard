@@ -104,14 +104,14 @@ export const actions = {
             return
         }
         if (id === null) {
-            return dispatch('api/post', {url: `/campaigns/clicks`, options, debug: false}, root)
+            return dispatch('api/post', {url: `/api/campaigns/clicks`, options, debug: false}, root)
                 .then(res => {
                     commit('setList', res.data)
                     commit('setPagination')
                     return res
                 })
         } else {
-            return dispatch('api/get', {url: `/campaigns/clicks/{id}`, options}, root)
+            return dispatch('api/get', {url: `/api/campaigns/clicks/{id}`, options}, root)
                 .then(res => {
                     commit('setRecord', res.data)
                     return res
