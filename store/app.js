@@ -8,7 +8,6 @@ import _has from 'lodash/has'
  */
 const menuItems = {
     campaigns: {to: 'campaigns', label: 'Campaigns'},
-    newcampaign: {to: 'newcampaign', label: 'New Campaign'},
     leads: {to: 'lead', label: 'Leads'},
     msisdnsearch: {to: 'msisdnsearch', label: 'MSISDN Search'},
     whitelist: {to: 'whitelist', label: 'Whitelist'},
@@ -20,7 +19,6 @@ const menuItems = {
 const menus = {
   Admin: [
     menuItems.campaigns,
-    menuItems.newcampaign,
     menuItems.leads,
     menuItems.msisdnsearch,
     menuItems.whitelist,

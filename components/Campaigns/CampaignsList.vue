@@ -10,15 +10,15 @@
 
                     <v-flex sm3 offset-sm1 xs12>
                         <div class="ml-2">
-                        <span v-if="filter.click_date && filter.click_date[0]" class="active-label-size" >Click Date</span>&nbsp;
+                        <span v-if="filter.creation_datetime && filter.creation_datetime[0]" class="active-label-size" >Creation Datetime</span>&nbsp;
                         </div>
-                        <DatePicker :placeholder="$vuetify.t('Click Date')" v-model="filter.click_date" range></DatePicker>
+                        <DatePicker :placeholder="$vuetify.t('creation datetime')" v-model="filter.creation_datetime" range></DatePicker>
                     </v-flex>
                     <v-flex sm3 xs12>
                         <div class="ml-2">
-                            <span v-if="filter.sms_mo_date && filter.sms_mo_date[0]" class="active-label-size">SMS MO Date</span>&nbsp;
+                            <span v-if="filter.start_datetime && filter.start_datetime[0]" class="active-label-size">Start Datetime</span>&nbsp;
                         </div>
-                        <DatePicker :placeholder="$vuetify.t('SMS MO Date')" v-model="filter.sms_mo_date" range></DatePicker>
+                        <DatePicker :placeholder="$vuetify.t('Start Datetime')" v-model="filter.start_datetime" range></DatePicker>
                     </v-flex>
 
                     <v-flex sm4 xs3>
@@ -28,35 +28,22 @@
                     </v-flex>
 
                 </v-layout>
-                <v-layout rows wrap class="xs-">
-                    <v-flex sm2 offset-sm1 xs3><v-combobox dense    hide-details :label="$vuetify.t('Channel')"  :items="channelList"  v-model="filter.channel_id" item-text="channel_name" item-value="channel_id" /></v-flex>
-                    <v-flex sm2 xs4><v-combobox dense  hide-details :label="$vuetify.t('ADV Format')"  :items="advformatsList"  v-model="filter.adv_format_id" item-text="adv_format_name" item-value="adv_format_id" /></v-flex>
-
-                    <v-flex sm2 xs6>
-                        <v-combobox dense  :return-object="false" hide-details :label="$vuetify.t('Country')"  :items="[{country: 'ITA'}]" item-text="country" item-value="country" v-model="filter.country" />
-                    </v-flex>
-
-                    <v-flex sm3 xs6>
-                        <v-text-field dense  hide-details :label="$vuetify.t('Location')"    v-model="filter.region" />
-                    </v-flex>
+                <v-layout rows wrap>
+                    <v-flex sm2 offset-sm1 xs3><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
+                    <v-flex sm2 xs4><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('CB Selection')"  :items="['Random', 'Sequential']"   v-model="filter.cb_selection" /></v-flex>
+                    <v-flex sm2 xs3><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('Landing Page Type')"  :items="['One Click', 'No Click']"   v-model="filter.landing_page_type" /></v-flex>
+                    <v-flex sm2 xs3><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('Gender')"  :items="['All', 'M', 'F']"   v-model="filter.gender" /></v-flex>
 
                     <v-flex sm2 xs2 class="text-xs-left pa-0 pt-1">
-
                         <GridButton icon="search" color="blue" @click="doSearch" />
                         <GridButton :dark="false" icon="cancel" color="white" @click="doResetSearch" />
-
                     </v-flex>
                 </v-layout>
                 <v-layout rows wrap>
-                    <v-flex sm3 offset-sm1 xs4>
-                        <v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('OS')"  :items="['Android', 'iOS', 'Other']"   v-model="filter.os_only" />
-                        <v-combobox dense  class="ml-2"  style="width: 30%; min-width:100px;" hide-details :label="$vuetify.t('OS Version')"  :items="[3,4,5,6,7,8,9,10,11,12,13]"  v-model="filter.os_version"  />
+                    <v-flex sm3 xs3><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('OS')"  :items="['Android', 'iOS', 'Other']"   v-model="filter.os_only" /></v-flex>
+                    <v-flex sm3 xs4><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('CB Activity Level')"  :items="['All', 'High', 'Medium', 'Low']"   v-model="filter.cb_activity_level" /></v-flex>
+                    <v-flex sm3 xs3><v-combobox dense  hide-details :label="$vuetify.t('Conversion Status')"  :items="statusList"  v-model="filter.conversion_status_id" item-text="text" item-value="conversion_status_id" />
                     </v-flex>
-                    <v-flex sm3 xs4><v-text-field dense   hide-details :label="$vuetify.t('Msisdn')"  v-model="filter.msisdns"  /></v-flex>
-                    <v-flex sm4 xs4>
-                        <v-combobox dense  hide-details :label="$vuetify.t('Conversion Status')"  :items="statusList"  v-model="filter.conversion_status_id" item-text="text" item-value="conversion_status_id" />
-                    </v-flex>
-
                 </v-layout>
             </div>
         </CardPanel>
@@ -90,33 +77,35 @@
                 class="elevation-0 fixed-header"
                 slot="body-center">
             <template slot="items" slot-scope="{item}">
-                <td>{{ item.click_date | dmy}} {{ item.click_date  | time }}</td>
-                <td>{{ item.brand_name }}</td>
-                <td>{{ item.channel_name }}</td>
-                <td style="white-space: nowrap">{{ item.adv_format_name }}</td>
-                <td style="white-space: nowrap">{{ item.campaign_name }}</td>
-                <td>{{ item.bid_price }}</td>
-                <td>{{ item.creative_id }}</td>
-                <td>
+                <!--<td>{{ item.click_date | dmy}} {{ item.click_date  | time }}</td>-->
+                <td>{{ item.campaign_id }}</td>
+                <td>{{ item.brand }}</td>
+                <!--<td style="white-space: nowrap">{{ item.adv_format_name }}</td>-->
+                <td>{{ item.status }}</td>
+                <td>{{ item.campaign_type }}</td>
+                <!--<td>
                     <v-tooltip left v-if="item.sms_template_text">
                         <span class="pa-3" slot="activator">{{ item.sms_template_text | truncate(10) }}</span>
                         {{ item.sms_template_text }}
                     </v-tooltip>
-                </td>
-                <td>{{ item.country }}</td>
-                <td>{{ item.region }}</td>
-                <td>{{ item.city }}</td>
-                <td>{{ item.os_only }} {{ item.os_version }}</td>
-                <td>{{ item.user_ip }}</td>
-                <td>{{ item.msisdns | truncate(5,'.....')}}</td>
-                <td>{{ item.token_id }}</td>
-                <td>{{ item.sms_mo_date  | dmy }} {{ item.sms_mo_date  | time }}</td>
-                <td>
+                </td>-->
+                <td>{{ item.cb_selection }}</td>
+                <td>{{ item.creation_datetime | dmy}} {{ item.creation_datetime  | time }}</td>
+                <td>{{ item.start_datetime | dmy}} {{ item.start_datetime  | time }}</td>
+                <td>{{ item.end_datetime | dmy}} {{ item.end_datetime  | time }}</td>                <td>{{ item.user_ip }}</td>
+                <td>{{ item.token_landing_page_name }}</td>
+                <td>{{ item.token_landing_page_type }}</td>
+                <td>{{ item.age_range }}</td>
+                <td>{{ item.cb_activity_level }}</td>
+                <td>{{ item.target_cb_quantity }}</td>
+                <td>{{ item.processed_cb_quantity }}</td>
+                <td>{{ item.lead }}</td>
+                <!--<td>
                     <v-tooltip left v-if="item.sms_mo_final_text ">
                         <span class="pa-3" slot="activator">{{ item.sms_mo_final_text | truncate(8) }}</span>
                         {{ item.sms_mo_final_text }}
                     </v-tooltip>
-                </td>
+                </td>-->
                 <td>
                     <v-tooltip left>
                         <span class="pa-3" slot="activator">{{ item.conversion_status_id }}</span>
@@ -146,38 +135,23 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             const headers = [
-                { text: this.$vuetify.t('Campaign ID'), value: 'click_date' },
-                { text: this.$vuetify.t('Brand'), value: 'brand_name' },
-                { text: this.$vuetify.t('Status'), value: 'channel_name' },
-                { text: this.$vuetify.t('Campaign Type'), value: 'adv_format_name' },
-                { text: this.$vuetify.t('CB Selection'), value: 'campaign_name' },
-                { text: this.$vuetify.t('Creation Datetime'), value: 'bid_price' },
-                { text: this.$vuetify.t('Start Datetime'), value: 'creative_id' },
-                { text: this.$vuetify.t('End Datetime'), value: 'sms_template_text' },
-                { text: this.$vuetify.t('Landing Page Name'), value: 'country' },
-                { text: this.$vuetify.t('Landing Page Type'), value: 'region' },
-                { text: this.$vuetify.t('Age Range'), value: 'city' },
-                { text: this.$vuetify.t('CB Activity Level'), value: 'os_only' },
-                { text: this.$vuetify.t('Target CB Quantity'), value: 'user_ip' },
-                { text: this.$vuetify.t('Processed CB Quantity'), value: 'msisdns' },
-                { text: this.$vuetify.t('Leads'), value: 'token_id' },
-                { text: this.$vuetify.t('Conversion'), value: 'sms_mo_date' }
+                { text: this.$vuetify.t('Campaign ID'), value: 'campaign_id' },
+                { text: this.$vuetify.t('Brand'), value: 'brand' },
+                { text: this.$vuetify.t('Status'), value: 'status' },
+                { text: this.$vuetify.t('Campaign Type'), value: 'campaign_type' },
+                { text: this.$vuetify.t('CB Selection'), value: 'cb_selection' },
+                { text: this.$vuetify.t('Creation Datetime'), value: 'creation_datetime' },
+                { text: this.$vuetify.t('Start Datetime'), value: 'start_datetime' },
+                { text: this.$vuetify.t('End Datetime'), value: 'end_datetime' },
+                { text: this.$vuetify.t('Landing Page Name'), value: 'landing_page_name' },
+                { text: this.$vuetify.t('Landing Page Type'), value: 'landing_page_type' },
+                { text: this.$vuetify.t('Age Range'), value: 'age_range' },
+                { text: this.$vuetify.t('CB Activity Level'), value: 'cb_activity_level' },
+                { text: this.$vuetify.t('Target CB Quantity'), value: 'target_cb_quantity' },
+                { text: this.$vuetify.t('Processed CB Quantity'), value: 'processed_cb_quantity' },
+                { text: this.$vuetify.t('Leads'), value: 'lead' },
+                { text: this.$vuetify.t('Conversion'), value: 'conversion' }
             ]
             return {
                 sms_mo_date: null,

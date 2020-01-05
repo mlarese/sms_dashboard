@@ -94,6 +94,10 @@ export const actions = {
           return res
         })
     },
+    add ({dispatch, commit}, {data}) {
+        const url = `/campaign`
+        return dispatch('api/post', {url, data}, root)
+    },
     resetSearch ({dispatch, commit, state}) {
         commit('setSearchActive', false)
         commit('resetFilter')
