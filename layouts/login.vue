@@ -32,7 +32,7 @@
 
 <style>
   .back-city{
-    background-image: url(https://c2sms.xyz/img/sfondo.jpg) !important;
+    background-image: url(//gtg.ai//img/sfondo.jpg) !important;
     background-position: center;
   }
 </style>

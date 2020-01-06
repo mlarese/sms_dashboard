@@ -9,7 +9,7 @@
 
                 <v-flex xs2 class="pl-0">
                     <a class="default-navbar-brand" href="/">
-                        <img src="c2sms_logo.png" alt="logo c2sms" width="100">
+                        <img src="gtg_logo.png" alt="logo" width="100">
                     </a>
 
                 </v-flex>
@@ -148,8 +148,9 @@
         padding-top: 0px;
     }
 
-    .mx-datepicker-range {
+    .mx-datepicker-range, .mx-datepicker {
         width: 100% !important;
+
     }
 
     .v-input, .v-label, .v-list__tile {
@@ -169,11 +170,12 @@
         max-width:400px;
     }
     .active-label-size {
-        color: rgba(0,0,0,0.54);
+        color: rgba(0,0,0,0.84);
         font-size: 11px !important;
         line-height:10px;
         position: relative;
-        top: 4px;
+        top: px;
+        left:5px;
     }
 
     .v-progress-linear {
@@ -182,5 +184,9 @@
     }
     .sub-tabs .v-tabs__bar {
         background: #f3f3f3f3;
+    }
+
+    .v-toolbar__content {
+        padding: 0;
     }
 </style>

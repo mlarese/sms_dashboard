@@ -2,7 +2,7 @@
 <template>
     <GridContainer title="Campaigns">
         <div slot="header-right">
-            <ButtonNew title="New Campaign"/>
+            <ButtonNew title="New Campaign" @click.native="addCampaign" />
         </div>
         <CardPanel slot_="container-top">
             <div class="">
@@ -162,7 +162,7 @@
             }
         },
         computed: {
-            ...mapState('clicks', {'grid': 'grid', 'clicksList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
+            ...mapState('campaigns', {'grid': 'grid', 'clicksList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
             ...mapState('channels', {'channelList': 'list'}),
             ...mapState('brands', {'brandsList': 'list'}),
             ...mapState('advformats', {'advformatsList': 'list'}),
@@ -173,7 +173,7 @@
           this.resetSearch()
         },
         methods: {
-            ...mapActions('clicks', ['resetSearch', 'search']),
+            ...mapActions('campaigns', ['resetSearch', 'search']),
             statusIdToText,
             doSearch () {
                 this.search()
@@ -181,6 +181,9 @@
             doResetSearch () {
               this.resetSearch()
 
+            },
+            addCampaign () {
+              this.$router.push('/campaigns/add')
             }
         }
     }

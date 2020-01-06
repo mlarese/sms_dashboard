@@ -2,10 +2,10 @@ import _cloneDeep from 'lodash/cloneDeep'
 import Vue from 'vue'
 import addDays from 'date-fns/addDays'
 let today = new Date()
+
 const newFilter = () => ({
-  click_date: [addDays(today,-30), today],
-  country: 'ITA'
 })
+
 export const state = () => {
     return {
         list: [],
@@ -24,6 +24,11 @@ export const state = () => {
               totalItems: 0
             }
         },
+        statusList: [
+          {value: 4,  text: 'Pending'},
+          {value: 5,  text: 'Running'},
+          {value: 6,  text: 'Ended'}
+        ],
         mode: 'list',
         searchActive: false,
         filter: newFilter()
