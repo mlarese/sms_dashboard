@@ -2,8 +2,11 @@
 <template>
     <FormPanel v-bind="$attrs">
         <div slot="header-right">
-            <v-btn outline color="indigo"   @click="$router.go(-1)" >
+            <!--<v-btn outline color="indigo"   @click="$router.go(-1)" >
                 {{$vuetify.t('Back')}}
+            </v-btn>-->
+            <v-btn class="mx-2" fab dark small color="red" @click="$router.go(-1)" >
+                <v-icon dark>keyboard_arrow_left</v-icon>
             </v-btn>
         </div>
         <v-layout row wrap>
@@ -11,22 +14,22 @@
                 <v-combobox dense   hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="$record.brand_id" item-text="brand_name" item-value="brand_id" />
             </v-flex>
             <v-flex xs6>
-                <v-combobox dense   hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="$record.campaign_type" />
+                <v-combobox dense   hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="$record.type" />
             </v-flex>
         </v-layout>
 
         <v-layout row wrap>
             <v-flex xs6 style="line-height: 0">
-                    <span v-if="$record.start_DatePicker"  class="active-label-size" >Start DatePicker</span>
+                    <span v-if="$record.start_datetime"  class="active-label-size" >Start Datetime</span>
                     <span v-else  class="active-label-size" > &nbsp;</span>
 
-                    <DatePicker :placeholder="$vuetify.t('Start DatePicker')" v-model="$record.start_DatePicker" type="DatePicker"></DatePicker>
+                    <DatePicker :placeholder="$vuetify.t('Start Datetime')" v-model="$record.start_datetime" type="DatePicker"></DatePicker>
             </v-flex>
 
             <v-flex xs6 style="line-height: 0">
-                <span v-if="$record.end_DatePicker"  class="active-label-size" >End DatePicker</span>
+                <span v-if="$record.end_datetime"  class="active-label-size" >End Datetime</span>
                 <span v-else  class="active-label-size" > &nbsp;</span>
-                <DatePicker :placeholder="$vuetify.t('End DatePicker')" v-model="$record.end_DatePicker"></DatePicker>
+                <DatePicker :placeholder="$vuetify.t('End Datetime')" v-model="$record.end_datetime"></DatePicker>
             </v-flex>
 
             <v-flex xs6 v-if="false">
@@ -40,7 +43,7 @@
                 <v-combobox dense  hide-details :label="$vuetify.t('Gender')"  :items="['All', 'M', 'F']"   v-model="$record.gender" />
             </v-flex>
             <v-flex xs6>
-                <v-combobox dense  hide-details :label="$vuetify.t('OS')"  :items="['Android', 'iOS', 'Other']"   v-model="$record.os_only" />
+                <v-combobox dense  hide-details :label="$vuetify.t('Age Range')"  :items="['0-18', '18-25', '26-35', '36-45', '46-55']"   v-model="$record.os_only" />
             </v-flex>
         </v-layout>
         <v-layout row wrap>
@@ -48,18 +51,14 @@
                 <v-combobox dense  hide-details :label="$vuetify.t('CB Activity Level')"  :items="['All', 'High', 'Medium', 'Low']"   v-model="$record.cb_activity_level" />
             </v-flex>
             <v-flex xs6>
-                <v-combobox dense  hide-details :label="$vuetify.t('Conversion Status')"  :items="statusList"  v-model="$record.conversion_status_id" item-text="text" item-value="value" />
+                <v-combobox dense  hide-details :label="$vuetify.t('CB Target Quantity')"   v-model="$record.cb_target_quantity" item-text="text" item-value="value" />
             </v-flex>
         </v-layout>
-
-        <v-layout row wrap>
-            <v-flex xs4 offset-xs4>
-
-                <v-btn  style="width:100%" dark color="primary"  @click="add">
-                    {{$vuetify.t('Confirm') }}
-                </v-btn>
-            </v-flex>
-        </v-layout>
+        <div slot="header-right">
+            <v-btn class="mx-2" fab small dark color="primary"  @click="save">
+                <v-icon dark>mdi-plus</v-icon>
+            </v-btn>
+        </div>
     </FormPanel>
 </template>
 
@@ -78,7 +77,7 @@
             ...mapState('campaigns',  ['statusList', '$record'])
         },
         methods: {
-            ...mapActions('campaigns', ['add'])
+            ...mapActions('campaigns', ['add', 'save'])
         }
     }
 </script>

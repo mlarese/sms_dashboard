@@ -82,7 +82,7 @@
                 <td>{{ item.brand }}</td>
                 <!--<td style="white-space: nowrap">{{ item.adv_format_name }}</td>-->
                 <td>{{ item.status }}</td>
-                <td>{{ item.campaign_type }}</td>
+                <td>{{ item.type }}</td>
                 <!--<td>
                     <v-tooltip left v-if="item.sms_template_text">
                         <span class="pa-3" slot="activator">{{ item.sms_template_text | truncate(10) }}</span>
@@ -139,7 +139,7 @@
                 { text: this.$vuetify.t('Campaign ID'), value: 'campaign_id' },
                 { text: this.$vuetify.t('Brand'), value: 'brand' },
                 { text: this.$vuetify.t('Status'), value: 'status' },
-                { text: this.$vuetify.t('Campaign Type'), value: 'campaign_type' },
+                { text: this.$vuetify.t('Campaign Type'), value: 'type' },
                 { text: this.$vuetify.t('CB Selection'), value: 'cb_selection' },
                 { text: this.$vuetify.t('Creation Datetime'), value: 'creation_datetime' },
                 { text: this.$vuetify.t('Start Datetime'), value: 'start_datetime' },

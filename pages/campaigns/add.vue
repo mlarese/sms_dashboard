@@ -10,6 +10,10 @@
     components: {
       CampaignForms
     },
+  fetch({store}) {
+        store.commit('campaigns/setRecord',{},{root: true})
+        store.commit('campaigns/setAddMode',null,{root: true})
+  },
     computed: {
     },
     methods: {
