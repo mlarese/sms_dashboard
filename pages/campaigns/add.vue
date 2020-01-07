@@ -10,17 +10,10 @@
     components: {
       CampaignForms
     },
-  fetch({store}) {
-        store.commit('campaigns/setRecord',{},{root: true})
+    fetch({store}) {
+        store.dispatch('brands/load', {}, {root: true}),
+        store.commit('campaigns/setRecord',{cb_age_range: [1,2,3,4,5,6], cb_gender: 'All'},{root: true})
         store.commit('campaigns/setAddMode',null,{root: true})
-  },
-    computed: {
-    },
-    methods: {
     }
   }
 </script>
-
-<style lang="scss">
-
-</style>

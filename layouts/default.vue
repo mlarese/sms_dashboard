@@ -189,4 +189,12 @@
     .v-toolbar__content {
         padding: 0;
     }
+
+    .v-select__slot{
+        height:30px;
+    }
+
+    .v-chip .v-chip__content{
+        height:24px;
+    }
 </style>

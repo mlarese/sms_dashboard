@@ -24,6 +24,14 @@ export const state = () => {
               totalItems: 0
             }
         },
+        agesList: [
+          {text:'0-18', value: 1},
+          {text:'18-25', value: 2},
+          {text:'26-35', value: 3},
+          {text:'36-45', value: 4},
+          {text:'46-55', value: 5},
+          {text:'>55', value: 6}
+        ],
         statusList: [
           {value: 4,  text: 'Pending'},
           {value: 5,  text: 'Running'},
@@ -118,12 +126,19 @@ export const actions = {
                 .then(r => {
                     commit('addRecord', data)
                     commit('set$Record', {})
+                    return r
                 })
         } else {
             let id = data.code
             return dispatch('update', {data, id})
-                .then(() => commit('set$Record', {}))
-                .then(() => commit('setAddMode'))
+              .then(r => {
+                commit('addRecord', data)
+                commit('set$Record', {})
+                return r
+              })
+
+
+
         }
     },
     add ({dispatch, commit}, {data}) {
@@ -141,12 +156,12 @@ export const actions = {
         commit('resetFilter')
         commit('setList', [])
     },
-    load ({dispatch, commit, state}, {id = null, force = true, options = {}}) {
+    loadAll ({dispatch, commit, state}, {id = null, force = true, options = {}}) {
         if (!force && state.loaded) {
             return
         }
         if (id === null) {
-            return dispatch('api/post', {url: `/api/campaigns`, options, debug: false}, root)
+            return dispatch('api/post', {url: `/api/campaigns_load`, options, debug: false}, root)
                 .then(res => {
                     commit('setList', res.data)
                     commit('setPagination')
@@ -155,7 +170,7 @@ export const actions = {
         } else {
             return dispatch('api/get', {url: `/api/campaigns/{id}`, options}, root)
                 .then(res => {
-                    commit('setRecord', res.data)
+                    commit('setRecord', res)
                     return res
                 })
         }
