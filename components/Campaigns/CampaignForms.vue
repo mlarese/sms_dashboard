@@ -64,7 +64,8 @@
                             hide-details
                             :label="$vuetify.t('Age Range')"
                             :items="agesList"
-                            multiple deletable-chips chips v-model="$record.cb_age_range" />
+                            multiple deletable-chips chips v-model="$record.cb_age_range"
+                    />
                 </v-flex>
             </v-layout>
             <v-layout row wrap>

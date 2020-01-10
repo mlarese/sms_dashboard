@@ -9,7 +9,7 @@ import _has from 'lodash/has'
 const settingTabs = [
   {to: 'settings/brands', label: 'Brands'},
   {to: 'settings/users', label: 'Users'},
-  {to: 'settings/userbrand', label: 'Users Brands '},
+  {to: 'settings/usersbrands', label: 'Users Brands '},
   {to: 'settings/configuration', label: 'Configuration'}
 ]
 

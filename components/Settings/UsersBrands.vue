@@ -2,14 +2,36 @@
 <template>
     <GridContainer title="Users Brands">
 
-        <CardPanel slot="container-top">
+        <div slot="container-top" class="py-4">
+            <v-layout row wrap>
 
-        </CardPanel>
+                <v-flex xs6 xs12>
+                    <v-text-field
+                            v-model="gridFilter"
+                            label="Company name"
+                            single-line
+                            hide-details
+                            append-icon="search"/>
+                </v-flex>
+                <v-flex xs6 xs12>
+                    <v-text-field
+                            v-model="gridFilter"
+                            label="Brand"
+                            single-line
+                            hide-details
+                            append-icon="search"/>
+                </v-flex>
+            </v-layout>
+
+            <!-- v-autocomplete dense hide-details :label="$vuetify.t('Brand')"  :items="usersList" v-model="$record.user_id" item-text="brand_name" item-value="user_id" /-->
+
+        </div>
 
         <div slot="header-right" class="pb-2">
-            <ButtonNew title="Add Brand"/>
+            <ButtonNew title="Add User Brand" @click.native="onAdd"/>
         </div>
         <v-data-table
+                :search="gridFilter"
                 :headers="headers"
                 :items="list"
                 :hide-actions="false"
@@ -19,14 +41,11 @@
             <template slot="items" slot-scope="{item}">
                 <td>{{ item.company_name }}</td>
                 <td>{{ item.brand }}</td>
-                <td width="1" class="pa-0">
-                    <GridButton icon="edit" color="green" @click="onClick"></GridButton>
+                <td width="1" class="pa-1">
+                    <GridButton icon="edit" color="green" @click="onEdit(item.user_id )"></GridButton>
                 </td>
-                <td width="1" class="pa-0">
-                    <GridButton icon="visibility" color="blue" @click="onClick"></GridButton>
-                </td>
-                <td width="1" class="pa-0">
-                    <GridButton icon="delete" color="error" @click="onClick"></GridButton>
+                <td width="1" class="pa-1">
+                    <GridButton icon="delete" color="error" @click="onDelete(item.user_id)"></GridButton>
                 </td>
             </template>
             <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
@@ -37,7 +56,7 @@
     </GridContainer>
 </template>
 <script>
-    import {mapState} from 'vuex'
+    import {mapState, mapActions} from 'vuex'
     import GridButton from '../General/GridButton'
     import GridContainer from '../General/GridContainer'
     import CardPanel from "../General/CardPanel";
@@ -47,10 +66,10 @@
         components: {ButtonNew, CardPanel, GridButton, GridContainer},
         data () {
             const headers = [
-                { text: this.$vuetify.t('Company Name'), value: 'company_name' },
+                { text: this.$vuetify.t('Company Name'), value: 'brand' },
                 { text: this.$vuetify.t('Brand'), value: 'brand' },
+
                 { text: 'Edit', value: 'action', sortable: false },
-                { text: 'View', value: 'action', sortable: false },
                 { text: 'Delete', value: 'action', sortable: false }
             ]
             return {
@@ -59,11 +78,22 @@
             }
         },
         computed: {
-            ...mapState('usersBrandsChannels', ['list', '$record'])
+            ...mapState('usersBrands', ['list', '$record'])
         },
         methods: {
-            onClick () {
-                alert('onClick')
+            ...mapActions('usersBrands', ['delete', 'load']),
+            onDelete (id) {
+                if(!confirm('Do you confirm the row deletion ?')) return
+                this.delete(id)
+                    .then(() => {
+                        this.load({})
+                    })
+            },
+            onAdd () {
+                this.$router.push('/settings/usersbrands/add')
+            },
+            onEdit (id) {
+                this.$router.push(`/settings/usersbrands/${id}`)
             }
         }
     }
