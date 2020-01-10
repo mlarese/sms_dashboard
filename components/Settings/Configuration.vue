@@ -9,8 +9,8 @@
         </div>
 
         <v-form
-            ref="form"
-            lazy-validation
+                ref="form"
+                lazy-validation
         >
             <v-layout row wrap>
                 <v-flex xs6>
@@ -24,16 +24,16 @@
             <v-layout row wrap>
 
                 <v-flex xs6 style="line-height: 0">
-                        <span v-if="$record.start_datetime"  class="active-label-size" >Start Datetime</span>
-                        <span v-else  class="active-label-size" > &nbsp;</span>
+                    <span v-if="$record.start_datetime"  class="active-label-size" >Start Datetime</span>
+                    <span v-else  class="active-label-size" > &nbsp;</span>
 
-                        <DatePicker
-                                @change="onStartChange"
-                                value-type="YYYY-MM-DD HH:mm:ss"
-                                format="YYYY-MM-DD HH:mm:ss"
-                                :disabled-date="notBeforeToday"
-                                :time-picker-options="timePickerOptions"
-                                :placeholder="$vuetify.t('Start Datetime')" v-model="$record.start_datetime" type="datetime"></DatePicker>
+                    <DatePicker
+                            @change="onStartChange"
+                            value-type="YYYY-MM-DD HH:mm:ss"
+                            format="YYYY-MM-DD HH:mm:ss"
+                            :disabled-date="notBeforeToday"
+                            :time-picker-options="timePickerOptions"
+                            :placeholder="$vuetify.t('Start Datetime')" v-model="$record.start_datetime" type="datetime"></DatePicker>
                 </v-flex>
 
                 <v-flex xs6 style="line-height: 0">
@@ -89,74 +89,40 @@
         </v-form>
     </FormPanel>
 </template>
-
 <script>
-    import {mapState, mapActions} from 'vuex'
-    import {timePickerOptions, notBeforeToday} from '../../assets/helpers'
-    import FormPanel from '../General/FormPanel'
+    import {mapState} from 'vuex'
     import GridButton from '../General/GridButton'
-    import DatePicker from 'vue2-datepicker';
+    import GridContainer from '../General/GridContainer'
+    import CardPanel from "../General/CardPanel";
+    import ButtonNew from "../General/ButtonNew";
+    import FormPanel from '../General/FormPanel'
+
 
     export default {
-        name: "CampaignForms",
-        components: {
-            FormPanel, DatePicker, GridButton
-        },
+        components: {ButtonNew, CardPanel, GridButton, GridContainer, FormPanel},
         data () {
-          return {
-            timePickerOptions: timePickerOptions(),
-            requiredRule: [v => !!v || 'Required']
-          }
+            const headers = [
+                { text: this.$vuetify.t('Channel ID'), value: 'channel_id' },
+                { text: this.$vuetify.t('Channel Name'), value: 'channel_name' },
+                { text: this.$vuetify.t('Channel Currency'), value: 'channel_currency' },
+                { text: this.$vuetify.t('Postback URL'), value: 'postback_url' },
+                { text: 'Edit', value: 'action', sortable: false },
+                { text: 'View', value: 'action', sortable: false },
+                { text: 'Delete', value: 'action', sortable: false }
+            ]
+            return {
+                gridFilter: '',
+                headers
+            }
         },
-
         computed: {
-          ...mapState('brands', {'brandsList': 'list'}),
-          ...mapState('campaigns',  ['statusList', '$record' ,'agesList']),
-          isValid () {
-            if(!this.$record.brand_id) return false
-            if(!this.$record.start_datetime) return false
-            if(!this.$record.type) return false
-            if(!this.$record.end_datetime) return false
-            if( this.$record.cb_age_range.length===0) return false
-            if(!this.$record.type) return false
-            if(!this.$record.cb_target_quantity) return false
-            if(!this.$record.cb_activity_level) return false
-            if(!this.$record.cb_selection) return false
-            return true
-          },
-          startDateTimeToDate () {
-            return new Date(this.$record.start_datetime)
-          },
-          endDateTimeToDate () {
-            return new Date(this.$record.end_datetime)
-          }
+            ...mapState('channels', ['list', '$record'])
         },
         methods: {
-          onStartChange () {
-            if(this.endDateTimeToDate<=this.startDateTimeToDate)
-              this.$record.end_datetime = null
-          },
-          onEndChange () {
-            if(this.endDateTimeToDate<=this.startDateTimeToDate) {
-              const oldStart = this.$record.start_datetime
-              this.$record.start_datetime = this.$record.end_datetime
-              this.$record.end_datetime = oldStart
+            onClick () {
+                alert('onClick')
             }
-          },
-          notBeforeToday,
-          notBeforeStartDateTime (date) {
-            return date < this.startDateTimeToDate
-          },
-          onAdd () {
-            this.save()
-              .then(r => this.$router.go(-1))
-          },
-          ...mapActions('campaigns', ['add', 'save']),
-
         }
     }
 </script>
 
-<style scoped>
-
-</style>
