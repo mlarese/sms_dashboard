@@ -13,12 +13,14 @@
             lazy-validation
         >
             <v-layout row wrap>
-                <v-flex xs6>
-
+                <v-flex xs4>
                     <v-autocomplete dense hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="$record.brand_id" item-text="brand_name" item-value="brand_id" />
                 </v-flex>
-                <v-flex xs6>
+                <v-flex xs4>
                     <v-combobox dense   hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="$record.type" />
+                </v-flex>
+                <v-flex xs4>
+                    <v-autocomplete dense item-text="lp_name" item-value="lp_id"  hide-details :label="$vuetify.t('Landing Page')"  :items="landingPageByBrend"   v-model="$record.lp_id" />
                 </v-flex>
             </v-layout>
             <v-layout row wrap>
@@ -30,7 +32,7 @@
                         <DatePicker
                                 @change="onStartChange"
                                 value-type="YYYY-MM-DD HH:mm:ss"
-                                format="YYYY-MM-DD HH:mm:ss"
+                                format="DD/MM/YYYY - HH:mm:ss"
                                 :disabled-date="notBeforeToday"
                                 :time-picker-options="timePickerOptions"
                                 :placeholder="$vuetify.t('Start Datetime')" v-model="$record.start_datetime" type="datetime"></DatePicker>
@@ -42,7 +44,7 @@
                     <DatePicker
                             @change="onEndChange"
                             value-type="YYYY-MM-DD HH:mm:ss"
-                            format="YYYY-MM-DD HH:mm:ss"
+                            format="DD/MM/YYYY - HH:mm:ss"
                             :disabled-date="notBeforeStartDateTime"
                             :time-picker-options="timePickerOptions"
                             :placeholder="$vuetify.t('End Datetime')" v-model="$record.end_datetime" type="datetime"></DatePicker>
@@ -111,7 +113,12 @@
 
         computed: {
           ...mapState('brands', {'brandsList': 'list'}),
+          ...mapState('landingPages', {'lpList': 'list'}),
           ...mapState('campaigns',  ['statusList', '$record' ,'agesList']),
+          landingPageByBrend () {
+            if(!this.$record.brand_id) return []
+            return  this.lpList.filter(o => o.brand_id === this.$record.brand_id)
+          },
           isValid () {
             if(!this.$record.brand_id) return false
             if(!this.$record.start_datetime) return false
@@ -119,6 +126,7 @@
             if(!this.$record.end_datetime) return false
             if( this.$record.cb_age_range.length===0) return false
             if(!this.$record.type) return false
+            if(!this.$record.lp_id) return false
             if(!this.$record.cb_target_quantity) return false
             if(!this.$record.cb_activity_level) return false
             if(!this.$record.cb_selection) return false

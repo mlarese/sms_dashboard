@@ -77,41 +77,34 @@
                 class="elevation-0 fixed-header"
                 slot="body-center">
             <template slot="items" slot-scope="{item}">
-                <!--<td>{{ item.click_date | dmy}} {{ item.click_date  | time }}</td>-->
                 <td>{{ item.campaign_id }}</td>
-                <td>{{ item.brand }}</td>
-                <!--<td style="white-space: nowrap">{{ item.adv_format_name }}</td>-->
-                <td>{{ item.status }}</td>
+                <td>{{ item.brand_name }}</td>
+                <td>{{ item.status_name }}</td>
                 <td>{{ item.type }}</td>
-                <!--<td>
-                    <v-tooltip left v-if="item.sms_template_text">
-                        <span class="pa-3" slot="activator">{{ item.sms_template_text | truncate(10) }}</span>
-                        {{ item.sms_template_text }}
-                    </v-tooltip>
-                </td>-->
                 <td>{{ item.cb_selection }}</td>
-                <td>{{ item.creation_datetime | dmy}} {{ item.creation_datetime  | time }}</td>
-                <td>{{ item.start_datetime | dmy}} {{ item.start_datetime  | time }}</td>
-                <td>{{ item.end_datetime | dmy}} {{ item.end_datetime  | time }}</td>                <td>{{ item.user_ip }}</td>
-                <td>{{ item.token_landing_page_name }}</td>
-                <td>{{ item.token_landing_page_type }}</td>
-                <td>{{ item.age_range }}</td>
+                <td>{{ item.creation_datetime | dmy}}<br> {{ item.creation_datetime  | time }}</td>
+                <td>{{ item.start_datetime | dmy}} <br>{{ item.start_datetime  | time }}</td>
+                <td>{{ item.end_datetime | dmy}} <br>{{ item.end_datetime  | time }}</td>
+                <td>{{ item.lp_name }}</td>
+                <td>{{ item.lp_type }}</td>
+                <td nowrap="nowrap">{{ item.cb_age_range }}</td>
                 <td>{{ item.cb_activity_level }}</td>
-                <td>{{ item.target_cb_quantity }}</td>
-                <td>{{ item.processed_cb_quantity }}</td>
+                <td>{{ item.cb_target_quantity }}</td>
+                <td>{{ item.cb_target_quantity_processed }}</td>
                 <td>{{ item.lead }}</td>
+                <td><span v-if="item.processed_cb_quantity">{{ item.lead/item.processed_cb_quantity }}</span></td>
                 <!--<td>
                     <v-tooltip left v-if="item.sms_mo_final_text ">
                         <span class="pa-3" slot="activator">{{ item.sms_mo_final_text | truncate(8) }}</span>
                         {{ item.sms_mo_final_text }}
                     </v-tooltip>
                 </td>-->
-                <td>
+                <!--td>
                     <v-tooltip left>
                         <span class="pa-3" slot="activator">{{ item.conversion_status_id }}</span>
                         {{statusIdToText(item.conversion_status_id)}}
                     </v-tooltip>
-                </td>
+                </td-->
             </template>
             <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
                 {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}
@@ -137,19 +130,19 @@
 
             const headers = [
                 { text: this.$vuetify.t('Campaign ID'), value: 'campaign_id' },
-                { text: this.$vuetify.t('Brand'), value: 'brand' },
-                { text: this.$vuetify.t('Status'), value: 'status' },
+                { text: this.$vuetify.t('Brand'), value: 'brand_name' },
+                { text: this.$vuetify.t('Status'), value: 'status_name' },
                 { text: this.$vuetify.t('Campaign Type'), value: 'type' },
                 { text: this.$vuetify.t('CB Selection'), value: 'cb_selection' },
                 { text: this.$vuetify.t('Creation Datetime'), value: 'creation_datetime' },
                 { text: this.$vuetify.t('Start Datetime'), value: 'start_datetime' },
                 { text: this.$vuetify.t('End Datetime'), value: 'end_datetime' },
-                { text: this.$vuetify.t('Landing Page Name'), value: 'landing_page_name' },
-                { text: this.$vuetify.t('Landing Page Type'), value: 'landing_page_type' },
-                { text: this.$vuetify.t('Age Range'), value: 'age_range' },
+                { text: this.$vuetify.t('Landing Page Name'), value: 'lp_name' },
+                { text: this.$vuetify.t('Landing Page Type'), value: 'lp_type' },
+                { text: this.$vuetify.t('Age Range'), value: 'cb_age_range' },
                 { text: this.$vuetify.t('CB Activity Level'), value: 'cb_activity_level' },
-                { text: this.$vuetify.t('Target CB Quantity'), value: 'target_cb_quantity' },
-                { text: this.$vuetify.t('Processed CB Quantity'), value: 'processed_cb_quantity' },
+                { text: this.$vuetify.t('Target CB Quantity'), value: 'cb_target_quantity' },
+                { text: this.$vuetify.t('Processed CB Quantity'), value: 'cb_target_quantity_processed' },
                 { text: this.$vuetify.t('Leads'), value: 'lead' },
                 { text: this.$vuetify.t('Conversion'), value: 'conversion' }
             ]
