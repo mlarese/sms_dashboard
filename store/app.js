@@ -8,10 +8,10 @@ import _has from 'lodash/has'
  */
 const menuItems = {
     campaigns: {to: 'campaigns', label: 'Campaigns'},
-    leads: {to: 'lead', label: 'Leads'},
+    leads: {to: 'leads', label: 'Leads'},
     msisdnsearch: {to: 'msisdnsearch', label: 'MSISDN Search'},
     whitelist: {to: 'whitelist', label: 'Whitelist'},
-    landingpage: {to: 'landingpage', label: 'Landing Pages'},
+    landingpages: {to: 'landingPages', label: 'Landing Pages'},
     settings: {to: 'settings/brands', label: 'Settings'}
 }
 
@@ -22,7 +22,7 @@ const menus = {
     menuItems.leads,
     menuItems.msisdnsearch,
     menuItems.whitelist,
-    menuItems.landingpage,
+    menuItems.landingpages,
     menuItems.settings
   ],
   'Third Party Agency': [

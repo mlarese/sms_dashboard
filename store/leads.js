@@ -56,13 +56,13 @@ export const actions = {
             return
         }
         if (id === null) {
-            return dispatch('api/get', {url: `/api/landingPages`, options, debug: false}, root)
+            return dispatch('api/get', {url: `/api/leads`, options, debug: false}, root)
                 .then(res => {
                     commit('setList', res.data)
                     return res
                 })
         } else {
-            const url = `/api/landingPages/${id}`
+            const url = `/api/leads/${id}`
             return dispatch('api/get', {url, options}, root)
                 .then(res => {
                     commit('setRecord', res.data)
@@ -71,27 +71,27 @@ export const actions = {
         }
     },
     delete ({dispatch, commit, state}, id) {
-        const url = `/api/landingPages/${id}`
-        return dispatch('api/delete', {url}, root)
+      const url = `/api/leads/${id}`
+      return dispatch('api/delete', {url}, root)
     },
     save ({dispatch, commit, state, getters}) {
         let data = state.$record
 
         if (getters.isAddMode) {
-            return dispatch('api/post', {url: `/api/landingPages`, data}, root)
-                .then(r => {
-                    commit('addRecord', data)
-                    commit('set$Record', {})
-                    return r
-                })
+          return dispatch('api/post', {url: `/api/leads`, data}, root)
+            .then(r => {
+              commit('addRecord', data)
+              commit('set$Record', {})
+              return r
+            })
         } else {
-            let id = data.landing_page_id
-            return dispatch('api/put', {url: `/api/landingPages/${id}`, data}, root)
-                .then(r => {
-                    commit('addRecord', data)
-                    commit('set$Record', {})
-                    return r
-                })
+          let id = data.lead_id
+          return dispatch('api/put', {url: `/api/leads/${id}`, data}, root)
+            .then(r => {
+              commit('addRecord', data)
+              commit('set$Record', {})
+              return r
+            })
 
 
 
