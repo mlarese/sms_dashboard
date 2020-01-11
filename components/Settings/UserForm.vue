@@ -38,7 +38,7 @@
                 </v-flex>
 
                 <v-flex sm3 xs12>
-                    <v-text-field type="password" label="Password" single-line  hide-details v-model="$record.password" />
+                    <v-text-field type="password" class="bold" label="Password" single-line  hide-details v-model="$record.password" />
                 </v-flex>
 
 
