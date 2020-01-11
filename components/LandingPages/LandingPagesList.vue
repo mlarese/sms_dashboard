@@ -122,8 +122,8 @@
 
 
             const headers = [
-                { text: this.$vuetify.t('Landing Page ID'), value: 'landing_page_id' },
-                { text: this.$vuetify.t('Landing Page Name'), value: 'landing_page_name' },
+                { text: this.$vuetify.t('ID'), value: 'landing_page_id' },
+                { text: this.$vuetify.t('LP Name'), value: 'landing_page_name' },
                 { text: this.$vuetify.t('Type'), value: 'type' },
                 { text: this.$vuetify.t('Background Color'), value: 'background_color' },
                 { text: this.$vuetify.t('Banner'), value: 'banner' },

@@ -59,7 +59,7 @@
                 { text: this.$vuetify.t('Brand ID'), value: 'brand_id' },
                 { text: this.$vuetify.t('Brand'), value: 'brand_name' },
                 { text: this.$vuetify.t('SMS MT Message'), value: 'sms_mt_text_message' },
-                { text: this.$vuetify.t('Conversion grace period'), value: 'conversion_grace_period' },
+                { text: this.$vuetify.t('Conversion Grace Period'), value: 'conversion_grace_period' },
                 { text: 'Edit', value: 'action', sortable: false },
                 { text: 'Delete', value: 'action', sortable: false }
             ]

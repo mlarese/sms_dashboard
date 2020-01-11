@@ -22,14 +22,7 @@
                 </v-flex>
 
                 <v-flex sm2 xs12>
-                    <v-select
-                          :items="[5,10,20,30,40,50,60,70,80,90,100,120,140]"
-                          v-model="$record.conversion_grace_period"
-                          label="Conversion Grace Period"
-                          single-line
-                          search-input
-                          bottom
-                    ></v-select>
+                    <v-text-field append-icon="" label="Conversion Grace Period" single-line  hide-details v-model="$record.conversion_grace_period" />
                 </v-flex>
             </v-layout>
 

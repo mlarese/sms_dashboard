@@ -129,22 +129,22 @@
 
 
             const headers = [
-                { text: this.$vuetify.t('Campaign ID'), value: 'campaign_id' },
+                { text: this.$vuetify.t('ID'), value: 'campaign_id' },
                 { text: this.$vuetify.t('Brand'), value: 'brand_name' },
                 { text: this.$vuetify.t('Status'), value: 'status_name' },
-                { text: this.$vuetify.t('Campaign Type'), value: 'type' },
+                { text: this.$vuetify.t('Type'), value: 'type' },
                 { text: this.$vuetify.t('CB Selection'), value: 'cb_selection' },
-                { text: this.$vuetify.t('Creation Datetime'), value: 'creation_datetime' },
-                { text: this.$vuetify.t('Start Datetime'), value: 'start_datetime' },
-                { text: this.$vuetify.t('End Datetime'), value: 'end_datetime' },
-                { text: this.$vuetify.t('Landing Page Name'), value: 'lp_name' },
-                { text: this.$vuetify.t('Landing Page Type'), value: 'lp_type' },
+                { text: this.$vuetify.t('Creation DateTime'), value: 'creation_datetime' },
+                { text: this.$vuetify.t('Start DateTime'), value: 'start_datetime' },
+                { text: this.$vuetify.t('End DateTime'), value: 'end_datetime' },
+                { text: this.$vuetify.t('LP Name'), value: 'lp_name' },
+                { text: this.$vuetify.t('LP Type'), value: 'lp_type' },
                 { text: this.$vuetify.t('Age Range'), value: 'cb_age_range' },
                 { text: this.$vuetify.t('CB Activity Level'), value: 'cb_activity_level' },
-                { text: this.$vuetify.t('Target CB Quantity'), value: 'cb_target_quantity' },
-                { text: this.$vuetify.t('Processed CB Quantity'), value: 'cb_target_quantity_processed' },
+                { text: this.$vuetify.t('Target CB Qty'), value: 'cb_target_quantity' },
+                { text: this.$vuetify.t('Processed CB Qty'), value: 'cb_target_quantity_processed' },
                 { text: this.$vuetify.t('Leads'), value: 'lead' },
-                { text: this.$vuetify.t('Conversion'), value: 'conversion' }
+                { text: this.$vuetify.t('Conversion (%)'), value: 'conversion' }
             ]
             return {
                 sms_mo_date: null,

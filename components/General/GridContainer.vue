@@ -4,7 +4,7 @@
 
         <v-toolbar dense class="elevation-0 pl-0 mb-3"  color="white" style="font-size:36px !important;border-bottom: 1px solid #dddddd !important">
             <slot name="header-left">
-                <v-toolbar-title class="display-5" style="font-size:32px !important;">{{ $vuetify.t(title) }}</v-toolbar-title>
+                <v-toolbar-title class="display-7" style="font-size:32px !important;">{{ $vuetify.t(title) }}</v-toolbar-title>
             </slot>
 
             <v-spacer/>

@@ -99,10 +99,10 @@
 
 
             const headers = [
-                { text: this.$vuetify.t('Campaign ID'), value: 'campaign_id' },
+                { text: this.$vuetify.t('ID'), value: 'campaign_id' },
                 { text: this.$vuetify.t('Brand'), value: 'brand' },
                 { text: this.$vuetify.t('MSISDN'), value: 'msisdn' },
-                { text: this.$vuetify.t('Datetime'), value: 'datetime' },
+                { text: this.$vuetify.t('DateTime'), value: 'datetime' },
             ]
             return {
                 sms_mo_date: null,
