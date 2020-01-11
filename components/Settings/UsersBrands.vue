@@ -3,9 +3,9 @@
     <GridContainer title="Users Brands">
 
         <div slot="container-top" class="py-4">
-            <v-layout row wrap>
+            <v-layout row>
 
-                <v-flex xs6 xs12>
+                <v-flex xs5 xs11>
                     <v-text-field
                             v-model="gridFilter"
                             label="Company name"
@@ -13,7 +13,8 @@
                             hide-details
                             append-icon="search"/>
                 </v-flex>
-                <v-flex xs6 xs12>
+                <v-spacer></v-spacer>
+                <v-flex xs5 xs11>
                     <v-text-field
                             v-model="gridFilter"
                             label="Brand"

@@ -13,21 +13,14 @@
             lazy-validation
         >
             <v-layout row wrap>
-                <v-flex sm12 xs12>
-                    <v-select
-                          :items="[5,10,20,30,40,50,60,70,80,90,100,120,140]"
-                          v-model="$record.contact_grace_period"
-                          label="Contact Grace Period"
-                          single-line
-                          search-input
-                          bottom
-                    ></v-select>
-                </v-flex>
+                    <v-flex sm12 xs12>
+                        <v-text-field append-icon="" label="Conversion Grace Period" single-line  hide-details v-model="$record.conversion_grace_period" />
+                    </v-flex>
             </v-layout>
             <v-layout row wrap>
 
                 <v-flex xs6 style="line-height: 0">
-                    <span v-if="$record.validity_contact_start_datetime"  class="active-label-size" >Validity Contact Start Datetime</span>
+                    <span v-if="$record.validity_contact_start_datetime"  class="active-label-size" >Validity Contact Start DateTime</span>
                     <span v-else  class="active-label-size" > &nbsp;</span>
 
                     <DatePicker
@@ -36,11 +29,11 @@
                             format="DD/MM/YYYY - HH:mm:ss"
                             :disabled-date="notBeforeToday"
                             :time-picker-options="timePickerOptions"
-                            :placeholder="$vuetify.t('Start Datetime')" v-model="$record.start_datetime" type="datetime"></DatePicker>
+                            :placeholder="$vuetify.t('Start DateTime')" v-model="$record.start_datetime" type="datetime"></DatePicker>
                 </v-flex>
 
                 <v-flex xs6 style="line-height: 0">
-                    <span v-if="$record.validity_contact_end_datetime"  class="active-label-size" > Validity Contact End Datetime</span>
+                    <span v-if="$record.validity_contact_end_datetime"  class="active-label-size" > Validity Contact End DateTime</span>
                     <span v-else  class="active-label-size" > &nbsp;</span>
                     <DatePicker
                             @change="onEndChange"
@@ -48,7 +41,7 @@
                             format="DD/MM/YYYY - HH:mm:ss"
                             :disabled-date="notBeforeStartDateTime"
                             :time-picker-options="timePickerOptions"
-                            :placeholder="$vuetify.t('End Datetime')" v-model="$record.end_datetime" type="datetime"></DatePicker>
+                            :placeholder="$vuetify.t('End DateTime')" v-model="$record.end_datetime" type="datetime"></DatePicker>
                 </v-flex>
             </v-layout>
             <v-layout row wrap>
