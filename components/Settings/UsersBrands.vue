@@ -9,7 +9,7 @@
                     <v-text-field
                             v-model="gridFilter"
                             label="Company name"
-                            single-line
+
                             hide-details
                             append-icon="search"/>
                 </v-flex>
@@ -17,7 +17,7 @@
                     <v-text-field
                             v-model="gridFilter"
                             label="Brand"
-                            single-line
+
                             hide-details
                             append-icon="search"/>
                 </v-flex>

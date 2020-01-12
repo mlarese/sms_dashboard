@@ -18,7 +18,7 @@
                           :items="[5,10,20,30,40,50,60,70,80,90,100,120,140]"
                           v-model="$record.contact_grace_period"
                           label="Contact Grace Period"
-                          single-line
+
                           search-input
                           bottom
                     ></v-select>
@@ -58,12 +58,12 @@
                             dense
                             hide-details
                             :label="$vuetify.t('Validity Contact Weekdays')"
-                            :items="contactList"
+                            _items="contactList"
                             multiple deletable-chips chips v-model="$record.validity_contact_weekdays"
                     />
                 </v-flex>
                 <v-flex sm6 xs6>
-                    <v-text-field append-icon="" label="Sky SHA512 Pwd" single-line  hide-details v-model="$record.sky_sha512_pwd" />
+                    <v-text-field append-icon="" label="Sky SHA512 Pwd"   hide-details v-model="$record.sky_sha512_pwd" />
                 </v-flex>
             </v-layout>
             <v-layout row wrap>

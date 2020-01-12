@@ -15,11 +15,11 @@
 
             <v-layout row wrap>
                 <v-flex sm6 xs12>
-                    <v-text-field append-icon="" label="Company Name" single-line  hide-details v-model="$record.company_name" />
+                    <v-text-field append-icon="" label="Company Name"   hide-details v-model="$record.company_name" />
                 </v-flex>
 
                 <v-flex sm6 xs12>
-                    <v-text-field append-icon="" label="Brand" single-line  hide-details v-model="$record.brand" />
+                    <v-text-field append-icon="" label="Brand"   hide-details v-model="$record.brand" />
                 </v-flex>
 
 

@@ -1,4 +1,6 @@
 import _cloneDeep from 'lodash/cloneDeep'
+import _keyBy from 'lodash/keyBy'
+
 import Vue from 'vue'
 import addDays from 'date-fns/addDays'
 let today = new Date()
@@ -26,7 +28,7 @@ export const state = () => {
         },
         agesList: [
           {text:'0-18', value: 1},
-          {text:'18-25', value: 2},
+          {text:'19-25', value: 2},
           {text:'26-35', value: 3},
           {text:'36-45', value: 4},
           {text:'46-55', value: 5},
@@ -178,6 +180,7 @@ export const actions = {
 }
 
 export const getters = {
+    agesListById: state => _keyBy (state.agesList, 'value'),
     isEditMode: state => state.mode === 'edit',
     isAddMode: state => state.mode === 'add'
 }

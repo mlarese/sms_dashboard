@@ -9,14 +9,14 @@
 
                 <v-flex xs2 class="pl-0">
                     <a class="default-navbar-brand" href="/">
-                        <img src="gtg_logo.png" alt="logo" width="100">
+                        <img src="gtg_logo.png" alt="logo" width="85">
                     </a>
 
                 </v-flex>
                 <v-flex xs8>
 
                     <v-tabs
-                        class="ma-0"
+                        class="mt-1"
 
                         v-model="ui.currentMenuItem"
                         slider-color="yellow"

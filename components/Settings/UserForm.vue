@@ -15,11 +15,11 @@
 
             <v-layout row wrap>
                 <v-flex sm3 xs12>
-                    <v-text-field append-icon="" label="Company Name" single-line  hide-details v-model="$record.company_name" />
+                    <v-text-field append-icon="" label="Company Name"   hide-details v-model="$record.company_name" />
                 </v-flex>
 
                 <v-flex sm3 xs12>
-                    <v-text-field append-icon="" label="User Name" single-line  hide-details v-model="$record.username" />
+                    <v-text-field append-icon="" label="User Name"   hide-details v-model="$record.username" />
                 </v-flex>
 
 
@@ -31,14 +31,14 @@
                           label="Role"
                           item-text="role_name"
                           item-value="role_id"
-                          single-line
+
                           search-input
                           bottom
                     ></v-select>
                 </v-flex>
 
                 <v-flex sm3 xs12>
-                    <v-text-field type="password" class="bold" label="Password" single-line  hide-details v-model="$record.password" />
+                    <v-text-field class="bold" label="Password"   hide-details v-model="$record.password" />
                 </v-flex>
 
 

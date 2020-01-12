@@ -67,3 +67,11 @@ export const notBeforeToday = (date) => {
 }
 
 export const today = getToday()
+
+export const timeList = () => {
+  let res = []
+
+  for(let i = 0; i<20; i++) {
+    res.push
+  }
+}

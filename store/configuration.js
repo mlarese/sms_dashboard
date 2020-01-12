@@ -5,6 +5,9 @@ let today = new Date()
 export const state = () => {
   return {
     list: [],
+    timesList: [
+
+    ],
     recordList: [],
     record: {},
     $record: {},
@@ -55,47 +58,26 @@ export const actions = {
     if (!force && state.list.length > 0) {
       return
     }
-    if (id === null) {
-      return dispatch('api/get', {url: `/api/configuration`, options, debug: false}, root)
-        .then(res => {
-          commit('setList', res.data)
-          return res
-        })
-    } else {
-      const url = `/api/configuration/${id}`
-      return dispatch('api/get', {url, options}, root)
-        .then(res => {
-          commit('setRecord', res.data)
-          return res
-        })
-    }
+
+    return dispatch('api/get', {url: `/api/configuration`, options, debug: false}, root)
+      .then(res => {
+        commit('setRecord', res.data)
+        return res
+      })
+
   },
-  delete ({dispatch, commit, state}, id) {
-    const url = `/api/configuration/${id}`
-    return dispatch('api/delete', {url}, root)
-  },
+
   save ({dispatch, commit, state, getters}) {
     let data = state.$record
 
-    if (getters.isAddMode) {
-      return dispatch('api/post', {url: `/api/configuration`, data}, root)
-        .then(r => {
-          commit('addRecord', data)
-          commit('set$Record', {})
-          return r
-        })
-    } else {
       let id = data.user_id
-      return dispatch('api/put', {url: `/api/configuration/${id}`, data}, root)
+      return dispatch('api/put', {url: `/api/configuration`, data}, root)
         .then(r => {
           commit('addRecord', data)
           commit('set$Record', {})
           return r
         })
 
-
-
-    }
   }
 }
 

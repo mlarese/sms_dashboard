@@ -86,8 +86,8 @@
                 <td>{{ item.start_datetime | dmy}} <br>{{ item.start_datetime  | time }}</td>
                 <td>{{ item.end_datetime | dmy}} <br>{{ item.end_datetime  | time }}</td>
                 <td>{{ item.lp_name }}</td>
-                <td>{{ item.lp_type }}</td>
-                <td nowrap="nowrap">{{ item.cb_age_range }}</td>
+                <td>{{ item.lp_type | lpType}}</td>
+                <td :title="getAgesRangesList(item.cb_age_range)" v-html="getAgesRanges(item.cb_age_range)"></td>
                 <td>{{ item.cb_activity_level }}</td>
                 <td>{{ item.cb_target_quantity }}</td>
                 <td>{{ item.cb_target_quantity_processed }}</td>
@@ -115,7 +115,7 @@
     </GridContainer>
 </template>
 <script>
-    import {mapState, mapActions} from 'vuex'
+    import {mapState, mapActions, mapGetters} from 'vuex'
     import GridButton from '../General/GridButton'
     import GridContainer from '../General/GridContainer'
     import CardPanel from "../General/CardPanel";
@@ -125,8 +125,6 @@
     export default {
         components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
         data () {
-
-
 
             const headers = [
                 { text: this.$vuetify.t('ID'), value: 'campaign_id' },
@@ -139,7 +137,7 @@
                 { text: this.$vuetify.t('End DateTime'), value: 'end_datetime' },
                 { text: this.$vuetify.t('LP Name'), value: 'lp_name' },
                 { text: this.$vuetify.t('LP Type'), value: 'lp_type' },
-                { text: this.$vuetify.t('Age Range'), value: 'cb_age_range' },
+                { text: this.$vuetify.t('Age Range'), value: 'cb_age_range', width: 200 },
                 { text: this.$vuetify.t('CB Activity Level'), value: 'cb_activity_level' },
                 { text: this.$vuetify.t('Target CB Qty'), value: 'cb_target_quantity' },
                 { text: this.$vuetify.t('Processed CB Qty'), value: 'cb_target_quantity_processed' },
@@ -155,12 +153,13 @@
             }
         },
         computed: {
-            ...mapState('campaigns', {'grid': 'grid', 'clicksList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
+            ...mapState('campaigns', {'agesList':'agesList', 'grid': 'grid', 'clicksList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
+            ...mapGetters('campaigns', ['agesListById']),
             ...mapState('channels', {'channelList': 'list'}),
             ...mapState('brands', {'brandsList': 'list'}),
             ...mapState('advformats', {'advformatsList': 'list'}),
             ...mapState('locations', {'locationsList': 'list'}),
-            ...mapState('api', {'isAjax': 'isAjax'})
+            ...mapState('api', {'isAjax': 'isAjax'}),
         },
         created () {
           this.resetSearch()
@@ -168,6 +167,26 @@
         methods: {
             ...mapActions('campaigns', ['resetSearch', 'search']),
             statusIdToText,
+            isOdd (num) { return num % 2;},
+            getAgesRanges (ages) {
+                let ret = '';
+                if(ages) {
+                  if(ages.length === 0) ret = ''
+                  else if(ages.length === 6) ret = 'All'
+                  else if(ages.length === 1) ret = '['+this.agesListById[ages[0]].text+']'
+                  else if(ages.length === 2) ret = '['+this.agesListById[ages[0]].text+']' +' ' + '['+this.agesListById[ges[1]].text+']'
+                  else if(ages.length > 2) ret = '['+this.agesListById[ages[0]].text+']' +' ' + '['+this.agesListById[ages[1]].text+']' + ' ...'
+                }
+                return ret
+            },
+            getAgesRangesList (ages) {
+                let totalList = ''
+                for (let i = 0; i<ages.length;i++) {
+                  totalList+= '['+this.agesListById[ages[i]].text + '] '
+                }
+
+                return totalList
+            },
             doSearch () {
                 this.search()
             },

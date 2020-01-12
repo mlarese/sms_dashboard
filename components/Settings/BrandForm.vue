@@ -14,15 +14,15 @@
         >
             <v-layout row wrap>
                 <v-flex sm4 xs12>
-                    <v-text-field append-icon="" label="Brand" single-line  hide-details v-model="$record.brand_name" />
+                    <v-text-field label="Brand" hide-details v-model="$record.brand_name" />
                 </v-flex>
 
                 <v-flex sm6 xs12>
-                    <v-text-field append-icon="" label="Sms Text Message" single-line  hide-details v-model="$record.sms_mt_text_message" />
+                    <v-text-field append-icon="" label="Sms Text Message"  hide-details v-model="$record.sms_mt_text_message" />
                 </v-flex>
 
                 <v-flex sm2 xs12>
-                    <v-text-field append-icon="" label="Conversion Grace Period" single-line  hide-details v-model="$record.conversion_grace_period" />
+                    <v-text-field append-icon="" label="Conversion Grace Period"  hide-details v-model="$record.conversion_grace_period" />
                 </v-flex>
             </v-layout>
 

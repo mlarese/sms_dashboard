@@ -59,4 +59,8 @@ export const statusIdToText = (value) => {
   return statusList[value].text
 }
 
+export const lpType = (value) => {
+  if(!value) return ''
+  return value*1===1?'One-clcik':'Two-click'
+}
 export const statusList = [{conversion_status_id:0, text:'Pending'},{conversion_status_id:1, text:'Full Conversion'},{conversion_status_id:2, text:'Likely Conversion'},{conversion_status_id:3, text:'Detractor'}]
