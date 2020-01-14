@@ -10,7 +10,7 @@
     components: {CampaignsList},
     fetch ({store}) {
         store.dispatch('brands/load', {}, root)
-        store.dispatch('campaigns/loadAll', {}, root)
+        store.dispatch('campaigns/search', {}, root)
     }
   }
 </script>

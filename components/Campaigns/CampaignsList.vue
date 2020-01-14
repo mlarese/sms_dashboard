@@ -4,68 +4,58 @@
         <div slot="header-right">
             <ButtonNew title="New Campaign" @click.native="addCampaign" />
         </div>
-        <CardPanel slot_="container-top">
+        <CardPanel slot="container-top">
             <div class="">
                 <v-layout rows wrap>
+                    <pre v-if="false">
+                        Age Range :
+                        CB Activity Level :
+                        Status :
+                    </pre>
 
                     <v-flex sm3 offset-sm1 xs12>
                         <div class="ml-2">
                         <span v-if="filter.creation_datetime && filter.creation_datetime[0]" class="active-label-size" >Creation Datetime</span>&nbsp;
                         </div>
-                        <DatePicker :placeholder="$vuetify.t('creation datetime')" v-model="filter.creation_datetime" range></DatePicker>
+                        <DatePicker value-type="YYYY-MM-DD" :placeholder="$vuetify.t('Creation datetime')" v-model="filter.creation_datetime" range></DatePicker>
                     </v-flex>
+
                     <v-flex sm3 xs12>
                         <div class="ml-2">
                             <span v-if="filter.start_datetime && filter.start_datetime[0]" class="active-label-size">Start Datetime</span>&nbsp;
                         </div>
-                        <DatePicker :placeholder="$vuetify.t('Start Datetime')" v-model="filter.start_datetime" range></DatePicker>
+                        <DatePicker value-type="YYYY-MM-DD" :placeholder="$vuetify.t('Start Datetime')" v-model="filter.start_datetime" range></DatePicker>
                     </v-flex>
 
-                    <v-flex sm4 xs3>
+                    <v-flex sm3 xs3>
                         <div class="ml-2" style="margin-top: 21px !important;"></div>
                         <v-combobox dense   hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="filter.brand_id" item-text="brand_name" item-value="brand_id" />
 
                     </v-flex>
 
+
+
                 </v-layout>
                 <v-layout rows wrap>
-                    <v-flex sm2 offset-sm1 xs3><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
-                    <v-flex sm2 xs4><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('CB Selection')"  :items="['Random', 'Sequential']"   v-model="filter.cb_selection" /></v-flex>
-                    <v-flex sm2 xs3><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('Landing Page Type')"  :items="['One Click', 'No Click']"   v-model="filter.landing_page_type" /></v-flex>
-                    <v-flex sm2 xs3><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('Gender')"  :items="['All', 'M', 'F']"   v-model="filter.gender" /></v-flex>
+                    <v-flex sm2 offset-sm1 xs3><v-combobox dense  class=""  hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
+                    <v-flex sm2 xs3><v-combobox dense hide-details :label="$vuetify.t('CB Selection')"  :items="['Random', 'Sequential']"   v-model="filter.cb_selection" /></v-flex>
+                    <v-flex sm2 xs3><v-combobox dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="['One Click', 'No Click']"   v-model="filter.landing_page_type" /></v-flex>
+                    <v-flex sm2 xs3>
+                        <v-combobox dense   hide-details :label="$vuetify.t('CB Activity Level')"   :items="['All', 'High', 'Medium', 'Low']" v-model="filter.cb_activity_level"  />
+                    </v-flex>
 
-                    <v-flex sm2 xs2 class="text-xs-left pa-0 pt-1">
+                    <v-flex v-if="false" sm2 xs3><v-combobox dense  class=""   hide-details :label="$vuetify.t('Gender')"  :items="['All', 'M', 'F']"   v-model="filter.gender" /></v-flex>
+
+                    <v-flex sm2 xs3 class="text-xs-left pa-0 pt-1">
                         <GridButton icon="search" color="blue" @click="doSearch" />
                         <GridButton :dark="false" icon="cancel" color="white" @click="doResetSearch" />
                     </v-flex>
                 </v-layout>
-                <v-layout rows wrap>
-                    <v-flex sm3 xs3><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('OS')"  :items="['Android', 'iOS', 'Other']"   v-model="filter.os_only" /></v-flex>
-                    <v-flex sm3 xs4><v-combobox dense  class="" style="width: 60%;float:left" hide-details :label="$vuetify.t('CB Activity Level')"  :items="['All', 'High', 'Medium', 'Low']"   v-model="filter.cb_activity_level" /></v-flex>
-                    <v-flex sm3 xs3><v-combobox dense  hide-details :label="$vuetify.t('Conversion Status')"  :items="statusList"  v-model="filter.conversion_status_id" item-text="text" item-value="conversion_status_id" />
-                    </v-flex>
-                </v-layout>
+
             </div>
         </CardPanel>
 
-        <!-- v-card class="text-xs-right elevation-0 mb-2" slot="body-top" v-if="grid.pagination.pages > 1">
-            <v-pagination
-                    v-model="grid.pagination.page"
-                    :length="grid.pagination.pages"
-                    class="elevation-0"
 
-            ></v-pagination>
-        </v-card>
-
-        <v-card class="text-xs-right elevation-0 mt-2" slot="body-bottom" v-if="grid.pagination.pages > 1">
-
-            <v-pagination
-                    v-model="grid.pagination.page"
-                    :length="grid.pagination.pages"
-                    class="elevation-0"
-
-            ></v-pagination
-        </v-card>-->
 
         <v-data-table
                 :rows-per-page-items="[100,200,500,{'text':'All','value':-1}]"

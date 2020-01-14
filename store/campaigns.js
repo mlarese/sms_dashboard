@@ -3,11 +3,15 @@ import _keyBy from 'lodash/keyBy'
 
 import Vue from 'vue'
 import addDays from 'date-fns/addDays'
+import format from 'date-fns/format'
+
 let today = new Date()
+let fmtToday = format(today, 'yyyy-MM-dd')
 
 const newFilter = () => ({
+  creation_datetime: [fmtToday, fmtToday],
+  start_datetime: [fmtToday, fmtToday]
 })
-
 export const state = () => {
     return {
         list: [],
@@ -101,7 +105,7 @@ export const actions = {
     search ({dispatch, commit, state}) {
       let data = state.filter
       commit('setList', [])
-      return dispatch('api/post', {url: `/campaigns/clicks`, data}, root)
+      return dispatch('api/post', {url: `/api/campaigns_search`, data}, root)
         .then(res => {
           commit('setList', res.data)
           commit('setPagination')

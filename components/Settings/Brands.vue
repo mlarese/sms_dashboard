@@ -6,7 +6,6 @@
             <v-text-field
                 v-model="gridFilter"
                 label="Search"
-
                 hide-details
                 append-icon="search"
             />

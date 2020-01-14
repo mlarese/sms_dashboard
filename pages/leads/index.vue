@@ -12,6 +12,7 @@
         store.commit('leads/setList', [], root)
         store.commit('leads/resetFilter', null , root)
         store.dispatch('brands/load', {}, root)
+        store.dispatch('leads/search', {}, root)
     }
   }
 </script>
