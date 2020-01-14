@@ -14,35 +14,45 @@
         >
             <v-layout row wrap>
                 <v-flex xs4>
-                    <v-autocomplete dense hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="$record.brand_id" item-text="brand_name" item-value="brand_id" />
+                    <v-text-field append-icon="" label="LP Name"   hide-details v-model="$record.lp_name" />
+                </v-flex>
+
+                <v-flex xs3>
+                    <v-select :items="[{text: 'One-click', value:1},{text: 'Two-click', value:2}]" label="Type" hide-details v-model="$record.lp_type" />
                 </v-flex>
                 <v-flex xs4>
-                    <v-combobox dense   hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="$record.type" />
+                    <v-text-field append-icon="" label="Background Color" hide-details v-model="$record.background_rgb" />
                 </v-flex>
-                <v-flex xs4>
-                    <v-autocomplete dense item-text="lp_name" item-value="lp_id"  hide-details :label="$vuetify.t('Landing Page')"  :items="landingPageByBrend"   v-model="$record.lp_id" />
+                <v-flex xs1>
+                    <v-select append-icon="" label="Portout" hide-details v-model="$record.portout_flag" :items="['Y','N']" />
                 </v-flex>
             </v-layout>
 
 
             <v-layout row wrap>
-                <v-flex xs4>
-                    <v-combobox dense  hide-details :label="$vuetify.t('CB Activity Level')"  :items="['All', 'High', 'Medium', 'Low']"   v-model="$record.cb_activity_level" />
-                </v-flex>
-                <v-flex xs4>
-                    <v-combobox dense  hide-details :label="$vuetify.t('CB Target Quantity')"  :items="[100,1000,5000,10000,50000,100000,400000]" v-model="$record.cb_target_quantity"  />
+                <v-flex xs12>
+                    <v-text-field append-icon="" label="Banner"   hide-details v-model="$record.lp_banner_element" />
                 </v-flex>
 
-                <v-flex xs4>
-                    <v-combobox dense  hide-details :label="$vuetify.t('CB Selection')"  :items="['Random', 'Sequential']"   v-model="$record.cb_selection" />
+                <v-flex xs2>
+                    <v-text-field append-icon="" label="Text Color" hide-details v-model="$record.text_rgb" />
+                </v-flex>
+                <v-flex xs5>
+                    <v-text-field append-icon="" label="Text Welcome" hide-details v-model="$record.text_welcome" />
+                </v-flex>
+                <v-flex xs5>
+                    <v-text-field append-icon="" label="Text Greeting" hide-details v-model="$record.text_greeting" />
+                </v-flex>
+                <v-flex xs12>
+                    <v-text-field append-icon="" label="Button"   hide-details v-model="$record.button_element" />
                 </v-flex>
             </v-layout>
+
             <v-layout row wrap>
                 <v-flex xs2 offset-xs5>
 
                     <v-btn  style="width:100%"  color="primary"  @click="onAdd" :disabled="!isValid">
-                        <v-icon>add</v-icon>
-                        {{$vuetify.t('Add') }}
+                        {{$vuetify.t('Save') }}
                     </v-btn>
                 </v-flex>
             </v-layout>
@@ -70,54 +80,25 @@
         },
 
         computed: {
-          ...mapState('brands', {'brandsList': 'list'}),
-          ...mapState('landingPages', {'lpList': 'list'}),
-          ...mapState('campaigns',  ['statusList', '$record' ,'agesList']),
-          landingPageByBrend () {
-            if(!this.$record.brand_id) return []
-            return  this.lpList.filter(o => o.brand_id === this.$record.brand_id)
-          },
+          ...mapState('landingPages', ['$record']),
           isValid () {
-            if(!this.$record.brand_id) return false
-            if(!this.$record.start_datetime) return false
-            if(!this.$record.type) return false
-            if(!this.$record.end_datetime) return false
-            if( this.$record.cb_age_range.length===0) return false
-            if(!this.$record.type) return false
-            if(!this.$record.lp_id) return false
-            if(!this.$record.cb_target_quantity) return false
-            if(!this.$record.cb_activity_level) return false
-            if(!this.$record.cb_selection) return false
+            if(!this.$record.lp_name) return false
+            if(!this.$record.lp_type) return false
+            if(!this.$record.background_rgb) return false
+            if(!this.$record.lp_banner_element) return false
+            if(!this.$record.text_rgb) return false
+            if(!this.$record.text_welcome) return false
+            if(!this.$record.text_greeting) return false
+            if(!this.$record.button_element) return false
             return true
-          },
-          startDateTimeToDate () {
-            return new Date(this.$record.start_datetime)
-          },
-          endDateTimeToDate () {
-            return new Date(this.$record.end_datetime)
           }
         },
         methods: {
-          onStartChange () {
-            if(this.endDateTimeToDate<=this.startDateTimeToDate)
-              this.$record.end_datetime = null
-          },
-          onEndChange () {
-            if(this.endDateTimeToDate<=this.startDateTimeToDate) {
-              const oldStart = this.$record.start_datetime
-              this.$record.start_datetime = this.$record.end_datetime
-              this.$record.end_datetime = oldStart
-            }
-          },
-          notBeforeToday,
-          notBeforeStartDateTime (date) {
-            return date < this.startDateTimeToDate
-          },
           onAdd () {
             this.save()
               .then(r => this.$router.go(-1))
           },
-          ...mapActions('campaigns', ['add', 'save']),
+          ...mapActions('landingPages', ['add', 'save']),
 
         }
     }

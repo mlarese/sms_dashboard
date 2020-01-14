@@ -56,13 +56,13 @@ export const actions = {
             return
         }
         if (id === null) {
-            return dispatch('api/get', {url: `/api/usersBrands`, options, debug: false}, root)
+            return dispatch('api/get', {url: `/api/users_brands`, options, debug: false}, root)
                 .then(res => {
                     commit('setList', res.data)
                     return res
                 })
         } else {
-            const url = `/api/usersBrands/${id}`
+            const url = `/api/users_brands/${id}`
             return dispatch('api/get', {url, options}, root)
                 .then(res => {
                     commit('setRecord', res.data)
@@ -70,15 +70,15 @@ export const actions = {
                 })
         }
     },
-    delete ({dispatch, commit, state}, id) {
-      const url = `/api/usersBrands/${id}`
+    delete ({dispatch, commit, state}, {userId,brandId}) {
+      const url = `/api/users_brands/${userId}_${brandId}`
       return dispatch('api/delete', {url}, root)
     },
     save ({dispatch, commit, state, getters}) {
         let data = state.$record
 
         if (getters.isAddMode) {
-          return dispatch('api/post', {url: `/api/usersBrands`, data}, root)
+          return dispatch('api/post', {url: `/api/users_brands`, data}, root)
             .then(r => {
               commit('addRecord', data)
               commit('set$Record', {})
@@ -86,7 +86,7 @@ export const actions = {
             })
         } else {
           let id = data.brand_id
-          return dispatch('api/put', {url: `/api/usersBrands/${id}`, data}, root)
+          return dispatch('api/put', {url: `/api/users_brands/${id}`, data}, root)
             .then(r => {
               commit('addRecord', data)
               commit('set$Record', {})

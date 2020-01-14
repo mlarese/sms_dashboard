@@ -10,11 +10,11 @@
     components: {
       FormCmp
     },
-    async fetch({store, params}) {
-        store.commit('usersBrands/setRecord',{},{root: true})
+    fetch({store, params}) {
         store.commit('usersBrands/setEditMode',null,{root: true})
-        store.dispatch('roles/load',{},{root: true})
-        await store.dispatch('usersBrands/load', {id: params.id}, {root: true})
+        store.dispatch('users/load',{},{root: true})
+        store.dispatch('brands/load',{},{root: true})
+        store.dispatch('usersBrands/load', {id: params.id}, {root: true})
     }
   }
 </script>

@@ -10,7 +10,7 @@
     components: {LandingPagesList},
     fetch ({store}) {
         store.dispatch('brands/load', {}, root)
-        store.dispatch('landingPages/loadAll', {}, root)
+        store.dispatch('landingPages/load', {}, root)
     }
   }
 </script>

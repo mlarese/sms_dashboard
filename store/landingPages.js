@@ -1,7 +1,14 @@
 import _cloneDeep from 'lodash/cloneDeep'
 import Vue from 'vue'
+import addDays from "date-fns/addDays"
+import format from 'date-fns/format'
 
 let today = new Date()
+
+const newFilter = () => ({
+  creation_datetime: [format(addDays(today,-30), 'yyyy/MM/dd'), format(today,'yyyy/MM/dd')]
+})
+
 export const state = () => {
     return {
         list: [],
@@ -13,7 +20,7 @@ export const state = () => {
         grid: {pagination: {}},
         mode: 'list',
         searchActive: false,
-        filter: {click_date: [today, today]}
+        filter: {}
     }
 }
 
@@ -56,13 +63,13 @@ export const actions = {
             return
         }
         if (id === null) {
-            return dispatch('api/get', {url: `/api/landingPages`, options, debug: false}, root)
+            return dispatch('api/get', {url: `/api/landing_pages`, options, debug: false}, root)
                 .then(res => {
                     commit('setList', res.data)
                     return res
                 })
         } else {
-            const url = `/api/landingPages/${id}`
+            const url = `/api/landing_pages/${id}`
             return dispatch('api/get', {url, options}, root)
                 .then(res => {
                     commit('setRecord', res.data)
@@ -71,22 +78,22 @@ export const actions = {
         }
     },
     delete ({dispatch, commit, state}, id) {
-        const url = `/api/landingPages/${id}`
+        const url = `/api/landing_pages/${id}`
         return dispatch('api/delete', {url}, root)
     },
     save ({dispatch, commit, state, getters}) {
         let data = state.$record
 
         if (getters.isAddMode) {
-            return dispatch('api/post', {url: `/api/landingPages`, data}, root)
+            return dispatch('api/post', {url: `/api/landing_pages`, data}, root)
                 .then(r => {
                     commit('addRecord', data)
                     commit('set$Record', {})
                     return r
                 })
         } else {
-            let id = data.landing_page_id
-            return dispatch('api/put', {url: `/api/landingPages/${id}`, data}, root)
+            let id = data.lp_id
+            return dispatch('api/put', {url: `/api/landing_pages/${id}`, data}, root)
                 .then(r => {
                     commit('addRecord', data)
                     commit('set$Record', {})

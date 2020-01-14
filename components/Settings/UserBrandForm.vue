@@ -15,16 +15,24 @@
 
             <v-layout row wrap>
                 <v-flex sm6 xs12>
-                    <v-text-field append-icon="" label="Company Name"   hide-details v-model="$record.company_name" />
+                    <v-autocomplete
+                            item-text="company_name"
+                            item-value="user_id"
+                            :items="userList"
+                            label="Company Name"
+                            hide-details
+                            v-model="$record.user_id" />
                 </v-flex>
 
                 <v-flex sm6 xs12>
-                    <v-text-field append-icon="" label="Brand"   hide-details v-model="$record.brand" />
+                    <v-autocomplete
+                            item-text="brand_name"
+                            item-value="brand_id"
+                            :items="brandList"
+                            label="Brand"
+                            hide-details
+                            v-model="$record.brand_id" />
                 </v-flex>
-
-
-
-
             </v-layout>
 
             <v-layout row wrap>
@@ -51,10 +59,13 @@
           return {}
         },
         computed: {
-          ...mapState('users', ['$record']),
+          ...mapState('users', {'userList':'list'}),
+          ...mapState('brands', {'brandList':'list'}),
+          ...mapState('usersBrands', ['$record']),
           ...mapState('roles', {'rolesList': 'list'}),
           isValid () {
-            if(!this.$record.brand) return false
+            if(!this.$record.brand_id) return false
+            if(!this.$record.user_id) return false
             return true
           }
         },

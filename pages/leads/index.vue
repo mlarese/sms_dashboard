@@ -9,8 +9,9 @@
   export default {
     components: {LeadsList},
     fetch ({store}) {
-        store.dispatch('leads/load', {}, root)
-        store.dispatch('leads/loadAll', {}, root)
+        store.commit('leads/setList', [], root)
+        store.commit('leads/resetFilter', null , root)
+        store.dispatch('brands/load', {}, root)
     }
   }
 </script>

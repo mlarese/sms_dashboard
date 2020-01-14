@@ -1,7 +1,14 @@
 import _cloneDeep from 'lodash/cloneDeep'
 import Vue from 'vue'
+import addDays from "date-fns/addDays";
+import format from 'date-fns/format'
 
 let today = new Date()
+
+const newFilter = () => ({
+  creation_datetime: [format(addDays(today,-30), 'yyyy-MM-dd'), format(today,'yyyy-MM-dd')]
+})
+
 export const state = () => {
     return {
         list: [],
@@ -13,7 +20,7 @@ export const state = () => {
         grid: {pagination: {}},
         mode: 'list',
         searchActive: false,
-        filter: {click_date: [today, today]}
+        filter: {click_date: newFilter()}
     }
 }
 
@@ -44,6 +51,9 @@ export const mutations = {
     reset$Record (state) {
         state.$record = {}
     },
+      resetFilter (state) {
+        state.filter = newFilter()
+      },
     setMode (state, payload) { state.mode = payload },
     setForm (state, payload) { state.form = payload },
     setEditMode (state) { state.mode = 'edit' },
@@ -74,6 +84,26 @@ export const actions = {
       const url = `/api/leads/${id}`
       return dispatch('api/delete', {url}, root)
     },
+
+
+    search ({dispatch, commit, state}) {
+        let data = state.filter
+        commit('setList', [])
+        return dispatch('api/post', {url: `/api/leads_search`, data}, root)
+          .then(res => {
+            commit('setList', res.data)
+            commit('setPagination')
+            commit('setSearchActive', true)
+            return res
+          })
+    },
+
+    resetSearch ({dispatch, commit, state}) {
+        commit('setSearchActive', false)
+        commit('resetFilter')
+        commit('setList', [])
+    },
+
     save ({dispatch, commit, state, getters}) {
         let data = state.$record
 

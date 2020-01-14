@@ -4,20 +4,10 @@
 
         <div slot="container-top" class="py-4">
             <v-layout row>
-
-                <v-flex xs5 xs11>
+                <v-flex>
                     <v-text-field
                             v-model="gridFilter"
-                            label="Company name"
-
-                            hide-details
-                            append-icon="search"/>
-                </v-flex>
-                <v-spacer></v-spacer>
-                <v-flex xs5 xs11>
-                    <v-text-field
-                            v-model="gridFilter"
-                            label="Brand"
+                            label="Search"
 
                             hide-details
                             append-icon="search"/>
@@ -41,12 +31,12 @@
         >
             <template slot="items" slot-scope="{item}">
                 <td>{{ item.company_name }}</td>
-                <td>{{ item.brand }}</td>
-                <td width="1" class="pa-1">
-                    <GridButton icon="edit" color="green" @click="onEdit(item.user_id )"></GridButton>
+                <td>{{ item.brand_name }}</td>
+                <td width="1" class="pa-1" v-if="false">
+                    <GridButton icon="edit" color="green" @click="onEdit(item.user_id, item.brand_id  )"></GridButton>
                 </td>
                 <td width="1" class="pa-1">
-                    <GridButton icon="delete" color="error" @click="onDelete(item.user_id)"></GridButton>
+                    <GridButton icon="delete" color="error" @click="onDelete(item.user_id, item.brand_id )"></GridButton>
                 </td>
             </template>
             <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
@@ -67,10 +57,10 @@
         components: {ButtonNew, CardPanel, GridButton, GridContainer},
         data () {
             const headers = [
-                { text: this.$vuetify.t('Company Name'), value: 'brand' },
-                { text: this.$vuetify.t('Brand'), value: 'brand' },
+                { text: this.$vuetify.t('Company Name'), value: 'company_name' },
+                { text: this.$vuetify.t('Brand'), value: 'brand_name' },
 
-                { text: 'Edit', value: 'action', sortable: false },
+                // { text: 'Edit', value: 'action', sortable: false },
                 { text: 'Delete', value: 'action', sortable: false }
             ]
             return {
@@ -83,9 +73,9 @@
         },
         methods: {
             ...mapActions('usersBrands', ['delete', 'load']),
-            onDelete (id) {
+            onDelete (userId, brandId) {
                 if(!confirm('Do you confirm the row deletion ?')) return
-                this.delete(id)
+                this.delete({userId, brandId})
                     .then(() => {
                         this.load({})
                     })
@@ -93,8 +83,8 @@
             onAdd () {
                 this.$router.push('/settings/usersbrands/add')
             },
-            onEdit (id) {
-                this.$router.push(`/settings/usersbrands/${id}`)
+            onEdit (userId, brandId) {
+                this.$router.push(`/settings/usersbrands/${userId}_${brandId}`)
             }
         }
     }
