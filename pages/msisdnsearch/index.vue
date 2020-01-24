@@ -9,7 +9,7 @@
   export default {
     components: {MsisdnList},
     fetch ({store}) {
-        store.dispatch('msisdn/load', {}, root)
+        //store.dispatch('msisdn/load', {}, root)
     }
   }
 </script>

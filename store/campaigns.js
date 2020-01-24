@@ -10,7 +10,8 @@ let fmtToday = format(today, 'yyyy-MM-dd')
 
 const newFilter = () => ({
   creation_datetime: [fmtToday, fmtToday],
-  start_datetime: [fmtToday, fmtToday]
+  start_datetime: [fmtToday, fmtToday],
+  cb_age_range: [1,2,3,4,5,6]
 })
 export const state = () => {
     return {

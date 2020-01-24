@@ -158,10 +158,13 @@
     }
 
     .v-text-field .v-label--active {
-        -webkit-transform: translateY(-20px) scale(0.75);
-        transform: translateY(-20px) scale(0.75);
+        -webkit-transform: translateY(-25px) scale(0.75);
+        transform: translateY(-25px) scale(0.75);
     }
 
+    .theme--light.v-label {
+        color: rgba(0,0,0,1);
+    }
     table.v-table thead td:not(:nth-child(1)), table.v-table tbody td:not(:nth-child(1)), table.v-table thead th:not(:nth-child(1)), table.v-table tbody th:not(:nth-child(1)), table.v-table thead td:first-child, table.v-table tbody td:first-child, table.v-table thead th:first-child, table.v-table tbody th:first-child {
         padding: 0 4px 0 4px;
     }
@@ -170,7 +173,7 @@
         max-width:400px;
     }
     .active-label-size {
-        color: rgba(0,0,0,0.84);
+        color: rgba(0,0,0,1);
         font-size: 11px !important;
         line-height:10px;
         position: relative;
@@ -178,6 +181,9 @@
         left:5px;
     }
 
+    .v-datatable__progress th.column{
+        background: transparent;
+    }
     .v-progress-linear {
         position: relative !important;
         top: -20px !important;
@@ -186,6 +192,9 @@
         background: #f3f3f3f3;
     }
 
+    .layout.row {
+        margin-bottom: 15px;
+    }
     .v-toolbar__content {
         padding: 0;
     }

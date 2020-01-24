@@ -35,6 +35,9 @@
                 slot="body-center">
             <template slot="items" slot-scope="{item}">
                 <td>{{ item.msisdn }}</td>
+                <td width="1" class="pa-1">
+                    <GridButton icon="delete" color="error" @click="onDelete(item.msisdn)"></GridButton>
+                </td>
             </template>
             <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
                 {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}
@@ -56,7 +59,8 @@
         components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
         data () {
             const headers = [
-                { text: this.$vuetify.t('MSISDN'), value: 'msisdn' }
+                { text: this.$vuetify.t('MSISDN'), value: 'msisdn' },
+                { text: 'Delete', value: 'action', sortable: false },
             ]
             return {
               gridFilter: '',
@@ -72,7 +76,14 @@
           this.resetSearch()
         },
         methods: {
-            ...mapActions('whitelist', ['resetSearch', 'search', 'save']),
+              onDelete (id) {
+                if(!confirm('Do you confirm the row deletion ?')) return
+                this.delete(id)
+                  .then(() => {
+                    this.load({})
+                  })
+              },
+            ...mapActions('whitelist', ['resetSearch', 'search', 'save','delete','load']),
             onAdd () {
               let a = prompt('Msisdn')
               if(a){

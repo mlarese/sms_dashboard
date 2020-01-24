@@ -39,7 +39,7 @@
                 <v-layout rows wrap>
                     <v-flex sm2 offset-sm1 xs3><v-combobox dense  class=""  hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
                     <v-flex sm2 xs3><v-combobox dense hide-details :label="$vuetify.t('CB Selection')"  :items="['Random', 'Sequential']"   v-model="filter.cb_selection" /></v-flex>
-                    <v-flex sm2 xs3><v-combobox dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="['One Click', 'No Click']"   v-model="filter.landing_page_type" /></v-flex>
+                    <v-flex sm2 xs3><v-select dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="[{text:'One Click', value:1}, {text:'No Click', value:2}]"   v-model="filter.lp_type" /></v-flex>
                     <v-flex sm2 xs3>
                         <v-combobox dense   hide-details :label="$vuetify.t('CB Activity Level')"   :items="['All', 'High', 'Medium', 'Low']" v-model="filter.cb_activity_level"  />
                     </v-flex>
@@ -50,6 +50,16 @@
                         <GridButton icon="search" color="blue" @click="doSearch" />
                         <GridButton :dark="false" icon="cancel" color="white" @click="doResetSearch" />
                     </v-flex>
+                    <v-flex xs9 offset-sm1>
+                        <v-select
+                                dense
+                                hide-details
+                                :label="$vuetify.t('Age Range')"
+                                :items="agesList"
+                                multiple deletable-chips chips v-model="filter.cb_age_range"
+                        />
+                    </v-flex>
+
                 </v-layout>
 
             </div>
@@ -83,18 +93,6 @@
                 <td>{{ item.cb_target_quantity_processed }}</td>
                 <td>{{ item.lead }}</td>
                 <td><span v-if="item.processed_cb_quantity">{{ item.lead/item.processed_cb_quantity }}</span></td>
-                <!--<td>
-                    <v-tooltip left v-if="item.sms_mo_final_text ">
-                        <span class="pa-3" slot="activator">{{ item.sms_mo_final_text | truncate(8) }}</span>
-                        {{ item.sms_mo_final_text }}
-                    </v-tooltip>
-                </td>-->
-                <!--td>
-                    <v-tooltip left>
-                        <span class="pa-3" slot="activator">{{ item.conversion_status_id }}</span>
-                        {{statusIdToText(item.conversion_status_id)}}
-                    </v-tooltip>
-                </td-->
             </template>
             <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
                 {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}

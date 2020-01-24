@@ -18,6 +18,7 @@
             <ButtonNew title="Add Brand" @click.native="onAdd"/>
         </div>
         <v-data-table
+                :rows-per-page-items="[10,50,{'text':'All','value':-1}]"
                 :search="gridFilter"
                 :headers="headers"
                 :items="list"

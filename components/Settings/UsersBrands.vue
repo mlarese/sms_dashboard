@@ -27,6 +27,7 @@
                 :items="list"
                 :hide-actions="false"
                 class="elevation-0"
+                :rows-per-page-items="[20,50,{'text':'All','value':-1}]"
                 slot="body-center"
         >
             <template slot="items" slot-scope="{item}">

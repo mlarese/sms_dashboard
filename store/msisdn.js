@@ -6,7 +6,7 @@ import format from 'date-fns/format'
 let today = new Date()
 
 const newFilter = () => ({
-  creation_datetime: [format(addDays(today,-30), 'yyyy-MM-dd'), format(today,'yyyy-MM-dd')]
+
 })
 
 export const state = () => {
@@ -51,9 +51,9 @@ export const mutations = {
     reset$Record (state) {
         state.$record = {}
     },
-      resetFilter (state) {
+    resetFilter (state) {
         state.filter = newFilter()
-      },
+    },
     setMode (state, payload) { state.mode = payload },
     setForm (state, payload) { state.form = payload },
     setEditMode (state) { state.mode = 'edit' },
@@ -89,7 +89,7 @@ export const actions = {
     search ({dispatch, commit, state}) {
         let data = state.filter
         commit('setList', [])
-        return dispatch('api/post', {url: `/api/leads_search`, data}, root)
+        return dispatch('api/post', {url: `/api/msisdn_search`, data}, root)
           .then(res => {
             commit('setList', res.data)
             commit('setPagination')
@@ -107,25 +107,15 @@ export const actions = {
     save ({dispatch, commit, state, getters}) {
         let data = state.$record
 
-        if (getters.isAddMode) {
-          return dispatch('api/post', {url: `/api/msisdn`, data}, root)
+        let id = data.row_id
+          return dispatch('api/put', {url: `/api/cb/${id}`, data}, root)
             .then(r => {
-              commit('addRecord', data)
               commit('set$Record', {})
-              return r
-            })
-        } else {
-          let id = data.lead_id
-          return dispatch('api/put', {url: `/api/msisdn/${id}`, data}, root)
-            .then(r => {
-              commit('addRecord', data)
-              commit('set$Record', {})
+              commit('setList', [])
+              commit('resetFilter')
               return r
             })
 
-
-
-        }
     }
 }
 

@@ -32,14 +32,13 @@
                 slot="body-center">
             <template slot="items" slot-scope="{item}">
                 <td>{{ item.lp_id }}</td>
+                <td>{{ item.brand_name }}</td>
                 <td>{{ item.lp_name }}</td>
                 <td>{{ item.lp_type |lpType}}</td>
                 <td>{{ item.background_rgb }}</td>
-                <td>{{ item.lp_banner_element }}</td>
                 <td>{{ item.text_rgb }}</td>
-                <td>{{ item.text_welcome }}</td>
-                <td>{{ item.text_greeting }}</td>
-                <td>{{ item.button_element }}</td>
+                <td :title="item.text_welcome">{{ item.text_welcome|truncate(20) }}</td>
+                <td :title="item.text_greeting">{{ item.text_greeting |truncate(20)}}</td>
                 <td width="1" class="pa-1">
                     <GridButton icon="edit" color="green" @click="onEdit(item.lp_id )"></GridButton>
                 </td>
@@ -65,17 +64,19 @@
     import {statusIdToText, statusList} from '../../assets/filters'
     export default {
         components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
+
         data () {
             const headers = [
-                { text: this.$vuetify.t('ID'), value: 'landing_page_id' },
-                { text: this.$vuetify.t('LP Name'), value: 'landing_page_name' },
+                { text: this.$vuetify.t('ID'), value: 'lp_id' },
+                { text: this.$vuetify.t('Brand'), value: 'brand_name' },
+                { text: this.$vuetify.t('LP Name'), value: 'lp_name' },
                 { text: this.$vuetify.t('Type'), value: 'lp_type' },
                 { text: this.$vuetify.t('Background Color'), value: 'background_rgb' },
-                { text: this.$vuetify.t('Banner'), value: 'lp_banner_element' },
+
                 { text: this.$vuetify.t('Text Color'), value: 'text_rgb' },
                 { text: this.$vuetify.t('Text Welcome'), value: 'text_welcome' },
                 { text: this.$vuetify.t('Text Greeting'), value: 'text_greeting' },
-                { text: this.$vuetify.t('Button'), value: 'button_element' },
+
                 { text: 'Edit', value: 'action', sortable: false },
                 { text: 'Delete', value: 'action', sortable: false }
             ]
@@ -84,7 +85,6 @@
                 click_date: null,
                 gridFilter: '',
                 brandFilter: '',
-
                 statusList,
                 headers
             }

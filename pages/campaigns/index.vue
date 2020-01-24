@@ -11,6 +11,7 @@
     fetch ({store}) {
         store.dispatch('brands/load', {}, root)
         store.dispatch('campaigns/search', {}, root)
+
     }
   }
 </script>
