@@ -48,6 +48,8 @@
                 </v-toolbar-title>
 
                 <v-spacer/>
+
+
                 <file-upload
                         input-id="file1"
                         class="btn btn-primary"
@@ -62,9 +64,9 @@
                         @input-filter="inputFilter"
                 >
 
-                    <v-progress-circular size="24"  v-if="$refs.upload_button && $refs.upload_button.active" />
-                    <v-icon v-else>cloud_upload</v-icon>
 
+                        <v-progress-circular size="24"  v-if="$refs.upload_button && $refs.upload_button.active" />
+                        <v-icon title="Upload button element" v-else>cloud_upload</v-icon>
                 </file-upload>
 
             </v-toolbar>
@@ -100,8 +102,9 @@
                         @input-filter="inputFilterBanner"
                 >
 
-                    <v-progress-circular size="24" v-if="$refs.upload_banner && $refs.upload_banner.active" />
-                    <v-icon v-else>cloud_upload</v-icon>
+                        <v-progress-circular size="24"  v-if="$refs.upload_banner && $refs.upload_banner.active" />
+                        <v-icon title="Upload button element" v-else>cloud_upload</v-icon>
+
 
                 </file-upload>
 
@@ -110,7 +113,7 @@
                 <v-layout row wrap>
                     <v-flex xs12>
                         <div  class="text-xs-center pa-2" style="border:0px solid silver;min-height: 40px">
-                            <img :src="$record.lp_banner_element" style="max-height: 80px"  />
+                            <img :src="$record.lp_banner_element || noImageLpPlaceholder" style="max-height: 80px"  />
                         </div>
 
                     </v-flex>
@@ -149,6 +152,7 @@
             timePickerOptions: timePickerOptions(),
             requiredRule: [v => !!v || 'Required'],
             baseURL,
+            noImageLpPlaceholder,
             files1: [],
             files2: []
           }
