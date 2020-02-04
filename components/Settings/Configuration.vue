@@ -15,17 +15,10 @@
             <v-layout row wrap>
 
             </v-layout>
-            <v-layout row wrap>
-                <v-flex sm4>
 
-                    <v-select
-                            :items="[5,10,20,30,40,50,60,70,80,90,100,120,140]"
-                            v-model="$record.contact_grace_period"
-                            label="Contact Grace Period"
-                            search-input
-                            hide-details
-                            bottom
-                    ></v-select>
+            <v-layout row wrap  >
+                <v-flex sm4>
+                    <v-text-field label="Contact Grace Period"   hide-details v-model="$record.contact_grace_period" type="number" />
                 </v-flex>
 
                 <v-flex sm4>
@@ -39,7 +32,8 @@
 
 
             </v-layout>
-            <v-layout row wrap>
+
+            <v-layout row wrap class="mt-1">
                 <v-flex sm8>
                     <v-select
                             dense
@@ -50,10 +44,15 @@
                     />
                 </v-flex>
 
-                <v-flex sm4>
+                <v-flex sm2>
                     <v-text-field label="Sky SHA512 Pwd"   hide-details v-model="$record.sky_sha512_pwd" />
                 </v-flex>
+
+                <v-flex sm2>
+                    <v-text-field label="Sms Bulk"   hide-details v-model="$record.sms_bulk" type="number" />
+                </v-flex>
             </v-layout>
+
             <v-layout row wrap>
                 <v-flex xs2 offset-xs5>
                     <v-btn  style="width:100%"  color="primary"  @click="onAdd" :disabled="!isValid">
@@ -86,6 +85,7 @@
             if(!this.$record.contact_grace_period) return false
             if(!this.$record.validity_contact_period_start_datetime) return false
             if(!this.$record.validity_contact_period_end_datetime) return false
+            if(!this.$record.sms_bulk) return false
 
             return true
           }

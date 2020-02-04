@@ -206,4 +206,7 @@
     .v-chip .v-chip__content{
         height:24px;
     }
+    .v-text-field input {
+        padding: 3px 0 8px;
+    }
 </style>

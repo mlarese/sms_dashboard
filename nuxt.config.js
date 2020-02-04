@@ -1,7 +1,7 @@
 const pkg = require('./package')
 let routerBase = '/'
 if (process.env.NODE_ENV === 'production') {
-    routerBase = '/campaigns/'
+    routerBase = '/dashboard/'
 }
 module.exports = {
   mode: 'spa',
@@ -56,9 +56,9 @@ module.exports = {
             prod: {
                 _scheme: 'local',
                 endpoints: {
-                    login: { baseURL: 'http://138.197.11.140/public/index.php', url: '/auth/login', method: 'post', propertyName: 'token' },
-                    logout: {baseURL: 'http://138.197.11.140/public/index.php', url: '/auth/logout', method: 'post' },
-                    user: {baseURL: 'http://138.197.11.140/public/index.php', url: '/auth/user', method: 'get', propertyName: 'user' }
+                    login: { baseURL: 'https://gtg.ai/public/index.php', url: '/auth/login', method: 'post', propertyName: 'token' },
+                    logout: {baseURL: 'https://gtg.ai/public/index.php', url: '/auth/logout', method: 'post' },
+                    user: {baseURL: 'https://gtg.ai/public/index.php', url: '/auth/user', method: 'get', propertyName: 'user' }
                 },
                 tokenRequired: true,
                 tokenType: 'bearer'
