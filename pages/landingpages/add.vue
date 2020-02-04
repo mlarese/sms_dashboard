@@ -6,13 +6,14 @@
 <script>
   import {mapActions, mapState, mapGetters} from 'vuex'
   import LandingPageForms from '../../components/LandingPages/LandingPageForms'
+  import {noImageLpPlaceholder} from '../../assets/consts'
   import guid from 'uuid/v1'
   export default {
     components: {
         LandingPageForms
     },
     fetch({store}) {
-        store.commit('landingPages/setRecord',{portout_flag:'N', guid: guid()},{root: true})
+        store.commit('landingPages/setRecord',{portout_flag:'N', guid: guid(), button_element: noImageLpPlaceholder},{root: true})
         store.commit('landingPages/setAddMode',null,{root: true})
     }
   }

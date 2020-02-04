@@ -16,7 +16,7 @@
     "@nuxtjs/auth": "^4.8.4",
     "@nuxtjs/axios": "^5.9.2",
     "axios-mock-adapter": "^1.17.0",
-    "browser-locale": "^1.0.3",
+    "browser-locale": "mi st^1.0.3",
     "cross-env": "^5.2.0",
     "date-fns": "^2.8.1",
     "downloadjs": "^1.4.7",

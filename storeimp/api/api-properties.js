@@ -7,4 +7,6 @@ if (window.location.host === 'localhost:3000') {
 }
 
 export const baseURL = url
+export const wwwUrl = 'https://gtg.ai'
+export const uploadUrl = wwwUrl + '/uploads'
 export const mockApp = doMock
