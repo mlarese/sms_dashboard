@@ -148,6 +148,14 @@ export const actions = {
 
         }
     },
+    delete ({dispatch, commit, state, getters},id) {
+      return dispatch('api/delete', {url: `/api/campaigns/${id}`}, root)
+          .then(r => {
+            dispatch('search')
+            return r
+          })
+
+    },
     add ({dispatch, commit}, {data}) {
         const url = `/campaigns`
         return dispatch('api/post', {url, data}, root)
@@ -155,8 +163,6 @@ export const actions = {
     edit({commit}, item) {
         commit('set$Record', item)
         commit('setAddMode', {item, active:false})
-
-
     },
     resetSearch ({dispatch, commit, state}) {
         commit('setSearchActive', false)

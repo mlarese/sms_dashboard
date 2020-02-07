@@ -6,12 +6,8 @@
         </div>
         <CardPanel slot="container-top">
             <div class="">
-                <v-layout rows wrap>
-                    <pre v-if="false">
-                        Age Range :
-                        CB Activity Level :
-                        Status :
-                    </pre>
+                <v-layout rows wrap  >
+
 
                     <v-flex sm3 offset-sm1 xs12>
                         <div class="ml-2">
@@ -28,15 +24,34 @@
                     </v-flex>
 
                     <v-flex sm3 xs3>
-                        <div class="ml-2" style="margin-top: 21px !important;"></div>
-                        <v-combobox dense   hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="filter.brand_id" item-text="brand_name" item-value="brand_id" />
+                        <v-combobox style="margin-top:21px" dense  hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="filter.brand_id" item-text="brand_name" item-value="brand_id" />
+
+                    </v-flex>
+                </v-layout>
+
+                <v-layout rows wrap class="mt-2">
+                    <v-flex offset-sm1 xs9>
+
+                        <v-combobox multiple dense   hide-details :label="$vuetify.t('Postal code')"  chips deletable-chips
+                                        v-model="filter.postal_code" item-text="brand_name" item-value="brand_id" />
+
+                    </v-flex>
+                </v-layout>
+                <v-layout rows wrap class="mt-2">
+                    <v-flex offset-sm1  sm5 xs4>
+
+                        <v-autocomplete dense  hide-details :label="$vuetify.t('State')"  :items="states" v-model="filter.state"  />
 
                     </v-flex>
 
+                    <v-flex sm4 xs4>
 
+                        <v-autocomplete dense  hide-details :label="$vuetify.t('Region')"  :items="regions" v-model="filter.region"  />
 
+                    </v-flex>
                 </v-layout>
-                <v-layout rows wrap>
+
+                <v-layout rows wrap class="mt-2">
                     <v-flex sm2 offset-sm1 xs3><v-combobox dense  class=""  hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
                     <v-flex sm2 xs3><v-combobox dense hide-details :label="$vuetify.t('CB Selection')"  :items="['Random', 'Sequential']"   v-model="filter.cb_selection" /></v-flex>
                     <v-flex sm2 xs3><v-select dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="[{text:'One Click', value:1}, {text:'No Click', value:2}]"   v-model="filter.lp_type" /></v-flex>
@@ -50,7 +65,8 @@
                         <GridButton icon="search" color="blue" @click="doSearch" />
                         <GridButton :dark="false" icon="cancel" color="white" @click="doResetSearch" />
                     </v-flex>
-                    <v-flex xs9 offset-sm1>
+
+                    <v-flex xs9 offset-sm1 class="mt-2">
                         <v-select
                                 dense
                                 hide-details
@@ -93,6 +109,11 @@
                 <td>{{ item.cb_target_quantity_processed }}</td>
                 <td>{{ item.lead }}</td>
                 <td><span v-if="item.processed_cb_quantity">{{ item.lead/item.processed_cb_quantity }}</span></td>
+
+                <td width="1" class="py-1 px-2">
+                    <GridButton v-if="item.status_id==4" icon="delete" color="error" @click="onDelete(item)"></GridButton>
+                </td>
+
             </template>
             <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
                 {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}
@@ -130,7 +151,8 @@
                 { text: this.$vuetify.t('Target CB Qty'), value: 'cb_target_quantity' },
                 { text: this.$vuetify.t('Processed CB Qty'), value: 'cb_target_quantity_processed' },
                 { text: this.$vuetify.t('Leads'), value: 'lead' },
-                { text: this.$vuetify.t('Conversion (%)'), value: 'conversion' }
+                { text: this.$vuetify.t('Conversion (%)'), value: 'conversion' },
+                { text: 'Delete', value: 'action', sortable: false }
             ]
             return {
                 sms_mo_date: null,
@@ -146,16 +168,20 @@
             ...mapState('channels', {'channelList': 'list'}),
             ...mapState('brands', {'brandsList': 'list'}),
             ...mapState('advformats', {'advformatsList': 'list'}),
-            ...mapState('locations', {'locationsList': 'list'}),
+            ...mapState('locations', {'states':'states','locationsList': 'list','regions':'regions'}),
             ...mapState('api', {'isAjax': 'isAjax'}),
         },
         created () {
           this.resetSearch()
         },
         methods: {
-            ...mapActions('campaigns', ['resetSearch', 'search']),
+            ...mapActions('campaigns', ['resetSearch', 'search','delete']),
             statusIdToText,
             isOdd (num) { return num % 2;},
+            onDelete (item) {
+                if(!confirm('Do you confirm?')) return
+                this.delete(item.campaign_id)
+            },
             getAgesRanges (ages) {
                 let ret = '';
                 if(ages) {

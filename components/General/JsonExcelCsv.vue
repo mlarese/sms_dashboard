@@ -6,7 +6,7 @@
 		:id="idName"
 		@click="generate">
 		<slot>
-			Export
+			CSV Export
 		</slot>
 	</v-btn>
 

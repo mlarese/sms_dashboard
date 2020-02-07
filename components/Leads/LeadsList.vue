@@ -14,8 +14,6 @@
                         <DatePicker value-type="YYYY-MM-DD" :placeholder="$vuetify.t('Datetime')" v-model="filter.creation_datetime" range></DatePicker>
                     </v-flex>
 
-
-
                     <v-flex sm4 xs6>
                         <div class="ml-2" style="margin-top: 21px !important;"></div>
                         <v-autocomplete dense   hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="filter.brand_id" item-text="brand_name" item-value="brand_id" />
@@ -23,13 +21,18 @@
                     </v-flex>
 
                     <v-flex sm2 xs2 class="text-xs-left" >
-                        <JsonExcelCsv
-
-                        />
                         <div style="margin-top:22px">
                             <GridButton icon="search" color="blue" @click="doSearch" />
                             <GridButton :dark="false" icon="cancel" color="white" @click="doResetSearch" />
                         </div>
+                    </v-flex>
+                </v-layout>
+                <v-layout>
+                    <v-flex s12 class="text-xs-center">
+                        <JsonExcelCsv
+                                storeName   = "leads"
+                                :fields = "csvFields"
+                        />
                     </v-flex>
                 </v-layout>
             </div>
@@ -42,7 +45,7 @@
                 :loading="isAjax" fixed
                 :headers="headers"
                 :search="grid.pagination.search"
-                :items="clicksList"  :hide-actions="false"
+                :items="leadsList"  :hide-actions="false"
                 :pagination.sync="grid.pagination"
                 class="elevation-0 fixed-header"
                 slot="body-center">
@@ -62,6 +65,7 @@
 </template>
 <script>
     import {mapState, mapActions} from 'vuex'
+    import {dmy,time} from '../../assets/filters'
     import GridButton from '../General/GridButton'
     import GridContainer from '../General/GridContainer'
     import CardPanel from "../General/CardPanel"
@@ -80,6 +84,16 @@
                 { text: this.$vuetify.t('DateTime'), value: 'creation_datetime' },
             ]
             return {
+                csvFields:{
+                  msisdn:'msisdn',
+                  brand:'brand_name',
+                  creation_datetime:{
+                    field: 'creation_datetime',
+                    callback: (value) => {
+                      return dmy(value) + ' ' + time(value)
+                    }
+                  },
+                },
                 sms_mo_date: null,
                 click_date: null,
                 gridFilter: '',
@@ -88,7 +102,7 @@
             }
         },
         computed: {
-            ...mapState('leads', {'grid': 'grid', 'clicksList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
+            ...mapState('leads', {'grid': 'grid', 'leadsList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
             ...mapState('brands', {'brandsList': 'list'}),
             ...mapState('advformats', {'advformatsList': 'list'}),
             ...mapState('locations', {'locationsList': 'list'}),

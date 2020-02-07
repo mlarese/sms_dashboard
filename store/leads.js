@@ -131,6 +131,7 @@ export const actions = {
 
 export const getters = {
     isEditMode: state => state.mode === 'edit',
-    isAddMode: state => state.mode === 'add'
+    isAddMode: state => state.mode === 'add',
+    filteredList: state => state.list
 }
 
