@@ -23,10 +23,12 @@
                     </v-flex>
 
                     <v-flex sm2 xs2 class="text-xs-left" >
+                        <JsonExcelCsv
 
+                        />
                         <div style="margin-top:22px">
-                        <GridButton icon="search" color="blue" @click="doSearch" />
-                        <GridButton :dark="false" icon="cancel" color="white" @click="doResetSearch" />
+                            <GridButton icon="search" color="blue" @click="doSearch" />
+                            <GridButton :dark="false" icon="cancel" color="white" @click="doResetSearch" />
                         </div>
                     </v-flex>
                 </v-layout>
@@ -62,12 +64,14 @@
     import {mapState, mapActions} from 'vuex'
     import GridButton from '../General/GridButton'
     import GridContainer from '../General/GridContainer'
-    import CardPanel from "../General/CardPanel";
-    import ButtonNew from "../General/ButtonNew";
-    import DatePicker from 'vue2-datepicker';
+    import CardPanel from "../General/CardPanel"
+    import ButtonNew from "../General/ButtonNew"
+    import DatePicker from 'vue2-datepicker'
+    import JsonExcelCsv from '../General/JsonExcelCsv'
+
     import {statusIdToText, statusList} from '../../assets/filters'
     export default {
-        components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
+        components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker, JsonExcelCsv},
         data () {
             const headers = [
                 { text: this.$vuetify.t('Campaign ID'), value: 'campaign_id' },
