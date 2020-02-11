@@ -7,11 +7,12 @@ import format from 'date-fns/format'
 
 let today = new Date()
 let fmtToday = format(today, 'yyyy-MM-dd')
-
+const cbSelctionsList = ['Sequential']
 const newFilter = () => ({
   creation_datetime: [fmtToday, fmtToday],
   start_datetime: [fmtToday, fmtToday],
-  cb_age_range: [1,2,3,4,5,6]
+  cb_age_range: [1,2,3,4,5,6],
+  cb_selection: cbSelctionsList[0]
 })
 export const state = () => {
     return {
@@ -39,6 +40,7 @@ export const state = () => {
           {text:'46-55', value: 5},
           {text:'>55', value: 6}
         ],
+        cbSelctionsList,
         statusList: [
           {value: 4,  text: 'Pending'},
           {value: 5,  text: 'Running'},
@@ -57,7 +59,6 @@ export const mutations = {
         state.grid.pagination.totalItems = state.list.length
         state.grid.pagination.page = 1
         state.grid.pagination.pages = Math.ceil(state.grid.pagination.totalItems / state.grid.pagination.rowsPerPage)
-      console.dir(state.grid)
     },
     setSearchActive (state, payload) { state.searchActive = payload },
     setRecordList (state, payload) { state.recordList = payload },

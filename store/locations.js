@@ -1,6 +1,37 @@
 import _cloneDeep from 'lodash/cloneDeep'
 import Vue from 'vue'
 
+const regions =  [
+  'Abruzzo',
+  'Basilicata',
+  'Calabria',
+  'Campania',
+  'Emilia Romagna',
+  'Friuli Venezia Giulia',
+  'Lazio',
+  'Liguria',
+  'Lombardia',
+  'Marche',
+  'Molise',
+  'Piemonte',
+  'Puglia',
+  'Sardegna',
+  'Sicilia',
+  'Toscana',
+  'Trentino',
+  'Umbria',
+  'Valle d\'Aosta',
+  'Veneto'
+]
+
+export const allRegions = () => {
+  let ret = []
+  for (let i = 0; i < regions.length; i++) {
+    ret.push(regions[i])
+  }
+  return ret
+}
+
 let today = new Date()
 export const state = () => {
     return {
@@ -115,39 +146,18 @@ export const state = () => {
         { "value":"VI" ,"text":"Vicenza"},
         { "value":"VT" ,"text":"Viterbo"}
       ],
-      regions: [
-        'Abruzzo',
-        'Basilicata',
-        'Calabria',
-        'Campania',
-        'Emilia Romagna',
-        'Friuli Venezia Giulia',
-        'Lazio',
-        'Liguria',
-        'Lombardia',
-        'Marche',
-        'Molise',
-        'Piemonte',
-        'Puglia',
-        'Sardegna',
-        'Sicilia',
-        'Toscana',
-        'Trentino',
-        'Umbria',
-        'Valle d\'Aosta',
-        'Veneto'
-      ],
-        list: [],
-        recordList: [],
-        record: {},
-        $record: {},
-        addRecord: {},
-        resetItem: {},
-        grid: {pagination: {}},
-        mode: 'list',
-        searchActive: false,
-        loaded: false,
-        filter: {click_date: [today, today]}
+      regions,
+      list: [],
+      recordList: [],
+      record: {},
+      $record: {},
+      addRecord: {},
+      resetItem: {},
+      grid: {pagination: {}},
+      mode: 'list',
+      searchActive: false,
+      loaded: false,
+      filter: {click_date: [today, today]}
     }
 }
 
@@ -161,6 +171,10 @@ export const mutations = {
         state.list = payload
         state.loaded = true
     },
+    setAllRegions (state) {
+      state.$record.region = allRegions()
+    },
+
     setRecord (state, payload) {
         state.record = _cloneDeep(payload)
         state.$record = _cloneDeep(payload)

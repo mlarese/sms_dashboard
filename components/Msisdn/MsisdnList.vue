@@ -1,12 +1,13 @@
 <!--eslint-disable-->
 <template>
-    <GridContainer title="Msisdn Search">
+    <GridContainer title="MSISDN Search">
         <div slot="header-right">
         </div>
         <CardPanel slot="container-top">
             <div class="">
                 <v-layout rows wrap>
 
+                    <v-flex xs1 class="text-xs-right " style="padding-top:15px">+39</v-flex>
                     <v-flex xs5>
                         <v-text-field
                                 v-model="filter.msisdn"
@@ -41,8 +42,8 @@
                 <td>{{ item.last_contact_datetime | dmy}} {{ item.last_contact_datetime | time}}</td>
                 <td>
                     <v-btn color="black" dark @click="changeStatus(3,item.row_id)" v-if="item.status_id==1" class="elevation-0">Add in Blacklist</v-btn>
-                    <v-btn color="info"  @click="changeStatus(2,item.row_id)" v-if="item.status_id==1" class="elevation-0">PortOut</v-btn>
-                    <v-btn color="success"  @click="changeStatus(1,item.row_id)" v-if="item.status_id==3" class="elevation-0">Re-Active</v-btn>
+                    <v-btn color="info"  @click="changeStatus(2,item.row_id)" v-if="item.status_id==1" class="elevation-0">Port-Out</v-btn>
+                    <v-btn color="success"  @click="changeStatus(1,item.row_id)" v-if="item.status_id==3" class="elevation-0">Re-Activate</v-btn>
                     <v-btn color="success"  @click="changeStatus(1,item.row_id)" v-if="item.status_id==2" class="elevation-0">Port-In</v-btn>
                 </td>
             </template>

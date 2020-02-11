@@ -34,9 +34,10 @@
                 class="elevation-0 fixed-header"
                 slot="body-center">
             <template slot="items" slot-scope="{item}">
+                <td>{{ item.user_id }}</td>
                 <td>{{ item.msisdn }}</td>
                 <td width="1" class="pa-1">
-                    <GridButton icon="delete" color="error" @click="onDelete(item.msisdn)"></GridButton>
+                    <GridButton icon="delete" color="error" @click="onDelete(item.user_id)"></GridButton>
                 </td>
             </template>
             <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
@@ -59,6 +60,7 @@
         components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
         data () {
             const headers = [
+                { text: this.$vuetify.t('User Id'), value: 'user_id' },
                 { text: this.$vuetify.t('MSISDN'), value: 'msisdn' },
                 { text: 'Delete', value: 'action', sortable: false },
             ]

@@ -7,14 +7,9 @@ export default async function ({route, store, redirect, app}) {
   const token = app.$auth.getToken(schema)
 
   if (token) {
-    if (token !== axios.defaults.headers.common['Authorization']) {
-      console.log('Adding token')
-      axios.defaults.headers.common['Authorization'] = token
-    }
+    store.commit('api/setToken', token, {root: true})
   } else {
-    console.log('removing token')
-    axios.defaults.headers.common['Authorization'] = ''
-    delete axios.defaults.headers.common['Authorization']
+
   }
 
   if (!route.name) {

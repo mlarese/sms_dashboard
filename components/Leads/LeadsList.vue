@@ -6,15 +6,24 @@
         <CardPanel slot="container-top">
             <div class="">
                 <v-layout rows wrap class="align-center">
+                    <v-flex sm1 xs1 class="text-xs-right px-0">
+                        <div class="ml-2" style="margin-top: 21px !important;"></div>
+                        +39
+                    </v-flex>
+                    <v-flex sm3 xs6>
+                        <div class="ml-2" style="margin-top: 21px !important;"></div>
+                        <v-text-field dense   hide-details :label="$vuetify.t('MSISDN')"  v-model="filter.msisdn"   />
 
-                    <v-flex sm5 xs12 offset-sm1 >
+                    </v-flex>
+
+                    <v-flex sm3 xs12  >
                         <div class="ml-2">
                             <span v-if="filter.creation_datetime && filter.creation_datetime[0]" class="active-label-size">Datetime</span>&nbsp;
                         </div>
                         <DatePicker value-type="YYYY-MM-DD" :placeholder="$vuetify.t('Datetime')" v-model="filter.creation_datetime" range></DatePicker>
                     </v-flex>
 
-                    <v-flex sm4 xs6>
+                    <v-flex sm3 xs6>
                         <div class="ml-2" style="margin-top: 21px !important;"></div>
                         <v-autocomplete dense   hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="filter.brand_id" item-text="brand_name" item-value="brand_id" />
 
@@ -85,7 +94,7 @@
             ]
             return {
                 csvFields:{
-                  msisdn:'msisdn',
+                  msisdn:'msisdn_full',
                   brand:'brand_name',
                   creation_datetime:{
                     field: 'creation_datetime',

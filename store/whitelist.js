@@ -101,9 +101,8 @@ export const actions = {
 
         return dispatch('api/post', {url: `/api/whitelist_msisdn`, data}, root)
             .then(r => {
-              commit('addRecord', data)
               commit('set$Record', {})
-              return r
+              return dispatch('load',{})
             })
     }
 }

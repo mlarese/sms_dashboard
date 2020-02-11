@@ -17,15 +17,19 @@
             </v-layout>
 
             <v-layout row wrap  >
-                <v-flex sm4>
+                <v-flex sm3>
                     <v-text-field label="Contact Grace Period"   hide-details v-model="$record.contact_grace_period" type="number" />
                 </v-flex>
 
-                <v-flex sm4>
+                <v-flex sm3>
+                    <v-text-field label="Conversion Grace Period"   hide-details v-model="$record.conversion_grace_period" type="number" />
+                </v-flex>
+
+                <v-flex sm3>
                     <v-combobox hide-details dense :items="timesList" :label="$vuetify.t('Validity Contact Period - Start Date Time')" v-model="$record.validity_contact_period_start_datetime" />
                 </v-flex>
 
-                <v-flex sm4>
+                <v-flex sm3>
                     <v-select hide-details dense :items="timesList" :label="$vuetify.t('Validity Contact Period - End Date Time')" v-model="$record.validity_contact_period_end_datetime"/>
                 </v-flex>
 
@@ -33,7 +37,7 @@
 
             </v-layout>
 
-            <v-layout row wrap class="mt-1">
+            <v-layout row wrap class="mt-3">
                 <v-flex sm8>
                     <v-select
                             dense

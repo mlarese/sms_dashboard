@@ -28,32 +28,20 @@
 
                     </v-flex>
                 </v-layout>
-
-                <v-layout rows wrap class="mt-2">
-                    <v-flex offset-sm1 xs9>
-
-                        <v-combobox multiple dense   hide-details :label="$vuetify.t('Postal code')"  chips deletable-chips
-                                        v-model="filter.postal_code" item-text="brand_name" item-value="brand_id" />
-
+                <v-layout rows wrap class="mt-2" >
+                    <v-flex offset-sm1 sm9 xs12>
+                        <v-combobox multiple dense  class="hide-dropdown-icon" hide-details :label="$vuetify.t('Postal code')"  chips deletable-chips
+                                        v-model="filter.postal_code"  />
                     </v-flex>
                 </v-layout>
-                <v-layout rows wrap class="mt-2">
-                    <v-flex offset-sm1  sm5 xs4>
-
-                        <v-autocomplete dense  hide-details :label="$vuetify.t('State')"  :items="states" v-model="filter.state"  />
-
-                    </v-flex>
-
-                    <v-flex sm4 xs4>
-
-                        <v-autocomplete dense  hide-details :label="$vuetify.t('Region')"  :items="regions" v-model="filter.region"  />
-
+                <v-layout rows wrap class="mt-2" >
+                    <v-flex offset-sm1 sm9 xs12>
+                        <v-autocomplete dense  hide-details :label="$vuetify.t('Region')" multiple chips deletable-chips :items="regions" v-model="filter.region"  />
                     </v-flex>
                 </v-layout>
-
                 <v-layout rows wrap class="mt-2">
                     <v-flex sm2 offset-sm1 xs3><v-combobox dense  class=""  hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
-                    <v-flex sm2 xs3><v-combobox dense hide-details :label="$vuetify.t('CB Selection')"  :items="['Random', 'Sequential']"   v-model="filter.cb_selection" /></v-flex>
+                    <v-flex sm2 xs3><v-combobox dense hide-details :label="$vuetify.t('CB Selection')"  :items="cbSelctionsList"   v-model="filter.cb_selection" /></v-flex>
                     <v-flex sm2 xs3><v-select dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="[{text:'One Click', value:1}, {text:'No Click', value:2}]"   v-model="filter.lp_type" /></v-flex>
                     <v-flex sm2 xs3>
                         <v-combobox dense   hide-details :label="$vuetify.t('CB Activity Level')"   :items="['All', 'High', 'Medium', 'Low']" v-model="filter.cb_activity_level"  />
@@ -82,7 +70,6 @@
         </CardPanel>
 
 
-
         <v-data-table
                 :rows-per-page-items="[100,200,500,{'text':'All','value':-1}]"
                 :loading="isAjax" fixed
@@ -97,13 +84,15 @@
                 <td>{{ item.brand_name }}</td>
                 <td>{{ item.status_name }}</td>
                 <td>{{ item.type }}</td>
-                <td>{{ item.cb_selection }}</td>
                 <td>{{ item.creation_datetime | dmy}}<br> {{ item.creation_datetime  | time }}</td>
                 <td>{{ item.start_datetime | dmy}} <br>{{ item.start_datetime  | time }}</td>
                 <td>{{ item.end_datetime | dmy}} <br>{{ item.end_datetime  | time }}</td>
                 <td>{{ item.lp_name }}</td>
                 <td>{{ item.lp_type | lpType}}</td>
                 <td :title="getAgesRangesList(item.cb_age_range)" v-html="getAgesRanges(item.cb_age_range)"></td>
+                <td :title="getRegionsRangesList(item.region)" v-html="getRegionsRanges(item.region)"></td>
+                <td :title="getCapsRangesList(item.postal_code)" v-html="getCapsRanges(item.postal_code)"></td>
+
                 <td>{{ item.cb_activity_level }}</td>
                 <td>{{ item.cb_target_quantity }}</td>
                 <td>{{ item.cb_target_quantity_processed }}</td>
@@ -140,18 +129,19 @@
                 { text: this.$vuetify.t('Brand'), value: 'brand_name' },
                 { text: this.$vuetify.t('Status'), value: 'status_name' },
                 { text: this.$vuetify.t('Type'), value: 'type' },
-                { text: this.$vuetify.t('CB Selection'), value: 'cb_selection' },
                 { text: this.$vuetify.t('Creation DateTime'), value: 'creation_datetime' },
                 { text: this.$vuetify.t('Start DateTime'), value: 'start_datetime' },
                 { text: this.$vuetify.t('End DateTime'), value: 'end_datetime' },
                 { text: this.$vuetify.t('LP Name'), value: 'lp_name' },
                 { text: this.$vuetify.t('LP Type'), value: 'lp_type' },
-                { text: this.$vuetify.t('Age Range'), value: 'cb_age_range', width: 200 },
+                { text: this.$vuetify.t('Age Range'), value: 'cb_age_range'},
+                { text: this.$vuetify.t('Region'), value: 'region' },
+                { text: this.$vuetify.t('CAP'), value: 'postal_code' },
                 { text: this.$vuetify.t('CB Activity Level'), value: 'cb_activity_level' },
-                { text: this.$vuetify.t('Target CB Qty'), value: 'cb_target_quantity' },
-                { text: this.$vuetify.t('Processed CB Qty'), value: 'cb_target_quantity_processed' },
+                { text: this.$vuetify.t('Campaign Qty'), value: 'cb_target_quantity' },
+                { text: this.$vuetify.t('Processed Qty'), value: 'cb_target_quantity_processed' },
                 { text: this.$vuetify.t('Leads'), value: 'lead' },
-                { text: this.$vuetify.t('Conversion (%)'), value: 'conversion' },
+                { text: this.$vuetify.t('Conv. (%)'), value: 'conversion' },
                 { text: 'Delete', value: 'action', sortable: false }
             ]
             return {
@@ -163,7 +153,7 @@
             }
         },
         computed: {
-            ...mapState('campaigns', {'agesList':'agesList', 'grid': 'grid', 'clicksList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
+            ...mapState('campaigns', {'cbSelctionsList':'cbSelctionsList', 'agesList':'agesList', 'grid': 'grid', 'clicksList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
             ...mapGetters('campaigns', ['agesListById']),
             ...mapState('channels', {'channelList': 'list'}),
             ...mapState('brands', {'brandsList': 'list'}),
@@ -201,6 +191,46 @@
 
                 return totalList
             },
+            getRegionsRanges (regions) {
+                let ret = '';
+                if(regions) {
+                  if(regions.length === 0) ret = ''
+                  else if(regions.length === 20) ret = 'All'
+                  else if(regions.length === 1) ret = regions[0]
+                  else if(regions.length === 2) ret =  regions[0]+' '+regions[1]
+                  else if(regions.length > 2) ret =  regions[0]+' '+regions[1] + ' ...'
+                }
+                return ret
+            },
+            getRegionsRangesList (regions) {
+                let totalList = ''
+                if(!regions) return ''
+                for (let i = 0; i<regions.length;i++) {
+                  totalList+= regions[i] + ' '
+                }
+
+                return totalList
+            },
+            getCapsRanges (caps) {
+                let ret = '';
+                if(caps) {
+                  if(caps.length === 0) ret = ''
+                  else if(caps.length === 20) ret = 'All'
+                  else if(caps.length === 1) ret = caps[0]
+                  else if(caps.length === 2) ret =  caps[0]+' '+caps[1]
+                  else if(caps.length > 2) ret =  caps[0]+' '+caps[1] + ' ...'
+                }
+                return ret
+            },
+            getCapsRangesList (caps) {
+                let totalList = ''
+                if(!caps) return ''
+                for (let i = 0; i<caps.length;i++) {
+                  totalList+= caps[i] + ' '
+                }
+
+                return totalList
+            },
             doSearch () {
                 this.search()
             },
@@ -214,3 +244,5 @@
         }
     }
 </script>
+
+

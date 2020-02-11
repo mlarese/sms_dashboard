@@ -209,4 +209,9 @@
     .v-text-field input {
         padding: 3px 0 8px;
     }
+    .hide-dropdown-icon .v-input__icon {display:none}
+
+    .v-input--checkbox .v-input__slot {
+        border:0;
+    }
 </style>

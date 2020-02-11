@@ -20,10 +20,11 @@
                     <v-combobox dense   hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="$record.type" />
                 </v-flex>
                 <v-flex xs4>
-                    <v-autocomplete dense item-text="lp_name" item-value="lp_id"  hide-details :label="$vuetify.t('Landing Page')"  :items="landingPageByBrend"   v-model="$record.lp_id" />
+                    <v-autocomplete dense item-text="lp_name"
+                                    item-value="lp_id"  hide-details :label="$vuetify.t('Landing Page')"  :items="landingPageByBrend"   v-model="$record.lp_id" />
                 </v-flex>
             </v-layout>
-            <v-layout row wrap>
+            <v-layout row wrap class="mt-2">
 
                 <v-flex xs6 style="line-height: 0">
                         <span v-if="$record.start_datetime"  class="active-label-size" >Start Datetime</span>
@@ -52,7 +53,7 @@
 
 
             </v-layout>
-            <v-layout row wrap>
+            <v-layout row wrap class="mt-2">
 
                 <v-flex xs6>
                     <v-combobox dense  hide-details :label="$vuetify.t('Gender')"  :items="['All', 'M', 'F']"   v-model="$record.cb_gender" />
@@ -68,19 +69,32 @@
                     />
                 </v-flex>
             </v-layout>
-            <v-layout row wrap>
+            <v-layout row wrap class="mt-2">
+                <v-flex>
+                    <v-combobox multiple dense  small-chips class="hide-dropdown-icon" hide-details :label="$vuetify.t('Postal code')"  chips deletable-chips
+                                v-model="$record.postal_code"  />
+                </v-flex>
+            </v-layout>
+            <v-layout row wrap class="mt-3">
+                <v-flex>
+                    <v-autocomplete class="field-region" full-width multiple :height="70"   small-chips chips deletable-chips  hide-details :label="$vuetify.t('Region')"  :items="regions" v-model="$record.region"  />
+                </v-flex>
+            </v-layout>
+
+            <v-layout row wrap class="mt-2">
+
                 <v-flex xs4>
                     <v-combobox dense  hide-details :label="$vuetify.t('CB Activity Level')"  :items="['All', 'High', 'Medium', 'Low']"   v-model="$record.cb_activity_level" />
                 </v-flex>
                 <v-flex xs4>
-                    <v-combobox dense  hide-details :label="$vuetify.t('CB Target Quantity')"  :items="[100,1000,5000,10000,50000,100000,400000]" v-model="$record.cb_target_quantity"  />
+                    <v-text-field dense  hide-details :label="$vuetify.t('CB Target Quantity')"  v-model="$record.cb_target_quantity" type="number"  />
                 </v-flex>
 
                 <v-flex xs4>
-                    <v-combobox dense  hide-details :label="$vuetify.t('CB Selection')"  :items="['Random', 'Sequential']"   v-model="$record.cb_selection" />
+                    <v-combobox dense  hide-details :label="$vuetify.t('CB Selection')"  :items="cbSelctionsList"   v-model="$record.cb_selection" />
                 </v-flex>
             </v-layout>
-            <v-layout row wrap>
+            <v-layout row wrap class="mt-2">
                 <v-flex xs2 offset-xs5>
 
                     <v-btn  style="width:100%"  color="primary"  @click="onAdd" :disabled="!isValid">
@@ -115,7 +129,8 @@
         computed: {
           ...mapState('brands', {'brandsList': 'list'}),
           ...mapState('landingPages', {'lpList': 'list'}),
-          ...mapState('campaigns',  ['statusList', '$record' ,'agesList']),
+          ...mapState('campaigns',  ['statusList', '$record' ,'agesList','cbSelctionsList']),
+          ...mapState('locations', {'states':'states','regions':'regions'}),
           landingPageByBrend () {
             if(!this.$record.brand_id) return []
             return  this.lpList.filter(o => o.brand_id === this.$record.brand_id)
@@ -166,6 +181,13 @@
     }
 </script>
 
-<style scoped>
+<style >
+    .field-region .v-input__slot {
+        padding:10px !important;
+    }
 
+    .field-region .v-label--active {
+        -webkit-transform: translateY(-47px) scale(0.75);
+        transform: translateY(-47px) scale(0.75);
+    }
 </style>

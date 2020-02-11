@@ -24,7 +24,7 @@
                     <v-text-field append-icon="" label="Background Color" hide-details v-model="$record.background_rgb" />
                 </v-flex>
                 <v-flex xs1>
-                    <v-select append-icon="" label="Portout" hide-details v-model="$record.portout_flag" :items="['Y','N']" />
+                    <v-select append-icon="" label="Port-Out" hide-details v-model="$record.portout_flag" :items="['Y','N']" />
                 </v-flex>
             </v-layout>
 

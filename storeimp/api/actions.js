@@ -32,42 +32,21 @@ const instance = axios.create({
   withCredentials: true
 })
 
-const addToken = () => {
-  let options = {}
-
-  let token = null
-  if (localStorage.getItem('auth_token.prod'))
-    token = localStorage.getItem('auth_token.prod')
-
-  else if (localStorage.getItem('auth_token.dev'))
-    token = localStorage.getItem('auth_token.dev')
-
-  if (token) {
-    if (token !== instance.defaults.headers.common['Authorization']) {
-      instance.defaults.headers.common['Authorization'] = token
-    }
-  } else {
-    instance.defaults.headers.common['Authorization'] = ''
-    delete instance.defaults.headers.common['Authorization']
-  }
-
-  return instance
-}
 
 export const actions = {
   init ({commit}) {
     commit('error')
     commit('hasError')
   },
-  get ({commit, getters}, {url, options = {}, debug = false}) {
+  get ({commit, getters, state}, {url, options = {}, debug = false}) {
     commit('isAjax', true)
     commit('error')
     commit('hasError')
-    addToken()
-    if (!options.headers) {
-      //options.headers = {}
-    }
 
+    if (!options.headers) {
+      options.headers = {}
+    }
+    options.headers['Authorization'] = state.token
     if (debug) {
       console.log(baseURL + url, options)
     }
@@ -86,12 +65,15 @@ export const actions = {
         return Promise.reject(err)
       })
   },
-  post ({commit, getters}, {url, data = {}, options = {}}) {
+  post ({commit, getters, state}, {url, data = {}, options = {}}) {
     commit('isAjax', true)
     commit('error')
     commit('hasError')
-    addToken()
-    console.log('---- post', url, data, options)
+    if (!options.headers) {
+      options.headers = {}
+    }
+    options.headers['Authorization'] = state.token
+    //console.log('---- post', url, data, options)
 
     return instance.post(url, data, options)
       .then(res => {
@@ -107,13 +89,15 @@ export const actions = {
         return Promise.reject(err)
       })
   },
-  put ({commit, getters}, {url, data, options = {}}) {
+  put ({commit, getters, state}, {url, data, options = {}}) {
     commit('isAjax', true)
     commit('error')
     commit('hasError')
 
-    console.log(url)
-    addToken()
+    if (!options.headers) {
+      options.headers = {}
+    }
+    options.headers['Authorization'] = state.token
     return instance.put(url, data, options)
       .then(res => {
         commit('isAjax')
@@ -128,12 +112,15 @@ export const actions = {
         return Promise.reject(err)
       })
   },
-  delete ({commit, getters}, {url, options = {}}) {
+  delete ({commit, getters, state}, {url, options = {}}) {
     addToken
     commit('isAjax', true)
     commit('error')
     commit('hasError')
-    console.log(url)
+    if (!options.headers) {
+      options.headers = {}
+    }
+    options.headers['Authorization'] = state.token
 
     return instance.delete(url, options)
       .then(res => {
