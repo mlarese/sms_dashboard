@@ -19,19 +19,24 @@ const menuItems = {
 const menus = {
   Admin: [
     menuItems.campaigns,
-    menuItems.leads,
-    menuItems.msisdnsearch,
+    //menuItems.leads,
+    // menuItems.msisdnsearch,
     menuItems.whitelist,
     menuItems.landingpages,
     menuItems.settings
   ],
   'Third Party Agency': [
-    menuItems.campaigns,
-    menuItems.leads
+    menuItems.leads,
+    menuItems.msisdnsearch
   ],
   guest: [
 
   ]
+}
+
+const redirectRoutes = {
+  'Admin': '/campaigns',
+  'Third Party Agency': '/leads'
 }
 
 export const state = () => ({
@@ -39,6 +44,7 @@ export const state = () => ({
   title: 'SMS dashboard',
   debugMode: true,
   ui: {currentMenuItem: 0},
+  redirectRoutes,
   languages: [
     {id: 'it', label: 'ITA'},
     {id: 'en', label: 'ENG'},
@@ -78,5 +84,6 @@ export const getters = {
   role: (s, g, rs) => !_has(rs, 'auth.user.role') ? 'guest' : rs.auth.user.role,
   user: (s, g, rs) => !_has(rs, 'auth.user') ? '' : rs.auth.user,
   userName: (s, g, rs) => !_has(rs, 'auth.user.userName') ? '' : rs.auth.user.userName,
+  redirectRoute: (s, g) => s.redirectRoutes[g.role],
   menuItems: (s, g) => s.menus[g.role]
 }

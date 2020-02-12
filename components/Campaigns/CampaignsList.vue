@@ -42,7 +42,7 @@
                 <v-layout rows wrap class="mt-2">
                     <v-flex sm2 offset-sm1 xs3><v-combobox dense  class=""  hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
                     <v-flex sm2 xs3><v-combobox dense hide-details :label="$vuetify.t('CB Selection')"  :items="cbSelctionsList"   v-model="filter.cb_selection" /></v-flex>
-                    <v-flex sm2 xs3><v-select dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="[{text:'One Click', value:1}, {text:'No Click', value:2}]"   v-model="filter.lp_type" /></v-flex>
+                    <v-flex sm2 xs3><v-select dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="[{text:'One Click', value:1}, {text:'Two Clicks', value:2}]"   v-model="filter.lp_type" /></v-flex>
                     <v-flex sm2 xs3>
                         <v-combobox dense   hide-details :label="$vuetify.t('CB Activity Level')"   :items="['All', 'High', 'Medium', 'Low']" v-model="filter.cb_activity_level"  />
                     </v-flex>

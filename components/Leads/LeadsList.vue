@@ -10,7 +10,7 @@
                         <div class="ml-2" style="margin-top: 21px !important;"></div>
                         +39
                     </v-flex>
-                    <v-flex sm3 xs6>
+                    <v-flex sm2 xs6>
                         <div class="ml-2" style="margin-top: 21px !important;"></div>
                         <v-text-field dense   hide-details :label="$vuetify.t('MSISDN')"  v-model="filter.msisdn"   />
 
@@ -23,11 +23,17 @@
                         <DatePicker value-type="YYYY-MM-DD" :placeholder="$vuetify.t('Datetime')" v-model="filter.creation_datetime" range></DatePicker>
                     </v-flex>
 
-                    <v-flex sm3 xs6>
+                    <v-flex sm2 xs6>
                         <div class="ml-2" style="margin-top: 21px !important;"></div>
                         <v-autocomplete dense   hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="filter.brand_id" item-text="brand_name" item-value="brand_id" />
 
                     </v-flex>
+
+                    <v-flex sm2 xs3>
+                        <div class="ml-2" style="margin-top: 21px !important;"></div>
+                        <v-select dense  hide-details
+                                  :label="$vuetify.t('Landing Page Type')"
+                                  :items="[{text:'One Click', value:1}, {text:'Two Clicks', value:2}]"   v-model="filter.lp_type" /></v-flex>
 
                     <v-flex sm2 xs2 class="text-xs-left" >
                         <div style="margin-top:22px">
@@ -62,6 +68,7 @@
                 <td>{{ item.campaign_id }}</td>
                 <td>{{ item.brand_name }}</td>
                 <td>{{ item.msisdn }}</td>
+                <td>{{ item.lp_type|lpType }}</td>
                 <td>{{ item.creation_datetime | dmy}} - {{ item.creation_datetime  | time }}</td>
             </template>
             <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
@@ -74,7 +81,7 @@
 </template>
 <script>
     import {mapState, mapActions} from 'vuex'
-    import {dmy,time} from '../../assets/filters'
+    import {dmy,time,lpType} from '../../assets/filters'
     import GridButton from '../General/GridButton'
     import GridContainer from '../General/GridContainer'
     import CardPanel from "../General/CardPanel"
@@ -90,6 +97,7 @@
                 { text: this.$vuetify.t('Campaign ID'), value: 'campaign_id' },
                 { text: this.$vuetify.t('Brand'), value: 'brand' },
                 { text: this.$vuetify.t('MSISDN'), value: 'msisdn' },
+                { text: this.$vuetify.t('Lp Type'), value: 'lp_type' },
                 { text: this.$vuetify.t('DateTime'), value: 'creation_datetime' },
             ]
             return {
@@ -100,6 +108,12 @@
                     field: 'creation_datetime',
                     callback: (value) => {
                       return dmy(value) + ' ' + time(value)
+                    }
+                  },
+                  lp_type:{
+                    field: 'lp_type',
+                    callback: (value) => {
+                      return lpType(value)
                     }
                   },
                 },

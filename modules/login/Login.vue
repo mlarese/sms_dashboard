@@ -28,7 +28,7 @@
 
 </template>
 <script>
-  import {mapState, mapActions} from 'vuex'
+  import {mapState, mapActions, mapGetters} from 'vuex'
   import {notifyError} from '../../storeimp/api/actions'
   import {getSchema} from '../../assets/helpers'
 
@@ -47,6 +47,7 @@
       }
     },
     computed: {
+      ...mapGetters('app', ['redirectRoute']),
       ...mapState('app', ['title']),
       ...mapState('api', ['isAjax']),
       canLogin () {
@@ -90,7 +91,7 @@
           })
           .then(() => {
             this.loading = false
-            return this.$router.push('/campaigns')
+            return this.$router.push(this.redirectRoute)
           })
           .catch(e => {
             this.loading = false
