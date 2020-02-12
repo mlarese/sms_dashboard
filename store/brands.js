@@ -70,6 +70,19 @@ export const actions = {
                 })
         }
     },
+
+    loadByUser ({dispatch, commit, state}, {force = true, options = {}}) {
+        if (!force && state.list.length > 0) {
+          return
+        }
+
+        return dispatch('api/get', {url: `/api/brands_by_role`, options, debug: false}, root)
+            .then(res => {
+              commit('setList', res.data)
+              return res
+            })
+
+    },
     delete ({dispatch, commit, state}, id) {
       const url = `/api/brands/${id}`
       return dispatch('api/delete', {url}, root)
