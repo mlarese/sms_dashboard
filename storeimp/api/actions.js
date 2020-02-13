@@ -113,7 +113,6 @@ export const actions = {
       })
   },
   delete ({commit, getters, state}, {url, options = {}}) {
-    addToken
     commit('isAjax', true)
     commit('error')
     commit('hasError')

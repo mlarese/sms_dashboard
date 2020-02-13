@@ -9,7 +9,7 @@ let today = new Date()
 let fmtToday = format(today, 'yyyy-MM-dd')
 const cbSelctionsList = ['Sequential']
 const newFilter = () => ({
-  creation_datetime: [fmtToday, fmtToday],
+  //creation_datetime: [fmtToday, fmtToday],
   start_datetime: [fmtToday, fmtToday],
   cb_age_range: [1,2,3,4,5,6],
   cb_selection: cbSelctionsList[0]
@@ -18,6 +18,7 @@ export const state = () => {
     return {
         list: [],
         recordList: [],
+        targetQty: 0,
         record: {},
         $record: {},
         addRecord: {},
@@ -60,6 +61,7 @@ export const mutations = {
         state.grid.pagination.page = 1
         state.grid.pagination.pages = Math.ceil(state.grid.pagination.totalItems / state.grid.pagination.rowsPerPage)
     },
+    setTargetQty (state, payload) { state.targetQty = payload },
     setSearchActive (state, payload) { state.searchActive = payload },
     setRecordList (state, payload) { state.recordList = payload },
     setList (state, payload) {
@@ -103,6 +105,14 @@ export const actions = {
     insert ({dispatch, commit}, {data}) {
         const url = `/campaigns`
         return dispatch('api/post', {url, data}, root)
+    },
+    searchQty ({dispatch, commit, state},data) {
+      commit('setTargetQty',0)
+      return dispatch('api/post', {url: `/api/cb_qty`, data}, root)
+        .then(res => {
+          commit('setTargetQty', res.data.qty)
+          return res
+        })
     },
     search ({dispatch, commit, state}) {
       let data = state.filter

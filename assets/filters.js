@@ -31,7 +31,7 @@ export const dmy = (date) => {
   return formatSt(ldate, 'dd/MM/yyyy')
 }
 
-export const time = (date) => {
+export const time = (date, pattern='HH:mm:ss') => {
   if (!date) return ''
   let ldate = null
 
@@ -43,7 +43,20 @@ export const time = (date) => {
 
   const offs = -ldate.getTimezoneOffset()
   ldate = addMinutes(ldate, offs)
-  return formatSt(ldate, 'HH:mm:ss')
+  return formatSt(ldate, pattern)
+}
+
+export const timeNoTZ = (date, pattern='HH:mm:ss') => {
+  if (!date) return ''
+  let ldate = null
+
+  if (date.date) {
+    ldate = new Date(date.date)
+  } else {
+    ldate = new Date(date)
+  }
+
+  return formatSt(ldate, pattern)
 }
 
 export const truncate = (value, limit, appendText='...') => {

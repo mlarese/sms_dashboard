@@ -177,10 +177,13 @@
         font-size: 11px !important;
         line-height:10px;
         position: relative;
-        top: px;
+        top: -2px;
         left:5px;
     }
 
+    .mx-input {
+        height: 31px !important;
+    }
     .v-datatable__progress th.column{
         background: transparent;
     }
