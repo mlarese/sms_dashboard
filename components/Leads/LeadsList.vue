@@ -50,33 +50,39 @@
                         />
                     </v-flex>
                 </v-layout>
+
             </div>
         </CardPanel>
 
+        <v-layout slot="body-center" rows wrap>
+            <v-flex xs12 class="mb-1" style="color:grey">Total results: {{leadsList.length}}</v-flex>
 
 
-        <v-data-table
-                :rows-per-page-items="[100,200,500,{'text':'All','value':-1}]"
-                :loading="isAjax" fixed
-                :headers="headers"
-                :search="grid.pagination.search"
-                :items="leadsList"  :hide-actions="false"
-                :pagination.sync="grid.pagination"
-                class="elevation-0 fixed-header"
-                slot="body-center">
-            <template slot="items" slot-scope="{item}">
-                <td>{{ item.campaign_id }}</td>
-                <td>{{ item.brand_name }}</td>
-                <td>{{ item.msisdn }}</td>
-                <td>{{ item.lp_type|lpType }}</td>
-                <td>{{ item.creation_datetime | dmy}} - {{ item.creation_datetime  | time }}</td>
-            </template>
-            <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
-                {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}
-            </template>
+            <v-flex xs12>
+                <v-data-table
+                        :rows-per-page-items="[100,200,500,{'text':'All','value':-1}]"
+                        :loading="isAjax" fixed
+                        :headers="headers"
+                        :search="grid.pagination.search"
+                        :items="leadsList"  :hide-actions="false"
+                        :pagination.sync="grid.pagination"
+                        class="elevation-0 fixed-header"
+                >
+                    <template slot="items" slot-scope="{item}">
+                        <td>{{ item.campaign_id }}</td>
+                        <td>{{ item.brand_name }}</td>
+                        <td>{{ item.msisdn }}</td>
+                        <td>{{ item.lp_type|lpType }}</td>
+                        <td>{{ item.creation_datetime | dmy}} - {{ item.creation_datetime  | time }}</td>
+                    </template>
+                    <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
+                        {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}
+                    </template>
 
-        </v-data-table>
+                </v-data-table>
+            </v-flex>
 
+        </v-layout>
     </GridContainer>
 </template>
 <script>

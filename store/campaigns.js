@@ -114,6 +114,15 @@ export const actions = {
           return res
         })
     },
+    statistics ({dispatch, commit, state}, filter) {
+
+      return dispatch('api/post', {url: `/api/statistics`, data: filter}, root)
+        .then(res => {
+          commit('setRecord', res.data)
+          return res
+        })
+
+    },
     search ({dispatch, commit, state}) {
       let data = state.filter
       commit('setList', [])

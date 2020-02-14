@@ -51,6 +51,7 @@ export const mutations = {
 
 }
 export const actions = {
+
     load ({dispatch, commit, state}, {id = null, force = true, options = {}}) {
         if (!force && state.list.length > 0) {
             return

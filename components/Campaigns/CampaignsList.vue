@@ -69,47 +69,53 @@
             </div>
         </CardPanel>
 
+        <v-layout slot="body-center" rows wrap>
+            <v-flex xs12 class="mb-1" style="color:grey">Total results: {{clicksList.length}}</v-flex>
 
-        <v-data-table
-                :rows-per-page-items="[100,200,500,{'text':'All','value':-1}]"
-                :loading="isAjax" fixed
-                :headers="headers"
-                :search="grid.pagination.search"
-                :items="clicksList"  :hide-actions="false"
-                :pagination.sync="grid.pagination"
-                class="elevation-0 fixed-header"
-                slot="body-center">
-            <template slot="items" slot-scope="{item}">
-                <td>{{ item.campaign_id }}</td>
-                <td>{{ item.brand_name }}</td>
-                <td>{{ item.status_name }}</td>
-                <td>{{ item.type }}</td>
-                <td>{{ item.creation_datetime | dmy}}<br> {{ item.creation_datetime  | time }}</td>
-                <td>{{ item.start_datetime | dmy}} <br>{{ item.start_datetime  | time }}</td>
-                <td>{{ item.end_datetime | dmy}} <br>{{ item.end_datetime  | time }}</td>
-                <td>{{ item.lp_name }}</td>
-                <td>{{ item.lp_type | lpType}}</td>
-                <td :title="getAgesRangesList(item.cb_age_range)" v-html="getAgesRanges(item.cb_age_range)"></td>
-                <td :title="getRegionsRangesList(item.region)" v-html="getRegionsRanges(item.region)"></td>
-                <td :title="getCapsRangesList(item.postal_code)" v-html="getCapsRanges(item.postal_code)"></td>
 
-                <td>{{ item.cb_activity_level }}</td>
-                <td>{{ item.cb_target_quantity }}</td>
-                <td>{{ item.cb_target_quantity_processed }}</td>
-                <td>{{ item.lead }}</td>
-                <td><span v-if="item.processed_cb_quantity">{{ item.lead/item.processed_cb_quantity }}</span></td>
+            <v-flex xs12>
 
-                <td width="1" class="py-1 px-2">
-                    <GridButton v-if="item.status_id==4" icon="delete" color="error" @click="onDelete(item)"></GridButton>
-                </td>
+            <v-data-table
+                    :rows-per-page-items="[100,200,500,{'text':'All','value':-1}]"
+                    :loading="isAjax" fixed
+                    :headers="headers"
+                    :search="grid.pagination.search"
+                    :items="clicksList"  :hide-actions="false"
+                    :pagination.sync="grid.pagination"
+                    class="elevation-0 fixed-header"
+            >
+                <template slot="items" slot-scope="{item}">
+                    <td>{{ item.campaign_id }}</td>
+                    <td>{{ item.brand_name }}</td>
+                    <td>{{ item.status_name }}</td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.creation_datetime | dmy}}<br> {{ item.creation_datetime  | time }}</td>
+                    <td>{{ item.start_datetime | dmy}} <br>{{ item.start_datetime  | time }}</td>
+                    <td>{{ item.end_datetime | dmy}} <br>{{ item.end_datetime  | time }}</td>
+                    <td>{{ item.lp_name }}</td>
+                    <td>{{ item.lp_type | lpType}}</td>
+                    <td :title="getAgesRangesList(item.cb_age_range)" v-html="getAgesRanges(item.cb_age_range)"></td>
+                    <td :title="getRegionsRangesList(item.region)" v-html="getRegionsRanges(item.region)"></td>
+                    <td :title="getCapsRangesList(item.postal_code)" v-html="getCapsRanges(item.postal_code)"></td>
 
-            </template>
-            <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
-                {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}
-            </template>
+                    <td>{{ item.cb_activity_level }}</td>
+                    <td>{{ item.cb_target_quantity }}</td>
+                    <td>{{ item.cb_target_quantity_processed }}</td>
+                    <td>{{ item.lead }}</td>
+                    <td><span v-if="item.processed_cb_quantity">{{ item.lead/item.processed_cb_quantity }}</span></td>
 
-        </v-data-table>
+                    <td width="1" class="py-1 px-2">
+                        <GridButton v-if="item.status_id==4" icon="delete" color="error" @click="onDelete(item)"></GridButton>
+                    </td>
 
+                </template>
+                <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
+                    {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}
+                </template>
+
+            </v-data-table>
+            </v-flex>
+        </v-layout>
     </GridContainer>
 </template>
 <script>

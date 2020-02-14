@@ -1,5 +1,12 @@
 import formatSt from 'date-fns/format'
 import addMinutes from 'date-fns/addMinutes'
+import numeral from'numeral'
+
+numeral.register('locale', 'it', {
+  delimiters: { thousands: '.',  decimal: ',' },
+  currency: { symbol: '€'  }
+});
+numeral.locale('it');
 
 export const dmySt = (date) => {
   if (!date) return ''
@@ -77,3 +84,7 @@ export const lpType = (value) => {
   return value*1===1?'One clcik':'Two clicks'
 }
 export const statusList = [{conversion_status_id:0, text:'Pending'},{conversion_status_id:1, text:'Full Conversion'},{conversion_status_id:2, text:'Likely Conversion'},{conversion_status_id:3, text:'Detractor'}]
+
+export const number = (value, format='0,0') => {
+  return numeral(value).format(format)
+}

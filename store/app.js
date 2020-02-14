@@ -7,6 +7,8 @@ import _has from 'lodash/has'
  *
  */
 const menuItems = {
+    statistics: {to: 'statistics', label: 'Statistics'},
+    simulator: {to: 'simulator', label: 'Simulator'},
     campaigns: {to: 'campaigns', label: 'Campaigns'},
     leads: {to: 'leads', label: 'Leads'},
     msisdnsearch: {to: 'msisdnsearch', label: 'MSISDN Search'},
@@ -19,6 +21,8 @@ const menuItems = {
 const menus = {
   Admin: [
     menuItems.campaigns,
+    menuItems.simulator,
+    menuItems.statistics,
     //menuItems.leads,
     // menuItems.msisdnsearch,
     menuItems.whitelist,
@@ -50,16 +54,7 @@ export const state = () => ({
     {id: 'en', label: 'ENG'},
     {id: 'de', label: 'DEU'}
   ],
-  menus,
-  menuItems: [
-    {to: 'role', label: 'Roles'},
-    {to: 'user', label: 'Users'},
-    {to: 'usersrole', label: 'Users Roles'},
-    {to: 'usersbrandschannel', label: 'Users Brands Channels'},
-    {to: 'landingpage', label: 'Landing Pages'},
-    {to: 'brandlandingpage', label: 'Brand Landing Page'},
-
-  ]
+  menus
 })
 
 export const mutations = {

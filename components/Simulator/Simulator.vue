@@ -1,53 +1,45 @@
 <!--eslint-disable-->
 <template>
     <FormPanel v-bind="$attrs" >
-        <div slot="header-right">
-            <v-btn outline color="indigo"   @click="$router.go(-1)" >
-                {{$vuetify.t('Back')}}
-            </v-btn>
 
-        </div>
 
         <v-form
             ref="form"
             lazy-validation
-            v-if="!evaluateMode"
         >
             <v-layout row wrap>
-                <v-flex xs3>
+                <v-flex sm3>
                     <v-autocomplete dense hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="$record.brand_id" item-text="brand_name" item-value="brand_id" />
                 </v-flex>
-                <v-flex xs3>
-                    <v-combobox dense   hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="$record.type" />
-                </v-flex>
-                <v-flex xs3>
+
+                <v-flex sm3>
                     <v-autocomplete dense item-text="lp_name"
                                     item-value="lp_id"  hide-details :label="$vuetify.t('Landing Page')"  :items="landingPageByBrend"   v-model="$record.lp_id" />
                 </v-flex>
 
+                <v-flex sm3>
+                    <v-combobox dense  hide-details :label="$vuetify.t('CB Activity Level')"  :items="['All', 'High', 'Medium', 'Low']"   v-model="$record.cb_activity_level" />
+                </v-flex>
 
-                <v-flex xs3 style="line-height: 0">
-                        <div style="position:relativetop:-4px">
-                            <span v-if="$record.start_datetime"  class="active-label-size" >Start Datetime</span>
-                            <span v-else  class="active-label-size" > &nbsp</span>
+                <v-flex sm3 style="line-height: 0">
+                    <div style="position:relative;top:-4px">
+                        <span v-if="$record.start_datetime"  class="active-label-size" >Start Datetime</span>
+                        <span v-else  class="active-label-size" > &nbsp</span>
 
-                            <DatePicker
-                                    :disabled="isImmediate"
-                                    @change="onStartChange"
-                                    value-type="YYYY-MM-DD HH:mm"
-                                    format="DD/MM/YYYY - HH:mm"
-                                    :disabled-date="notBeforeToday"
-                                    :time-picker-options="timePickerOptions"
-                                    :placeholder="$vuetify.t('Start Datetime')"
-                                    v-model="$record.start_datetime" type="datetime"></DatePicker>
-                        </div>
+                        <DatePicker
+                                :disabled="isImmediate"
+                                @change="onStartChange"
+                                value-type="YYYY-MM-DD HH:mm"
+                                format="DD/MM/YYYY - HH:mm"
+                                :disabled-date="notBeforeToday"
+                                :time-picker-options="timePickerOptions"
+                                :placeholder="$vuetify.t('Start Datetime')"
+                                v-model="$record.start_datetime" type="datetime"></DatePicker>
+                    </div>
 
 
 
                 </v-flex>
-
-
-
 
             </v-layout>
             <v-layout row wrap class="mt-2">
@@ -78,18 +70,8 @@
                 </v-flex>
             </v-layout>
 
-            <v-layout row wrap class="mt-2">
 
-                <v-flex xs4>
-                    <v-combobox dense  hide-details :label="$vuetify.t('CB Activity Level')"  :items="['All', 'High', 'Medium', 'Low']"   v-model="$record.cb_activity_level" />
-                </v-flex>
-
-
-                <v-flex xs4>
-                    <v-combobox dense  hide-details :label="$vuetify.t('CB Selection')"  :items="cbSelctionsList"   v-model="$record.cb_selection" />
-                </v-flex>
-            </v-layout>
-            <v-layout row wrap class="mt-2">
+            <v-layout row wrap class="mt-2 mb-3">
                 <v-flex xs2 offset-xs5>
 
                     <v-btn  style="width:100%"  color="primary"  @click="onEevaluate" :disabled="!isValid">
@@ -99,36 +81,15 @@
             </v-layout>
         </v-form>
 
-        <div v-if="evaluateMode">
+        <div  >
             <v-layout row wrap  class="mb-4">
                 <v-flex  offset-xs5 xs2 class="text-xs-center">
                     <span class="title">Addressable quantity: <b>{{targetQty}}</b></span>
                 </v-flex>
             </v-layout>
-            <v-layout row wrap>
-                <v-flex  offset-xs5 xs2 class="text-xs-center">
-                    <v-text-field dense  hide-details
-                                  :label="$vuetify.t('CB Target Quantity')"
-                                  v-model="$record.cb_target_quantity"
-                                  type="number"  />
 
-                </v-flex>
-            </v-layout>
 
-            <v-layout row wrap>
-                <v-flex  xs12 class="text-xs-center">
-                    <v-btn :disabled="!$record.cb_target_quantity"  color="success"   @click="onAdd" >
-                        {{$vuetify.t('Proceed')}}
-                    </v-btn>
-
-                    <v-btn  color="warning"   @click="mode='input'" >
-                        {{$vuetify.t('Back')}}
-                    </v-btn>
-
-                </v-flex>
-                <v-flex xs12 class="text-xs-center">
-                      <span v-if="targetQty==0">{{'Loading Addressable Quantity' }}</span>
-                </v-flex>
+            <v-layout row wrap >
 
                 <v-flex xs12>
                     <v-progress-linear v-if="isAjax" :indeterminate="true"></v-progress-linear>
@@ -153,41 +114,13 @@
     export default {
         name: "CampaignForms",
         components: {
-            FormPanel, DatePicker, GridButton
+            FormPanel, GridButton, DatePicker
         },
         data () {
           return {
             timePickerOptions: timePickerOptions(),
             requiredRule: [v => !!v || 'Required'],
             mode: 'input' // input evaluate
-          }
-        },
-
-        watch: {
-          '$record.type' (val) {
-            if(val==='Immediate') {
-              this.$record.start_datetime
-            }
-          },
-          '$record.start_datetime' (val) {
-            if(!this.isStartDateValid){
-              this.$notify({
-                //clean: true,
-                ignoreDuplicates: true,
-                type:'error',
-                title: 'Invalid Start Date',
-                text: 'Campaign Start Datetime is not whitin validity range. Please check'
-              })
-            } else {
-              if(!this.$record.start_datetime) return
-              //this.$notify({clean: true})
-              this.$notify({
-                ignoreDuplicates: true,
-                type:'success',
-                title: 'Valid Start Date',
-                text: 'Campaign Start Datetime is valid'
-              })
-            }
           }
         },
         computed: {
@@ -206,13 +139,7 @@
           },
           isValid () {
             if(!this.$record.brand_id) return false
-            if(!this.$record.type) return false
-            if( this.$record.cb_age_range.length===0) return false
-            if(!this.$record.type) return false
             if(!this.$record.lp_id) return false
-            if(!this.$record.cb_activity_level) return false
-            if(!this.$record.cb_selection) return false
-            if(!this.isStartDateValid) return false
             return true
           },
           isStartDateValid () {

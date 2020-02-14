@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import colors from 'vuetify/es5/util/colors'
 import Notifications from 'vue-notification'
-import {dmy, time, truncate, statusIdToText, lpType} from '../assets/filters'
+import {dmy, time, truncate, statusIdToText, lpType,number} from '../assets/filters'
 import numeral from 'numeral';
 import numFormat from 'vue-filter-number-format';
 import 'vue2-datepicker/index.css';
@@ -19,6 +19,7 @@ Vue.use(Vuetify, {
   }
 })
 Vue.use(Notifications)
+Vue.filter('number', number)
 Vue.filter('lpType', lpType)
 Vue.filter('dmy', dmy)
 Vue.filter('time', time)
