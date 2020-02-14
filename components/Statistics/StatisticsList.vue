@@ -128,7 +128,7 @@
                             <v-list-tile-title>Overall - Conversion (%)</v-list-tile-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-chip color="orange" text-color="white">{{ $record.overall_conv|number }}</v-chip>
+                            <v-chip color="orange" text-color="white">{{ $record.overall_conv|number('0.000%') }}</v-chip>
                         </v-list-tile-action>
                     </v-list-tile>
 
@@ -140,7 +140,7 @@
                             <v-list-tile-title>Lp "One-Click" - Conversion (%)</v-list-tile-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-chip color="orange" text-color="white">{{ $record.lp_1c_conv | number}}</v-chip>
+                            <v-chip color="orange" text-color="white">{{ $record.lp_1c_conv | number('0.000%')}}</v-chip>
                         </v-list-tile-action>
                     </v-list-tile>
 
@@ -153,7 +153,7 @@
                             <v-list-tile-title>Lp "Two-Click" - Conversion (%)</v-list-tile-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-chip color="orange" text-color="white">{{ $record.lp_2c_conv | number}}</v-chip>
+                            <v-chip color="orange" text-color="white">{{ $record.lp_2c_conv | number('0.000%')}}</v-chip>
                         </v-list-tile-action>
                     </v-list-tile>
 
