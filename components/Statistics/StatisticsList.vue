@@ -143,7 +143,7 @@
                             <v-chip color="orange" text-color="white">{{ $record.lp_1c_conv | number('0.000%')}}</v-chip>
                         </v-list-tile-action>
                     </v-list-tile>
-
+ 
                     <v-list-tile avatar @click="" >
                         <v-list-tile-avatar>
                             <v-icon class="orange white--text">textsms</v-icon>
