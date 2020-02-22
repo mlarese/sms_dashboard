@@ -101,8 +101,10 @@
                     <td>{{ item.cb_activity_level }}</td>
                     <td>{{ item.cb_target_quantity }}</td>
                     <td>{{ item.cb_target_quantity_processed }}</td>
-                    <td>{{ item.lead }}</td>
-                    <td><span v-if="item.processed_cb_quantity">{{ item.lead/item.processed_cb_quantity }}</span></td>
+                    <td>{{ item.leads_count }}</td>
+                    <td>
+                        <span v-if="item.cb_target_quantity_processed>0">{{ item.leads_count/item.cb_target_quantity_processed | number('0.000%')}}</span>
+                    </td>
 
                     <td width="1" class="py-1 px-2">
                         <GridButton v-if="item.status_id==4" icon="delete" color="error" @click="onDelete(item)"></GridButton>
