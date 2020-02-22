@@ -30,7 +30,15 @@ const menus = {
     menuItems.settings
   ],
   'Third Party Agency': [
-    menuItems.leads,
+    menuItems.leads
+    //,menuItems.msisdnsearch
+  ],
+  Intermediary:[
+    menuItems.campaigns,
+    menuItems.statistics
+  ],
+  "CB Owner": [
+    menuItems.campaigns,
     menuItems.msisdnsearch
   ],
   guest: [
