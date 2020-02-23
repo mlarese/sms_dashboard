@@ -44,10 +44,7 @@
                 </v-layout>
                 <v-layout>
                     <v-flex s12 class="text-xs-center">
-                        <JsonExcelCsv
-                                storeName   = "leads"
-                                :fields = "csvFields"
-                        />
+                        <v-btn color="blue" dark class="elevation-1" @click="downloadCsv">Csv Export</v-btn>
                     </v-flex>
                 </v-layout>
 
@@ -55,7 +52,7 @@
         </CardPanel>
 
         <v-layout slot="body-center" rows wrap>
-            <v-flex xs12 class="mb-1" style="color:grey">Total results: {{leadsList.length}}</v-flex>
+            <v-flex xs12 class="mb-1" style="color:grey">Total results: <b>{{leadsList.length|number}}</b></v-flex>
 
 
             <v-flex xs12>
@@ -93,11 +90,11 @@
     import CardPanel from "../General/CardPanel"
     import ButtonNew from "../General/ButtonNew"
     import DatePicker from 'vue2-datepicker'
-    import JsonExcelCsv from '../General/JsonExcelCsv'
+
 
     import {statusIdToText, statusList} from '../../assets/filters'
     export default {
-        components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker, JsonExcelCsv},
+        components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
         data () {
             const headers = [
                 { text: this.$vuetify.t('Campaign ID'), value: 'campaign_id' },
@@ -107,22 +104,6 @@
                 { text: this.$vuetify.t('DateTime'), value: 'creation_datetime' },
             ]
             return {
-                csvFields:{
-                  msisdn:'msisdn_full',
-                  brand:'brand_name',
-                  creation_datetime:{
-                    field: 'creation_datetime',
-                    callback: (value) => {
-                      return dmy(value) + ' ' + time(value)
-                    }
-                  },
-                  lp_type:{
-                    field: 'lp_type',
-                    callback: (value) => {
-                      return lpType(value)
-                    }
-                  },
-                },
                 sms_mo_date: null,
                 click_date: null,
                 gridFilter: '',
@@ -136,12 +117,13 @@
             ...mapState('advformats', {'advformatsList': 'list'}),
             ...mapState('locations', {'locationsList': 'list'}),
             ...mapState('api', {'isAjax': 'isAjax'})
+
         },
         created () {
           this.resetSearch()
         },
         methods: {
-            ...mapActions('leads', ['resetSearch', 'search']),
+            ...mapActions('leads', ['resetSearch', 'search','downloadCsv']),
             statusIdToText,
             doSearch () {
                 this.search()

@@ -1,7 +1,7 @@
 <!--eslint-disable-->
 <template>
     <GridContainer title="Campaigns">
-        <div slot="header-right">
+        <div slot="header-right" v-if="isAdmin">
             <ButtonNew title="New Campaign" @click.native="addCampaign" />
         </div>
         <CardPanel slot="container-top">
@@ -70,7 +70,7 @@
         </CardPanel>
 
         <v-layout slot="body-center" rows wrap>
-            <v-flex xs12 class="mb-1" style="color:grey">Total results: {{clicksList.length}}</v-flex>
+            <v-flex xs12 class="mb-1" style="color:grey">Total results: <b>{{clicksList.length|number}}</b> - Total processed quantity: <b>{{totalProcessedQty|number}}</b></v-flex>
 
 
             <v-flex xs12>
@@ -99,8 +99,8 @@
                     <td :title="getCapsRangesList(item.postal_code)" v-html="getCapsRanges(item.postal_code)"></td>
 
                     <td>{{ item.cb_activity_level }}</td>
-                    <td>{{ item.cb_target_quantity }}</td>
-                    <td>{{ item.cb_target_quantity_processed }}</td>
+                    <td>{{ item.cb_target_quantity | number}}</td>
+                    <td>{{ item.cb_target_quantity_processed | number}}</td>
                     <td>{{ item.leads_count }}</td>
                     <td>
                         <span v-if="item.cb_target_quantity_processed>0">{{ item.leads_count/item.cb_target_quantity_processed | number('0.000%')}}</span>
@@ -128,6 +128,8 @@
     import ButtonNew from "../General/ButtonNew";
     import DatePicker from 'vue2-datepicker';
     import {statusIdToText, statusList} from '../../assets/filters'
+    import _sumBy from 'lodash/sumBy'
+
     export default {
         components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
         data () {
@@ -168,6 +170,10 @@
             ...mapState('advformats', {'advformatsList': 'list'}),
             ...mapState('locations', {'states':'states','locationsList': 'list','regions':'regions'}),
             ...mapState('api', {'isAjax': 'isAjax'}),
+            ...mapGetters('app', ['isAdmin']),
+            totalProcessedQty () {
+                return _sumBy(this.clicksList, 'cb_target_quantity_processed')
+            }
         },
         created () {
           this.resetSearch()

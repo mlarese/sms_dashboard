@@ -84,7 +84,7 @@
         <div  >
             <v-layout row wrap  class="mb-4">
                 <v-flex  offset-xs5 xs2 class="text-xs-center">
-                    <span class="title">Addressable quantity: <b>{{targetQty}}</b></span>
+                    <span class="title">Addressable Quantity: <b>{{targetQty|number}}</b></span>
                 </v-flex>
             </v-layout>
 

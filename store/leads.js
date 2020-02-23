@@ -85,7 +85,15 @@ export const actions = {
       return dispatch('api/delete', {url}, root)
     },
 
-
+    downloadCsv ({dispatch, commit, state}) {
+      const url = `/api/leadscsv`
+      let data = state.filter
+      return dispatch('api/post', {url, data}, root)
+        .then(res => {
+            window.location='https://gtg.ai/'+res.data.file
+            return res
+        })
+    },
     search ({dispatch, commit, state}) {
         let data = state.filter
         commit('setList', [])

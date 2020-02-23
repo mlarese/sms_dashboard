@@ -85,6 +85,7 @@ export const actions = {
 
 export const getters = {
   role: (s, g, rs) => !_has(rs, 'auth.user.role') ? 'guest' : rs.auth.user.role,
+  isAdmin: (s, g)=> g.role === 'Admin',
   user: (s, g, rs) => !_has(rs, 'auth.user') ? '' : rs.auth.user,
   userName: (s, g, rs) => !_has(rs, 'auth.user.userName') ? '' : rs.auth.user.userName,
   redirectRoute: (s, g) => s.redirectRoutes[g.role],
