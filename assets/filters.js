@@ -19,7 +19,7 @@ export const dmySt = (date) => {
   }
 
   const offs = -ldate.getTimezoneOffset()
-  ldate = addMinutes(ldate, offs)
+  // ldate = addMinutes(ldate, offs)
   return formatSt(ldate, 'dd/MM/yyyy')
 }
 
@@ -49,7 +49,7 @@ export const time = (date, pattern='HH:mm:ss') => {
   }
 
   const offs = -ldate.getTimezoneOffset()
-  ldate = addMinutes(ldate, offs)
+  //ldate = addMinutes(ldate, offs)
   return formatSt(ldate, pattern)
 }
 
@@ -88,3 +88,5 @@ export const statusList = [{conversion_status_id:0, text:'Pending'},{conversion_
 export const number = (value, format='0,0') => {
   return numeral(value).format(format)
 }
+
+export const currentYMD = () => formatSt(new Date(), 'yyyy-MM-dd')

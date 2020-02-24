@@ -70,12 +70,20 @@
         </CardPanel>
 
         <v-layout slot="body-center" rows wrap>
-            <v-flex xs12 class="mb-1" style="color:grey">Total results: <b>{{clicksList.length|number}}</b> - Total processed quantity: <b>{{totalProcessedQty|number}}</b></v-flex>
-
+            <v-flex xs12 sm4 class="text-xs-center mb-1" style="color:grey">
+                <span >Total Results: <b>{{clicksList.length|number}}</b> </span>
+            </v-flex>
+            <v-flex xs12 sm4 class="text-xs-center  mb-1" style="color:grey">
+                <span >Total Processed Quantity: <b>{{totalProcessedQty|number}}</b></span>
+            </v-flex>
+            <v-flex xs12 sm4 class="text-xs-center  mb-1" style="color:grey">
+                <span >Total Leads: <b>{{totalLeadsQty|number}}</b></span>
+            </v-flex>
 
             <v-flex xs12>
 
             <v-data-table
+                    :must-sort="true"
                     :rows-per-page-items="[100,200,500,{'text':'All','value':-1}]"
                     :loading="isAjax" fixed
                     :headers="headers"
@@ -89,7 +97,7 @@
                     <td>{{ item.brand_name }}</td>
                     <td>{{ item.status_name }}</td>
                     <td>{{ item.type }}</td>
-                    <td>{{ item.creation_datetime | dmy}}<br> {{ item.creation_datetime  | time }}</td>
+                    <td>{{ item.creation_datetime | dmy}}<br> {{ item.creation_datetime  | time }} </td>
                     <td>{{ item.start_datetime | dmy}} <br>{{ item.start_datetime  | time }}</td>
                     <td>{{ item.end_datetime | dmy}} <br>{{ item.end_datetime  | time }}</td>
                     <td>{{ item.lp_name }}</td>
@@ -139,9 +147,9 @@
                 { text: this.$vuetify.t('Brand'), value: 'brand_name' },
                 { text: this.$vuetify.t('Status'), value: 'status_name' },
                 { text: this.$vuetify.t('Type'), value: 'type' },
-                { text: this.$vuetify.t('Creation DateTime'), value: 'creation_datetime' },
-                { text: this.$vuetify.t('Start DateTime'), value: 'start_datetime' },
-                { text: this.$vuetify.t('End DateTime'), value: 'end_datetime' },
+                { text: this.$vuetify.t('Creation DateTime'), value: 'creation_datetime.date' },
+                { text: this.$vuetify.t('Start DateTime'), value: 'start_datetime.date' },
+                { text: this.$vuetify.t('End DateTime'), value: 'end_datetime.date' },
                 { text: this.$vuetify.t('LP Name'), value: 'lp_name' },
                 { text: this.$vuetify.t('LP Type'), value: 'lp_type' },
                 { text: this.$vuetify.t('Age Range'), value: 'cb_age_range'},
@@ -150,7 +158,7 @@
                 { text: this.$vuetify.t('CB Activity Level'), value: 'cb_activity_level' },
                 { text: this.$vuetify.t('Campaign Qty'), value: 'cb_target_quantity' },
                 { text: this.$vuetify.t('Processed Qty'), value: 'cb_target_quantity_processed' },
-                { text: this.$vuetify.t('Leads'), value: 'lead' },
+                { text: this.$vuetify.t('Leads'), value: 'leads_count' },
                 { text: this.$vuetify.t('Conv. (%)'), value: 'conversion' },
                 { text: 'Delete', value: 'action', sortable: false }
             ]
@@ -173,6 +181,9 @@
             ...mapGetters('app', ['isAdmin']),
             totalProcessedQty () {
                 return _sumBy(this.clicksList, 'cb_target_quantity_processed')
+            },
+            totalLeadsQty () {
+                return _sumBy(this.clicksList, 'leads_count')
             }
         },
         created () {

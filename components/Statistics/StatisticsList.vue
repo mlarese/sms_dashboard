@@ -36,7 +36,6 @@
 
         <v-layout slot="body-center" rows wrap>
 
-
             <v-flex offset-sm4 sm4 xs12>
 
                 <v-list one-line  dense>
@@ -167,7 +166,7 @@
 </template>
 <script>
     import {mapState, mapActions} from 'vuex'
-    import {dmy,time,lpType} from '../../assets/filters'
+    import {dmy,time,lpType, currentYMD} from '../../assets/filters'
     import GridButton from '../General/GridButton'
     import GridContainer from '../General/GridContainer'
     import CardPanel from "../General/CardPanel"
@@ -179,7 +178,9 @@
         components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
         data () {
           return {
-            filter: {}
+            filter: {
+              creation_datetime: currentYMD()
+            }
           }
         },
         computed: {
