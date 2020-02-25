@@ -34,7 +34,7 @@ export const dmy = (date) => {
   }
 
   const offs = -ldate.getTimezoneOffset()
-  ldate = addMinutes(ldate, offs)
+  //ldate = addMinutes(ldate, offs)
   return formatSt(ldate, 'dd/MM/yyyy')
 }
 
@@ -86,6 +86,8 @@ export const lpType = (value) => {
 export const statusList = [{conversion_status_id:0, text:'Pending'},{conversion_status_id:1, text:'Full Conversion'},{conversion_status_id:2, text:'Likely Conversion'},{conversion_status_id:3, text:'Detractor'}]
 
 export const number = (value, format='0,0') => {
+  if(!value) return 0
+  value = value * 1
   return numeral(value).format(format)
 }
 

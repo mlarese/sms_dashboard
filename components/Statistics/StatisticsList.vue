@@ -155,7 +155,19 @@
                             <v-chip color="orange" text-color="white">{{ $record.lp_2c_conv | number('0.000%')}}</v-chip>
                         </v-list-tile-action>
                     </v-list-tile>
+                    <v-divider/>
+                    <v-list-tile avatar @click="" >
+                        <v-list-tile-avatar>
+                            <v-icon class="red white--text">people</v-icon>
+                        </v-list-tile-avatar>
 
+                        <v-list-tile-content>
+                            <v-list-tile-title>Port-Out</v-list-tile-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-chip color="red" text-color="white">{{ $record.portout  | number }}</v-chip>
+                        </v-list-tile-action>
+                    </v-list-tile>
 
                 </v-list>
 
