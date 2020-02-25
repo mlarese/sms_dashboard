@@ -45,6 +45,7 @@
                 <v-layout>
                     <v-flex s12 class="text-xs-center">
                         <v-btn color="blue" dark class="elevation-1" @click="downloadCsv">Csv Export</v-btn>
+
                     </v-flex>
                 </v-layout>
 
@@ -57,6 +58,7 @@
 
             <v-flex xs12>
                 <v-data-table
+                        :must-sort="true"
                         :rows-per-page-items="[100,200,500,{'text':'All','value':-1}]"
                         :loading="isAjax" fixed
                         :headers="headers"
@@ -71,6 +73,7 @@
                         <td>{{ item.msisdn }}</td>
                         <td>{{ item.lp_type|lpType }}</td>
                         <td>{{ item.creation_datetime | dmy}} - {{ item.creation_datetime  | time }}</td>
+                        <td><GridButton icon="cloud_download" color="blue" @click="onExportLog(item)" /></td>
                     </template>
                     <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
                         {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}
@@ -101,7 +104,8 @@
                 { text: this.$vuetify.t('Brand'), value: 'brand' },
                 { text: this.$vuetify.t('MSISDN'), value: 'msisdn' },
                 { text: this.$vuetify.t('Lp Type'), value: 'lp_type' },
-                { text: this.$vuetify.t('DateTime'), value: 'creation_datetime' },
+                { text: this.$vuetify.t('DateTime'), value: 'creation_datetime.date' },
+                { text: 'Log', value: 'action', sortable: false }
             ]
             return {
                 sms_mo_date: null,
@@ -123,8 +127,11 @@
           this.resetSearch()
         },
         methods: {
-            ...mapActions('leads', ['resetSearch', 'search','downloadCsv']),
+            ...mapActions('leads', ['resetSearch', 'search','downloadCsv','downloadLog']),
             statusIdToText,
+            onExportLog (item) {
+                this.downloadLog(item.row_id)
+            },
             doSearch () {
                 this.search()
             },

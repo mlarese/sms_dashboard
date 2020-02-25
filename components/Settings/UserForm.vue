@@ -14,6 +14,7 @@
         >
 
             <v-layout row wrap>
+                <v-flex sm2 xs12 v-if="!isAdmin"></v-flex>
                 <v-flex sm3 xs12>
                     <v-text-field append-icon="" label="Company Name"   hide-details v-model="$record.company_name" />
                 </v-flex>
@@ -24,7 +25,7 @@
 
 
 
-                <v-flex sm3 xs12>
+                <v-flex sm3 xs12 v-if="isAdmin">
                     <v-select
                           :items="rolesList"
                           v-model="$record.role_id"
@@ -56,7 +57,7 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex'
+    import {mapState, mapActions, mapGetters} from 'vuex'
     import {timePickerOptions, notBeforeToday} from '../../assets/helpers'
     import FormPanel from '../General/FormPanel'
     import GridButton from '../General/GridButton'
@@ -72,6 +73,7 @@
         computed: {
           ...mapState('users', ['$record']),
           ...mapState('roles', {'rolesList': 'list'}),
+          ...mapGetters('app', ['isAdmin']),
           isValid () {
             if(!this.$record.username) return false
             if(!this.$record.role_id) return false

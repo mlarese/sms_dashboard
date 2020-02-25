@@ -12,11 +12,11 @@ export default async function ({route, store, redirect, app}) {
   }
 
   if(role==='_Admin') {
-    if(route.name==='leads' || route.name==='msisdnsearch') {
+    if(route.name==='leads' || route.name==='profile') {
       return redirect('/campaigns')
     }
   } else if(role==='Third Party Agency') {
-    if(route.name!=='leads' && route.name!=='msisdnsearch') {
+    if(route.name!=='leads' && route.name!=='profile') {
       return redirect('/leads')
     }
   }

@@ -14,7 +14,8 @@ const menuItems = {
     msisdnsearch: {to: 'msisdnsearch', label: 'MSISDN Search'},
     whitelist: {to: 'whitelist', label: 'Whitelist'},
     landingpages: {to: 'landingPages', label: 'Landing Pages'},
-    settings: {to: 'settings/brands', label: 'Settings'}
+    settings: {to: 'settings/brands', label: 'Settings'},
+    profile: {to: 'profile', label: 'Profile'}
 }
 
 
@@ -30,7 +31,8 @@ const menus = {
     menuItems.settings
   ],
   'Third Party Agency': [
-    menuItems.leads
+    menuItems.leads,
+    menuItems.profile
     //,menuItems.msisdnsearch
   ],
   Intermediary:[

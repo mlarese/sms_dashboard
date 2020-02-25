@@ -94,6 +94,15 @@ export const actions = {
             return res
         })
     },
+    downloadLog ({dispatch, commit, state}, id) {
+      const url = `/api/leadslog/${id}`
+      let data = state.filter
+      return dispatch('api/get', {url}, root)
+        .then(res => {
+          window.location='https://gtg.ai/'+res.data.file
+          return res
+        })
+    },
     search ({dispatch, commit, state}) {
         let data = state.filter
         commit('setList', [])
