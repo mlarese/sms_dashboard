@@ -1,6 +1,6 @@
 <!--eslint-disable-->
 <template>
-    <GridContainer title="Cb Overview">
+    <GridContainer title="CB Overview">
         <CardPanel slot_="container-top">
             <div class="">
                 <v-layout rows wrap class="align-center">
@@ -23,6 +23,8 @@
                 </v-layout>
             </div>
         </CardPanel>
+
+
 
         <v-layout slot="body-center" rows wrap>
 

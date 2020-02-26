@@ -15,7 +15,7 @@ const menuItems = {
     whitelist: {to: 'whitelist', label: 'Whitelist'},
     landingpages: {to: 'landingPages', label: 'Landing Pages'},
     settings: {to: 'settings/brands', label: 'Settings'},
-    cboverview: {to: 'cboverview', label: 'Cb Overview'},
+    cboverview: {to: 'cboverview', label: 'CB Overview'},
     profile: {to: 'profile', label: 'Profile'}
 }
 
@@ -29,7 +29,7 @@ const menus = {
     //menuItems.msisdnsearch,
     menuItems.whitelist,
     menuItems.landingpages,
-    menuItems.cboverview,
+    //menuItems.cboverview,
     menuItems.settings
   ],
   'Third Party Agency': [
@@ -43,7 +43,7 @@ const menus = {
   ],
   "CB Owner": [
     menuItems.campaigns,
-    //menuItems.cboverview,
+    menuItems.cboverview,
     menuItems.msisdnsearch
   ],
   guest: [
