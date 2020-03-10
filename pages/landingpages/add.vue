@@ -13,7 +13,7 @@
         LandingPageForms
     },
     fetch({store}) {
-        store.commit('landingPages/setRecord',{portout_flag:'N', guid: guid(), button_element: noImageLpPlaceholder},{root: true})
+        store.commit('landingPages/setRecord',{guid: guid(), button_element: noImageLpPlaceholder},{root: true})
         store.commit('landingPages/setAddMode',null,{root: true})
     }
   }

@@ -1,8 +1,8 @@
 <!--eslint-disable-->
 <template>
-    <GridContainer title="Users">
+    <GridContainer title="Users" class="pb-0">
 
-        <div slot="container-top" class="py-4">
+        <div slot="container-top" class="pt-4 pb-0">
             <v-text-field
                     v-model="gridFilter"
                     label="Search"
