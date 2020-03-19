@@ -70,15 +70,26 @@
         </CardPanel>
 
         <v-layout slot="body-center" rows wrap>
-            <v-flex xs12 sm4 class="text-xs-center mb-1" style="color:grey">
+            <v-flex xs6 sm2 class="text-xs-center mb-1" style="color:grey">
                 <span >Total Results: <b>{{clicksList.length|number}}</b> </span>
             </v-flex>
-            <v-flex xs12 sm4 class="text-xs-center  mb-1" style="color:grey">
-                <span >Total Processed Quantity: <b>{{totalProcessedQty|number}}</b></span>
+            <v-flex xs6 sm2 class="text-xs-center  mb-1" style="color:grey">
+                <span >Total Campaign Qty “One Click”: <b>{{total_1_ClikQty|number}}</b></span>
             </v-flex>
-            <v-flex xs12 sm4 class="text-xs-center  mb-1" style="color:grey">
+            <v-flex xs6 sm2 class="text-xs-center  mb-1" style="color:grey">
+                <span >Total Campaign Qty “Two Click”: <b>{{total_2_ClikQty|number}}</b></span>
+            </v-flex>
+            <v-flex xs6 sm2 class="text-xs-center  mb-1" style="color:grey">
+                <span >Total Processed Qty: <b>{{totalProcessedQty|number}}</b></span>
+            </v-flex>
+            <v-flex xs6 sm2 class="text-xs-center  mb-1" style="color:grey">
                 <span >Total Leads: <b>{{totalLeadsQty|number}}</b></span>
             </v-flex>
+
+
+        </v-layout>
+
+        <v-layout slot="body-center" rows wrap>
 
             <v-flex xs12>
 
@@ -184,7 +195,14 @@
             },
             totalLeadsQty () {
                 return _sumBy(this.clicksList, 'leads_count')
+            },
+            total_1_ClikQty () {
+                return _sumBy(this.clicksList, 'counter_1_click')
+            },
+            total_2_ClikQty () {
+                return _sumBy(this.clicksList, 'counter_2_click')
             }
+
         },
         created () {
           this.resetSearch()

@@ -4,9 +4,11 @@ import addDays from "date-fns/addDays";
 import format from 'date-fns/format'
 
 let today = new Date()
+const sToday = format(today,'yyyy-MM-dd')
 
 const newFilter = () => ({
-  creation_datetime: [format(addDays(today,-30), 'yyyy-MM-dd'), format(today,'yyyy-MM-dd')]
+
+  creation_datetime: [sToday, sToday]
 })
 
 export const state = () => {
