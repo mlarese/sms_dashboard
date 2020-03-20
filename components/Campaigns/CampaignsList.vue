@@ -73,10 +73,10 @@
             <v-flex xs6 sm2 class="text-xs-center mb-1" style="color:grey">
                 <span >Total Results: <b>{{clicksList.length|number}}</b> </span>
             </v-flex>
-            <v-flex xs6 sm2 class="text-xs-center  mb-1" style="color:grey">
+            <v-flex xs6 sm3 class="text-xs-center  mb-1" style="color:grey">
                 <span >Total Campaign Qty “One Click”: <b>{{total_1_ClikQty|number}}</b></span>
             </v-flex>
-            <v-flex xs6 sm2 class="text-xs-center  mb-1" style="color:grey">
+            <v-flex xs6 sm3 class="text-xs-center  mb-1" style="color:grey">
                 <span >Total Campaign Qty “Two Click”: <b>{{total_2_ClikQty|number}}</b></span>
             </v-flex>
             <v-flex xs6 sm2 class="text-xs-center  mb-1" style="color:grey">
