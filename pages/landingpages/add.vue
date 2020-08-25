@@ -13,6 +13,7 @@
         LandingPageForms
     },
     fetch({store}) {
+        store.dispatch('brands/load', {}, {root: true})
         store.commit('landingPages/setRecord',{guid: guid(), button_element: noImageLpPlaceholder},{root: true})
         store.commit('landingPages/setAddMode',null,{root: true})
     }

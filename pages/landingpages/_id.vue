@@ -11,9 +11,50 @@
       LandingPageForms
     },
     async fetch({store, params}) {
+      store.dispatch('brands/load', {}, {root: true})
       store.commit('landingPages/setRecord',{},{root: true})
       store.commit('landingPages/setEditMode',null,{root: true})
       await store.dispatch('landingPages/load', {id: params.id}, {root: true})
     }
   }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

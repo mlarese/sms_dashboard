@@ -8,9 +8,9 @@ export const notifyError = (err, translate = null) => {
   let title = 'Error'
   let type = 'error'
 
-  if (err.response.data && err.response.data.error_message) {
+  if (err.response && err.response.data && err.response.data.error_message) {
     text = err.response.data.error_message
-  } else if (err.response.statusText) {
+  } else if (err.response && err.response.statusText) {
     text = err.response.statusText
   } else if (err.message) {
     text = err.message

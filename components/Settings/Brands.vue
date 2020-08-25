@@ -29,6 +29,7 @@
             <template slot="items" slot-scope="{item}">
                 <td>{{ item.brand_id }}</td>
                 <td>{{ item.brand_name }}</td>
+                <td>{{ item.sender }}</td>
                 <td>{{ item.sms_mt_text_message }}</td>
                 <td>{{ item.conversion_grace_period }}</td>
                 <td width="1" class="pa-1">
@@ -58,6 +59,7 @@
             const headers = [
                 { text: this.$vuetify.t('ID'), value: 'brand_id' },
                 { text: this.$vuetify.t('Brand'), value: 'brand_name' },
+                { text: this.$vuetify.t('Sender'), value: 'sender' },
                 { text: this.$vuetify.t('SMS MT Message'), value: 'sms_mt_text_message' },
                 { text: this.$vuetify.t('Conversion Grace Period'), value: 'conversion_grace_period' },
                 { text: 'Edit', value: 'action', sortable: false },

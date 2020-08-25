@@ -27,7 +27,7 @@
 
 
                 <v-flex xs3 style="line-height: 0">
-                        <div style="position:relativetop:-4px">
+                        <div style="position:relative;top:-4px">
                             <span v-if="$record.start_datetime"  class="active-label-size" >Start Datetime</span>
                             <span v-else  class="active-label-size" > &nbsp</span>
 
@@ -42,20 +42,19 @@
                                     v-model="$record.start_datetime" type="datetime"></DatePicker>
                         </div>
 
+                </v-flex>
+            </v-layout>
 
-
+            <v-layout row wrap class="mt-2">
+                <v-flex xs3>
+                    <v-combobox dense  hide-details :label="$vuetify.t('Sms Type')"  :items="['Low', 'High']"   v-model="$record.sms_type" />
                 </v-flex>
 
-
-
-
-            </v-layout>
-            <v-layout row wrap class="mt-2">
-
-                <v-flex xs6>
+                <v-flex xs4>
                     <v-combobox dense  hide-details :label="$vuetify.t('Gender')"  :items="['All', 'M', 'F']"   v-model="$record.cb_gender" />
                 </v-flex>
-                <v-flex sm12 lg6>
+
+                <v-flex sm12 lg6 class="mt-2">
 
                     <v-select
                             dense
@@ -88,6 +87,7 @@
                 <v-flex xs4>
                     <v-combobox dense  hide-details :label="$vuetify.t('CB Selection')"  :items="cbSelctionsList"   v-model="$record.cb_selection" />
                 </v-flex>
+
             </v-layout>
             <v-layout row wrap class="mt-2">
                 <v-flex xs2 offset-xs5>

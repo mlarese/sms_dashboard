@@ -4,6 +4,7 @@
         <div slot="header-right" v-if="isAdmin">
             <ButtonNew title="New Campaign" @click.native="addCampaign" />
         </div>
+
         <CardPanel slot="container-top">
             <div class="">
                 <v-layout rows wrap  >
@@ -23,24 +24,30 @@
                         <DatePicker value-type="YYYY-MM-DD" :placeholder="$vuetify.t('Start Datetime')" v-model="filter.start_datetime" range></DatePicker>
                     </v-flex>
 
-                    <v-flex sm3 xs3>
+                    <v-flex sm2 xs2>
                         <v-combobox style="margin-top:21px" dense  hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="filter.brand_id" item-text="brand_name" item-value="brand_id" />
 
                     </v-flex>
+
+                    <v-flex sm2 xs2
+                        <v-combobox style="margin-top:21px" dense hide-details :label="$vuetify.t('Sms Type')"  :items="['Low', 'High']"   v-model="filter.sms_type" />
+                    </v-flex>
+
+
                 </v-layout>
                 <v-layout rows wrap class="mt-2" >
-                    <v-flex offset-sm1 sm9 xs12>
+                    <v-flex offset-sm1 sm10 xs12>
                         <v-combobox multiple dense  class="hide-dropdown-icon" hide-details :label="$vuetify.t('Postal code')"  chips deletable-chips
                                         v-model="filter.postal_code"  />
                     </v-flex>
                 </v-layout>
                 <v-layout rows wrap class="mt-2" >
-                    <v-flex offset-sm1 sm9 xs12>
+                    <v-flex offset-sm1 sm10 xs12>
                         <v-autocomplete dense  hide-details :label="$vuetify.t('Region')" multiple chips deletable-chips :items="regions" v-model="filter.region"  />
                     </v-flex>
                 </v-layout>
                 <v-layout rows wrap class="mt-2">
-                    <v-flex sm2 offset-sm1 xs3><v-combobox dense  class=""  hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
+                    <v-flex sm3 offset-sm1 xs3><v-combobox dense  class=""  hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
                     <v-flex sm2 xs3><v-combobox dense hide-details :label="$vuetify.t('CB Selection')"  :items="cbSelctionsList"   v-model="filter.cb_selection" /></v-flex>
                     <v-flex sm2 xs3><v-select dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="[{text:'One Click', value:1}, {text:'Two Clicks', value:2}]"   v-model="filter.lp_type" /></v-flex>
                     <v-flex sm2 xs3>
@@ -54,7 +61,7 @@
                         <GridButton :dark="false" icon="cancel" color="white" @click="doResetSearch" />
                     </v-flex>
 
-                    <v-flex xs9 offset-sm1 class="mt-2">
+                    <v-flex xs10 offset-sm1 class="mt-2">
                         <v-select
                                 dense
                                 hide-details
@@ -69,7 +76,7 @@
             </div>
         </CardPanel>
 
-        <v-layout slot="body-center" rows wrap>
+        <v-layout v-if="false" slot="body-center" rows wrap>
             <v-flex xs6 sm2 class="text-xs-center mb-1" style="color:grey">
                 <span >Total Results: <b>{{clicksList.length|number}}</b> </span>
             </v-flex>
@@ -89,6 +96,57 @@
 
         </v-layout>
 
+
+        <v-layout slot="body-center" rows wrap >
+            <v-flex xs2 sm1 class="text-xs-left mb-1" >
+                <span class="statistic-high">SMS Type: High</span>
+            </v-flex>
+            <v-flex xs5 sm1 class="text-xs-left mb-1" >
+                <span class="statistic-high">Results: <b>{{clicksListHigh.length|number}}</b> </span>
+            </v-flex>
+            <v-flex xs5 sm3 class="text-xs-left  mb-1" >
+                <span class="statistic-high">Campaign Qty “One Click”: <b>{{total_1_ClikQty|number}}</b></span>
+            </v-flex>
+            <v-flex xs6 sm3 class="text-xs-left  mb-1" >
+                <span class="statistic-high">Campaign Qty “Two Click”: <b>{{total_2_ClikQty|number}}</b></span>
+            </v-flex>
+            <v-flex xs6 sm2 class="text-xs-left  mb-1" >
+                <span class="statistic-high">Processed Qty: <b>{{totalProcessedQty|number}}</b></span>
+            </v-flex>
+            <v-flex xs6 sm1 class="text-xs-left  mb-1" >
+                <span class="statistic-high">Leads: <b>{{totalLeadsQty|number}}</b></span>
+            </v-flex>
+
+            <v-flex xs6 sm1 class="text-xs-left  mb-1" >
+                <span class="statistic-high">Conv. (%): <b>{{convPerc|number('0.000')}}</b></span>
+            </v-flex>
+        </v-layout>
+
+        <v-layout slot="body-center" rows wrap class="mb-3">
+            <v-flex xs2 sm1 class="text-xs-left mb-1" >
+                <span class="statistic-low">SMS Type: Low</span>
+            </v-flex>
+            <v-flex xs5 sm1 class="text-xs-left mb-1" >
+                <span class="statistic-low">Results: <b>{{clicksListLow.length|number}}</b> </span>
+            </v-flex>
+            <v-flex xs5 sm3 class="text-xs-left  mb-1" >
+                <span class="statistic-low">Campaign Qty “One Click”: <b>{{total_1_ClikQtyLow|number}}</b></span>
+            </v-flex>
+            <v-flex xs6 sm3 class="text-xs-left  mb-1" >
+                <span class="statistic-low">Campaign Qty “Two Click”: <b>{{total_2_ClikQtyLow|number}}</b></span>
+            </v-flex>
+            <v-flex xs6 sm2 class="text-xs-left  mb-1" >
+                <span class="statistic-low">Processed Qty: <b>{{totalProcessedQtyLow|number}}</b></span>
+            </v-flex>
+            <v-flex xs6 sm1 class="text-xs-left mb-1" >
+                <span class="statistic-low">Leads: <b>{{totalLeadsQtyLow|number}}</b></span>
+            </v-flex>
+
+            <v-flex xs6 sm1 class="text-xs-left  mb-1" >
+                <span class="statistic-low">Conv. (%): <b>{{convPercLow|number('0.000')}}</b></span>
+            </v-flex>
+        </v-layout>
+
         <v-layout slot="body-center" rows wrap>
 
             <v-flex xs12>
@@ -103,6 +161,35 @@
                     :pagination.sync="grid.pagination"
                     class="elevation-0 fixed-header"
             >
+                <template slot="headers" >
+
+                    <tr>
+                        <th class="column sortable text-xs-left">ID</th>
+                        <th class="column sortable text-xs-left">Brand</th>
+                        <th class="column sortable text-xs-left">Status</th>
+                        <th class="column sortable text-xs-left">Type</th>
+                        <th class="column sortable text-xs-left">Create Date</th>
+                        <th class="column sortable text-xs-left">Start Date</th>
+                        <th class="column sortable text-xs-left">End Date</th>
+                        <th class="column sortable text-xs-left">LP Name</th>
+                        <th class="column sortable text-xs-left">LP Type</th>
+                        <th class="column sortable text-xs-left">Age Range</th>
+                        <th class="column sortable text-xs-left">Region</th>
+                        <th class="column sortable text-xs-left">CAP</th>
+                        <th class="column sortable text-xs-left">CB Activity</th>
+                        <th class="column sortable text-xs-left">Sms Type</th>
+                        <th class="column sortable text-xs-left">Ca Qty</th>
+                        <th class="column sortable text-xs-left">Pr Qty</th>
+                        <th class="column sortable text-xs-left">Leads</th>
+                        <th class="column sortable text-xs-left">Conv. (%)<br>Overall</th>
+                        <th class="column sortable text-xs-left">Conv. (%)<br>8H</th>
+                        <th class="column sortable text-xs-left">Conv. (%)<br>24H</th>
+                        <th class="column sortable text-xs-left">Action</th>
+                    </tr>
+
+                </template>
+
+
                 <template slot="items" slot-scope="{item}">
                     <td>{{ item.campaign_id }}</td>
                     <td>{{ item.brand_name }}</td>
@@ -118,6 +205,7 @@
                     <td :title="getCapsRangesList(item.postal_code)" v-html="getCapsRanges(item.postal_code)"></td>
 
                     <td>{{ item.cb_activity_level }}</td>
+                    <td>{{ item.sms_type }}</td>
                     <td>{{ item.cb_target_quantity | number}}</td>
                     <td>{{ item.cb_target_quantity_processed | number}}</td>
                     <td>{{ item.leads_count }}</td>
@@ -125,6 +213,12 @@
                         <span v-if="item.cb_target_quantity_processed>0">{{ item.leads_count/item.cb_target_quantity_processed | number('0.000%')}}</span>
                     </td>
 
+                    <td>
+                        <span v-if="item.cb_target_quantity_processed>0">{{ item.conv_8/item.cb_target_quantity_processed | number('0.000%') }}</span>
+                    </td>
+                    <td>
+                        <span v-if="item.cb_target_quantity_processed>0">{{ item.conv_24/item.cb_target_quantity_processed | number('0.000%') }}</span>
+                    </td>
                     <td width="1" class="py-1 px-2">
                         <GridButton v-if="item.status_id==4" icon="delete" color="error" @click="onDelete(item)"></GridButton>
                     </td>
@@ -148,9 +242,9 @@
     import DatePicker from 'vue2-datepicker';
     import {statusIdToText, statusList} from '../../assets/filters'
     import _sumBy from 'lodash/sumBy'
-
+import Brands from '../Settings/Brands'
     export default {
-        components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker},
+        components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker, Brands},
         data () {
 
             const headers = [
@@ -158,19 +252,22 @@
                 { text: this.$vuetify.t('Brand'), value: 'brand_name' },
                 { text: this.$vuetify.t('Status'), value: 'status_name' },
                 { text: this.$vuetify.t('Type'), value: 'type' },
-                { text: this.$vuetify.t('Creation DateTime'), value: 'creation_datetime.date' },
-                { text: this.$vuetify.t('Start DateTime'), value: 'start_datetime.date' },
-                { text: this.$vuetify.t('End DateTime'), value: 'end_datetime.date' },
+                { text: this.$vuetify.t('Creation Date'), value: 'creation_datetime.date' },
+                { text: this.$vuetify.t('Start Date'), value: 'start_datetime.date' },
+                { text: this.$vuetify.t('End Date'), value: 'end_datetime.date' },
                 { text: this.$vuetify.t('LP Name'), value: 'lp_name' },
                 { text: this.$vuetify.t('LP Type'), value: 'lp_type' },
                 { text: this.$vuetify.t('Age Range'), value: 'cb_age_range'},
                 { text: this.$vuetify.t('Region'), value: 'region' },
                 { text: this.$vuetify.t('CAP'), value: 'postal_code' },
-                { text: this.$vuetify.t('CB Activity Level'), value: 'cb_activity_level' },
-                { text: this.$vuetify.t('Campaign Qty'), value: 'cb_target_quantity' },
-                { text: this.$vuetify.t('Processed Qty'), value: 'cb_target_quantity_processed' },
+                { text: this.$vuetify.t('CB Activity'), value: 'cb_activity_level' },
+                { text: this.$vuetify.t('Sms Type'), value: 'sms_type' },
+                { text: this.$vuetify.t('Ca Qty'), value: 'cb_target_quantity' },
+                { text: this.$vuetify.t('Pr Qty'), value: 'cb_target_quantity_processed' },
                 { text: this.$vuetify.t('Leads'), value: 'leads_count' },
-                { text: this.$vuetify.t('Conv. (%)'), value: 'conversion' },
+                { text: this.$vuetify.t('Conv. (%) Overall'), width: 80, value: 'conversion' },
+                { text: this.$vuetify.t('Conv. (%) 8H'), sortable: false, width: 80, value: 'conv_8' },
+                { text: this.$vuetify.t('Conv. (%) 24H'),sortable: false,  width: 80, value: 'conv_24' },
                 { text: 'Delete', value: 'action', sortable: false }
             ]
             return {
@@ -190,18 +287,45 @@
             ...mapState('locations', {'states':'states','locationsList': 'list','regions':'regions'}),
             ...mapState('api', {'isAjax': 'isAjax'}),
             ...mapGetters('app', ['isAdmin']),
+            convPerc() {
+              if(this.totalProcessedQty === 0) return 0
+              return this.totalLeadsQty/this.totalProcessedQty * 100
+            },
+            clicksListHigh () {
+              return this.clicksList.filter(o => o.sms_type === 'High')
+            },
+            clicksListLow () {
+              return this.clicksList.filter(o => o.sms_type === 'Low')
+            },
             totalProcessedQty () {
-                return _sumBy(this.clicksList, 'cb_target_quantity_processed')
+                return _sumBy(this.clicksListHigh, 'cb_target_quantity_processed')
             },
             totalLeadsQty () {
-                return _sumBy(this.clicksList, 'leads_count')
+                return _sumBy(this.clicksListHigh, 'leads_count')
             },
             total_1_ClikQty () {
-                return _sumBy(this.clicksList, 'counter_1_click')
+                return _sumBy(this.clicksListHigh, 'counter_1_click')
             },
             total_2_ClikQty () {
-                return _sumBy(this.clicksList, 'counter_2_click')
-            }
+                return _sumBy(this.clicksListHigh, 'counter_2_click')
+            },
+
+          totalProcessedQtyLow () {
+            return _sumBy(this.clicksListLow, 'cb_target_quantity_processed')
+          },
+          totalLeadsQtyLow () {
+            return _sumBy(this.clicksListLow, 'leads_count')
+          },
+          total_1_ClikQtyLow () {
+            return _sumBy(this.clicksListLow, 'counter_1_click')
+          },
+          total_2_ClikQtyLow () {
+            return _sumBy(this.clicksListLow, 'counter_2_click')
+          },
+          convPercLow() {
+            if(this.totalProcessedQtyLow === 0) return 0
+            return this.totalLeadsQtyLow/this.totalProcessedQtyLow * 100
+          }
 
         },
         created () {
@@ -287,5 +411,10 @@
         }
     }
 </script>
+
+<style>
+    .statistic-high {color: #1565C0; font-size:12px;}
+    .statistic-low {color: grey; font-size:12px;}
+</style>
 
 

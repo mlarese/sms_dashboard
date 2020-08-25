@@ -17,10 +17,19 @@
                     <v-text-field append-icon="" label="LP Name"   hide-details v-model="$record.lp_name" />
                 </v-flex>
 
-                <v-flex xs3>
+                <v-flex xs2>
+                    <v-autocomplete dense  hide-details :label="$vuetify.t('Brands')"
+                                    :items="brandsList"
+                                    item-text="brand_name"
+                                    item-value="brand_id"
+                                    :disabled="$record.lp_id"
+                                    v-model="$record.brand_id" />
+                    </v-flex>
+
+                <v-flex xs2>
                     <v-select :items="[{text: 'One click', value:1},{text: 'Two click', value:2}]" label="Type" hide-details v-model="$record.lp_type" />
                 </v-flex>
-                <v-flex xs4>
+                <v-flex xs3>
                     <v-text-field append-icon="" label="Background Color" hide-details v-model="$record.background_rgb" />
                 </v-flex>
                 <v-flex xs1>
@@ -158,6 +167,7 @@
           }
         },
         computed: {
+          ...mapState('brands', {'brandsList': 'list'}),
           ...mapState('landingPages', ['$record']),
           btnImg () {
             if(this.$record.button_element)
@@ -172,6 +182,7 @@
             return noImageLpPlaceholder
           },
           isValid () {
+            if(!this.$record.brand_id) return false
             if(!this.$record.lp_name) return false
             if(!this.$record.lp_type) return false
             if(!this.$record.background_rgb) return false

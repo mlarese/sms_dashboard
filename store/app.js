@@ -16,6 +16,7 @@ const menuItems = {
     landingpages: {to: 'landingPages', label: 'Landing Pages'},
     settings: {to: 'settings/brands', label: 'Settings'},
     cboverview: {to: 'cboverview', label: 'CB Overview'},
+    invalids: {to: 'invalids', label: 'Invalid MSISDN'},
     profile: {to: 'profile', label: 'Profile'}
 }
 
@@ -44,7 +45,8 @@ const menus = {
   "CB Owner": [
     menuItems.campaigns,
     menuItems.cboverview,
-    menuItems.msisdnsearch
+    menuItems.msisdnsearch,
+    menuItems.invalids
   ],
   guest: [
 

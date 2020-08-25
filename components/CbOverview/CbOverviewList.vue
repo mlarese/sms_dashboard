@@ -24,8 +24,6 @@
             </div>
         </CardPanel>
 
-
-
         <v-layout slot="body-center" rows wrap>
 
             <v-flex offset-sm4 sm4 xs12>
@@ -82,6 +80,18 @@
                         </v-list-tile-action>
                     </v-list-tile>
 
+                    <v-list-tile avatar @click="" >
+                        <v-list-tile-avatar>
+                            <v-icon class=" yellow white--text">people</v-icon>
+                        </v-list-tile-avatar>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>CB Invalid</v-list-tile-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-chip color="yellow" text-color="grey">{{ $record.invalid | number }}</v-chip>
+                        </v-list-tile-action>
+                    </v-list-tile>
                     <!--v-divider/>
 
                     <v-list-tile avatar @click="" >

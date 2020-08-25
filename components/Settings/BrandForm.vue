@@ -13,11 +13,13 @@
             lazy-validation
         >
             <v-layout row wrap>
-                <v-flex sm4 xs12>
+                <v-flex sm3 xs12>
                     <v-text-field label="Brand" hide-details v-model="$record.brand_name" />
                 </v-flex>
-
-                <v-flex sm6 xs12>
+                <v-flex sm3 xs12>
+                    <v-text-field label="Sender" hide-details v-model="$record.sender" />
+                </v-flex>
+                <v-flex sm4 xs12>
                     <v-text-field append-icon="" label="Sms Text Message"  hide-details v-model="$record.sms_mt_text_message" />
                 </v-flex>
 

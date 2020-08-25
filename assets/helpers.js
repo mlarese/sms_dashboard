@@ -47,7 +47,7 @@ export const parseDate = (date) => {
   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
 }
 
-export const timePickerOptions = (start='08:30', step='00:15', end='23:30') => {
+export const timePickerOptions = (start='08:30', step='00:10', end='23:30') => {
   return {
     start,
     step,
