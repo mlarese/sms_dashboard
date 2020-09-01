@@ -38,6 +38,7 @@
                 <td>{{ item.background_rgb }}</td>
                 <td>{{ item.text_rgb }}</td>
                 <td :title="item.text_welcome">{{ item.text_welcome|truncate(20) }}</td>
+                <td :title="item.text_post_welcome">{{ item.text_post_welcome|truncate(20) }}</td>
                 <td :title="item.text_greeting">{{ item.text_greeting |truncate(20)}}</td>
                 <td width="1" class="pa-1">
                     <GridButton icon="edit" color="green" @click="onEdit(item.lp_id )"></GridButton>
@@ -74,7 +75,8 @@
                 { text: this.$vuetify.t('Background Color'), value: 'background_rgb' },
 
                 { text: this.$vuetify.t('Text Color'), value: 'text_rgb' },
-                { text: this.$vuetify.t('Text Welcome'), value: 'text_welcome' },
+                { text: this.$vuetify.t('Text Welcome Pre-Button'), value: 'text_welcome' },
+                { text: this.$vuetify.t('Text Welcome Post-Button'), value: 'text_post_welcome' },
                 { text: this.$vuetify.t('Text Greeting'), value: 'text_greeting' },
 
                 { text: 'Edit', value: 'action', sortable: false },

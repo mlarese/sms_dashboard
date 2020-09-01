@@ -38,15 +38,17 @@
             </v-layout>
 
 
-            <v-layout row wrap class="mt-2">
-
-                <v-flex xs2>
+            <v-layout row wrap>
+                <v-flex xs4 class="mt-2">
                     <v-text-field append-icon="" label="Text Color" hide-details v-model="$record.text_rgb" />
                 </v-flex>
-                <v-flex xs5>
-                    <v-text-field append-icon="" label="Text Welcome" hide-details v-model="$record.text_welcome" />
+                <v-flex xs12 class="mt-2">
+                    <v-text-field append-icon="" label="Text Welcome Pre-Button" hide-details v-model="$record.text_welcome" />
                 </v-flex>
-                <v-flex xs5>
+                <v-flex xs12 class="mt-2">
+                  <v-text-field append-icon="" label="Text Welcome Post-Button" hide-details v-model="$record.text_post_welcome" />
+                </v-flex>
+                <v-flex xs12 class="mt-2">
                     <v-text-field append-icon="" label="Text Greeting" hide-details v-model="$record.text_greeting" />
                 </v-flex>
             </v-layout>
