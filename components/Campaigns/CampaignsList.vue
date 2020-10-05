@@ -37,7 +37,10 @@
                 </v-layout>
                 <v-layout rows wrap class="mt-2" >
                     <v-flex offset-sm1 sm10 xs12>
-                        <v-combobox multiple dense  class="hide-dropdown-icon" hide-details :label="$vuetify.t('Postal code')"  chips deletable-chips
+
+                        <v-combobox
+                          @change="onInputPostalCode"
+                          multiple dense  class="hide-dropdown-icon" hide-details :label="$vuetify.t('Postal code')"  chips deletable-chips
                                         v-model="filter.postal_code"  />
                     </v-flex>
                 </v-layout>
@@ -333,6 +336,14 @@ import Brands from '../Settings/Brands'
         },
         methods: {
             ...mapActions('campaigns', ['resetSearch', 'search','delete']),
+            onInputPostalCode (item) {
+
+              if(!item[item.length-1]) return
+              let values = item[item.length-1].split(',')
+              if(this.filter.postal_code.length > values.length) return
+              this.filter.postal_code = [...values]
+
+            },
             statusIdToText,
             isOdd (num) { return num % 2;},
             onDelete (item) {

@@ -35,6 +35,7 @@ const menus = {
   ],
   'Third Party Agency': [
     menuItems.leads,
+    menuItems.statistics,
     menuItems.profile
     //,menuItems.msisdnsearch
   ],

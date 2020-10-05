@@ -40,6 +40,7 @@
                 <td>{{ item.msisdn }}</td>
                 <td>{{ item.status_name }}</td>
                 <td>{{ item.last_contact_datetime | dmy}} {{ item.last_contact_datetime | time}}</td>
+                <td>{{ item.portout_datetime | dmy}} {{ item.portout_datetime | time}}</td>
                 <td>
                     <v-btn color="black" dark @click="changeStatus(3,item.row_id)" v-if="item.status_id==1" class="elevation-0">Add in Blacklist</v-btn>
                     <v-btn color="info"  @click="changeStatus(2,item.row_id)" v-if="item.status_id==1" class="elevation-0">Port-Out</v-btn>
@@ -67,6 +68,7 @@
                 { text: this.$vuetify.t('MSISDN'), value: 'msisdn' },
                 { text: this.$vuetify.t('Status'), value: 'status_name' },
                 { text: this.$vuetify.t('Last Contact Date'), value: 'last_contact_datetime' },
+                { text: this.$vuetify.t('Port Out Date'), value: 'portout_datetime' },
                 { text: 'Actions', value: 'action', sortable: false },
             ]
             return {
