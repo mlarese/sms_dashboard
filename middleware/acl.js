@@ -16,7 +16,7 @@ export default async function ({route, store, redirect, app}) {
       return redirect('/campaigns')
     }
   } else if(role==='Third Party Agency') {
-    if(route.name!=='leads' && route.name!=='profile') {
+    if(route.name!=='leads' && route.name!=='profile' && route.name!=='statistics') {
       return redirect('/leads')
     }
   }
