@@ -46,8 +46,13 @@
             </v-layout>
 
             <v-layout row wrap class="mt-2">
+              <v-flex xs3>
+                <v-combobox  dense  @change="onChannelChange" hide-details :label="$vuetify.t('Channel')"  :items="channelList" v-model="$record.channel_id" item-text="channel_name" item-value="channel_id" />
+
+              </v-flex>
+
                 <v-flex xs3>
-                    <v-combobox dense  hide-details :label="$vuetify.t('Sms Type')"  :items="['Low', 'High']"   v-model="$record.sms_type" />
+                    <v-combobox dense  hide-details :label="$vuetify.t('Sms Type')" :disabled="!$record.channel_id"  :items="$recordSmsTypeByChannel"   v-model="$record.sms_type" />
                 </v-flex>
 
                 <v-flex xs4>
@@ -67,7 +72,9 @@
             </v-layout>
             <v-layout row wrap class="mt-2">
                 <v-flex>
-                    <v-combobox multiple dense  small-chips class="hide-dropdown-icon" hide-details :label="$vuetify.t('Postal code')"  chips deletable-chips
+                    <v-combobox
+                      @change="onInputPostalCode"
+                      multiple dense  small-chips class="hide-dropdown-icon" hide-details :label="$vuetify.t('Postal code')"  chips deletable-chips
                                 v-model="$record.postal_code"  />
                 </v-flex>
             </v-layout>
@@ -140,7 +147,7 @@
 </template>
 
 <script>
-    import {mapState, mapActions, mapMutations} from 'vuex'
+import {mapState, mapActions, mapMutations, mapGetters} from 'vuex'
     import {timePickerOptions, notBeforeToday} from '../../assets/helpers'
     import FormPanel from '../General/FormPanel'
     import GridButton from '../General/GridButton'
@@ -149,6 +156,7 @@
     import getDay from 'date-fns/getDay'
     import {timeNoTZ} from '../../assets/filters'
     import {dayMap} from '../../assets/consts'
+import Vue from "vue";
 
     export default {
         name: "CampaignForms",
@@ -191,8 +199,10 @@
           }
         },
         computed: {
+          ...mapGetters('campaigns', ['$recordSmsTypeByChannel']),
           ...mapState('brands', {'brandsList': 'list'}),
           ...mapState('api', ['isAjax']),
+          ...mapState('channels', {'channelList': 'list'}),
           ...mapState('landingPages', {'lpList': 'list'}),
           ...mapState('campaigns',  ['targetQty', 'statusList', '$record' ,'agesList','cbSelctionsList']),
           ...mapState('locations', {'states':'states','regions':'regions'}),
@@ -212,6 +222,8 @@
             if(!this.$record.lp_id) return false
             if(!this.$record.cb_activity_level) return false
             if(!this.$record.cb_selection) return false
+            if(!this.$record.channel_id) return false
+            if(!this.$record.sms_type) return false
             if(!this.isStartDateValid) return false
             return true
           },
@@ -253,6 +265,17 @@
           }
         },
         methods: {
+          onChannelChange () {
+            Vue.set(this.$record,'sms_type',null)
+          },
+          onInputPostalCode (item) {
+
+            if(!item[item.length-1]) return
+            let values = item[item.length-1].split(',')
+            if(this.$record.postal_code.length > values.length) return
+            this.$record.postal_code = [...values]
+
+          },
           onStartChange () {
             if(this.endDateTimeToDate<=this.startDateTimeToDate)
               this.$record.end_datetime = null

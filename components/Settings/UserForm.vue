@@ -39,7 +39,7 @@
                 </v-flex>
 
                 <v-flex sm3 xs12>
-                    <v-text-field class="bold" label="Password"   hide-details v-model="$record.password" />
+                    <v-text-field v-if="showPassword" class="bold" label="Password"   hide-details v-model="$record.password" />
                 </v-flex>
 
 
@@ -74,6 +74,12 @@
           ...mapState('users', ['$record']),
           ...mapState('roles', {'rolesList': 'list'}),
           ...mapGetters('app', ['isAdmin']),
+          showPassword () {
+            if(this.isAdmin) {
+              if(this.$record.role_id !== "1") return false
+            }
+            return true
+          },
           isValid () {
             if(!this.$record.username) return false
             if(!this.$record.role_id) return false

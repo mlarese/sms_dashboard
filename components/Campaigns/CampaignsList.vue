@@ -10,7 +10,7 @@
                 <v-layout rows wrap  >
 
 
-                    <v-flex sm3 offset-sm1 xs12>
+                    <v-flex sm3  xs12>
                         <div class="ml-2">
                         <span v-if="filter.creation_datetime && filter.creation_datetime[0]" class="active-label-size" >Creation Datetime</span>&nbsp;
                         </div>
@@ -25,18 +25,24 @@
                     </v-flex>
 
                     <v-flex sm2 xs2>
-                        <v-combobox style="margin-top:21px" dense  hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="filter.brand_id" item-text="brand_name" item-value="brand_id" />
+                      <v-combobox style="margin-top:21px" dense  hide-details :label="$vuetify.t('Brand')"  :items="brandsList" v-model="filter.brand_id" item-text="brand_name" item-value="brand_id" />
 
                     </v-flex>
 
-                    <v-flex sm2 xs2
-                        <v-combobox style="margin-top:21px" dense hide-details :label="$vuetify.t('Sms Type')"  :items="['Low', 'High']"   v-model="filter.sms_type" />
+                    <v-flex sm2 xs2>
+                        <v-combobox style="margin-top:21px" dense  @change="onChannelChange" hide-details :label="$vuetify.t('Channel')"  :items="channelList" v-model="filter.channel_id" item-text="channel_name" item-value="channel_id" />
+
+                    </v-flex>
+
+                    <v-flex sm2 xs2>
+
+                        <v-combobox style="margin-top:21px" dense hide-details :label="$vuetify.t('Sms Type')" :disabled="!filter.channel_id"  :items="filterSmsTypeByChannel"   v-model="filter.sms_type" />
                     </v-flex>
 
 
                 </v-layout>
                 <v-layout rows wrap class="mt-2" >
-                    <v-flex offset-sm1 sm10 xs12>
+                    <v-flex  sm12 xs12>
 
                         <v-combobox
                           @change="onInputPostalCode"
@@ -45,26 +51,26 @@
                     </v-flex>
                 </v-layout>
                 <v-layout rows wrap class="mt-2" >
-                    <v-flex offset-sm1 sm10 xs12>
+                    <v-flex   sm12 xs12>
                         <v-autocomplete dense  hide-details :label="$vuetify.t('Region')" multiple chips deletable-chips :items="regions" v-model="filter.region"  />
                     </v-flex>
                 </v-layout>
                 <v-layout rows wrap class="mt-2">
-                    <v-flex sm3 offset-sm1 xs3><v-combobox dense  class=""  hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
+                    <v-flex sm3 xs3><v-combobox dense  class=""  hide-details :label="$vuetify.t('Campaign Type')"  :items="['Immediate', 'Scheduled']"   v-model="filter.campaign_type" /></v-flex>
                     <v-flex sm2 xs3><v-combobox dense hide-details :label="$vuetify.t('CB Selection')"  :items="cbSelctionsList"   v-model="filter.cb_selection" /></v-flex>
-                    <v-flex sm2 xs3><v-select dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="[{text:'One Click', value:1}, {text:'Two Clicks', value:2}]"   v-model="filter.lp_type" /></v-flex>
+                    <v-flex sm3 xs3><v-select dense  hide-details :label="$vuetify.t('Landing Page Type')"  :items="[{text:'One Click', value:1}, {text:'Two Clicks', value:2}]"   v-model="filter.lp_type" /></v-flex>
                     <v-flex sm2 xs3>
                         <v-combobox dense   hide-details :label="$vuetify.t('CB Activity Level')"   :items="['All', 'High', 'Medium', 'Low']" v-model="filter.cb_activity_level"  />
                     </v-flex>
 
                     <v-flex v-if="false" sm2 xs3><v-combobox dense  class=""   hide-details :label="$vuetify.t('Gender')"  :items="['All', 'M', 'F']"   v-model="filter.gender" /></v-flex>
 
-                    <v-flex sm2 xs3 class="text-xs-left pa-0 pt-1">
+                    <v-flex sm2 xs3 class="text-xs-right pa-0 pt-1">
                         <GridButton icon="search" color="blue" @click="doSearch" />
                         <GridButton :dark="false" icon="cancel" color="white" @click="doResetSearch" />
                     </v-flex>
 
-                    <v-flex xs10 offset-sm1 class="mt-2">
+                    <v-flex xs12   class="mt-2">
                         <v-select
                                 dense
                                 hide-details
@@ -170,6 +176,7 @@
                         <th class="column sortable text-xs-left">ID</th>
                         <th class="column sortable text-xs-left">Brand</th>
                         <th class="column sortable text-xs-left">Status</th>
+                        <th class="column sortable text-xs-left">Channel</th>
                         <th class="column sortable text-xs-left">Type</th>
                         <th class="column sortable text-xs-left">Create Date</th>
                         <th class="column sortable text-xs-left">Start Date</th>
@@ -179,7 +186,7 @@
                         <th class="column sortable text-xs-left">Age Range</th>
                         <th class="column sortable text-xs-left">Region</th>
                         <th class="column sortable text-xs-left">CAP</th>
-                        <th class="column sortable text-xs-left">CB Activity</th>
+                        <!-- th class="column sortable text-xs-left">CB Activity</th-->
                         <th class="column sortable text-xs-left">Sms Type</th>
                         <th class="column sortable text-xs-left">Ca Qty</th>
                         <th class="column sortable text-xs-left">Pr Qty</th>
@@ -197,6 +204,7 @@
                     <td>{{ item.campaign_id }}</td>
                     <td>{{ item.brand_name }}</td>
                     <td>{{ item.status_name }}</td>
+                    <td>{{ item.channel_name }}</td>
                     <td>{{ item.type }}</td>
                     <td>{{ item.creation_datetime | dmy}}<br> {{ item.creation_datetime  | time }} </td>
                     <td>{{ item.start_datetime | dmy}} <br>{{ item.start_datetime  | time }}</td>
@@ -207,7 +215,7 @@
                     <td :title="getRegionsRangesList(item.region)" v-html="getRegionsRanges(item.region)"></td>
                     <td :title="getCapsRangesList(item.postal_code)" v-html="getCapsRanges(item.postal_code)"></td>
 
-                    <td>{{ item.cb_activity_level }}</td>
+                    <!-- td>{{ item.cb_activity_level }}</td-->
                     <td>{{ item.sms_type }}</td>
                     <td>{{ item.cb_target_quantity | number}}</td>
                     <td>{{ item.cb_target_quantity_processed | number}}</td>
@@ -245,7 +253,8 @@
     import DatePicker from 'vue2-datepicker';
     import {statusIdToText, statusList} from '../../assets/filters'
     import _sumBy from 'lodash/sumBy'
-import Brands from '../Settings/Brands'
+    import Brands from '../Settings/Brands'
+    import Vue from 'vue'
     export default {
         components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker, Brands},
         data () {
@@ -254,6 +263,7 @@ import Brands from '../Settings/Brands'
                 { text: this.$vuetify.t('ID'), value: 'campaign_id' },
                 { text: this.$vuetify.t('Brand'), value: 'brand_name' },
                 { text: this.$vuetify.t('Status'), value: 'status_name' },
+                { text: this.$vuetify.t('CB Channel'), value: 'channel_name' },
                 { text: this.$vuetify.t('Type'), value: 'type' },
                 { text: this.$vuetify.t('Creation Date'), value: 'creation_datetime.date' },
                 { text: this.$vuetify.t('Start Date'), value: 'start_datetime.date' },
@@ -263,7 +273,7 @@ import Brands from '../Settings/Brands'
                 { text: this.$vuetify.t('Age Range'), value: 'cb_age_range'},
                 { text: this.$vuetify.t('Region'), value: 'region' },
                 { text: this.$vuetify.t('CAP'), value: 'postal_code' },
-                { text: this.$vuetify.t('CB Activity'), value: 'cb_activity_level' },
+                // { text: this.$vuetify.t('CB Activity'), value: 'cb_activity_level' },
                 { text: this.$vuetify.t('Sms Type'), value: 'sms_type' },
                 { text: this.$vuetify.t('Ca Qty'), value: 'cb_target_quantity' },
                 { text: this.$vuetify.t('Pr Qty'), value: 'cb_target_quantity_processed' },
@@ -283,7 +293,7 @@ import Brands from '../Settings/Brands'
         },
         computed: {
             ...mapState('campaigns', {'cbSelctionsList':'cbSelctionsList', 'agesList':'agesList', 'grid': 'grid', 'clicksList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
-            ...mapGetters('campaigns', ['agesListById']),
+            ...mapGetters('campaigns', ['agesListById', 'filterSmsTypeByChannel']),
             ...mapState('channels', {'channelList': 'list'}),
             ...mapState('brands', {'brandsList': 'list'}),
             ...mapState('advformats', {'advformatsList': 'list'}),
@@ -336,8 +346,10 @@ import Brands from '../Settings/Brands'
         },
         methods: {
             ...mapActions('campaigns', ['resetSearch', 'search','delete']),
+            onChannelChange () {
+              Vue.set(this.filter,'sms_type',null)
+            },
             onInputPostalCode (item) {
-
               if(!item[item.length-1]) return
               let values = item[item.length-1].split(',')
               if(this.filter.postal_code.length > values.length) return

@@ -41,13 +41,15 @@ const menus = {
   ],
   Intermediary:[
     menuItems.campaigns,
-    menuItems.statistics
+    menuItems.statistics,
+    menuItems.profile
   ],
   "CB Owner": [
     menuItems.campaigns,
     menuItems.cboverview,
     menuItems.msisdnsearch,
-    menuItems.invalids
+    menuItems.invalids,
+    menuItems.profile
   ],
   guest: [
 

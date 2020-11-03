@@ -211,6 +211,20 @@ export const actions = {
 }
 
 export const getters = {
+    filterSmsTypeByChannel: state => {
+      if(!state.filter.channel_id) return []
+      if(state.filter.channel_id.sms_low_quality) return ['Low']
+      if(state.filter.channel_id.sms_high_quality) return ['High']
+      return ['Low', 'High']
+
+    },
+    $recordSmsTypeByChannel: state => {
+      if(!state.$record.channel_id) return []
+      if(state.$record.channel_id.sms_low_quality) return ['Low']
+      if(state.$record.channel_id.sms_high_quality) return ['High']
+      return ['Low', 'High']
+
+    },
     agesListById: state => _keyBy (state.agesList, 'value'),
     isEditMode: state => state.mode === 'edit',
     isAddMode: state => state.mode === 'add'
