@@ -11,6 +11,7 @@ export const mutations = {
         state.list = payload
     }
 }
+
 export const actions = {
 
     load ({dispatch, commit, state}, {force = true, options = {}}) {

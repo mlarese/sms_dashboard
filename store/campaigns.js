@@ -10,6 +10,7 @@ let fmtToday = format(today, 'yyyy-MM-dd')
 const cbSelctionsList = ['Sequential']
 const newFilter = () => ({
   //creation_datetime: [fmtToday, fmtToday],
+  city: [],
   start_datetime: [fmtToday, fmtToday],
   cb_age_range: [1,2,3,4,5,6],
   cb_selection: cbSelctionsList[0]
@@ -123,6 +124,15 @@ export const actions = {
         })
 
     },
+    statisticsLeads ({dispatch, commit, state}, filter) {
+
+      return dispatch('api/post', {url: `/api/statisticsleads`, data: filter}, root)
+        .then(res => {
+          commit('setRecord', res.data)
+          return res
+        })
+
+  },
     search ({dispatch, commit, state}) {
       let data = state.filter
       commit('setList', [])

@@ -74,6 +74,7 @@
                         <td>{{ item.lp_type|lpType }}</td>
                         <td>{{ item.creation_datetime | dmy}} - {{ item.creation_datetime  | time }}</td>
                         <td><GridButton icon="cloud_download" color="blue" @click="onExportLog(item)" /></td>
+                        <td><GridButton v-if="item.lp_type == 2" icon="cloud_download" color="blue" @click="onExportAccessLog(item)" /></td>
                     </template>
                     <template slot="pageText" slot-scope="{ pageStart, pageStop, itemsLength }">
                         {{$vuetify.t('From')}} {{ pageStart }} {{$vuetify.t('To')}} {{ pageStop }}  {{$vuetify.t('of')}} {{ itemsLength }}
@@ -105,7 +106,8 @@
                 { text: this.$vuetify.t('MSISDN'), value: 'msisdn' },
                 { text: this.$vuetify.t('Lp Type'), value: 'lp_type' },
                 { text: this.$vuetify.t('DateTime'), value: 'creation_datetime.date' },
-                { text: 'Log', value: 'action', sortable: false }
+                { text: 'Lead Log', value: 'action', sortable: false },
+                { text: 'Access Log', value: 'action', sortable: false }
             ]
             return {
                 sms_mo_date: null,
@@ -127,8 +129,11 @@
           this.resetSearch()
         },
         methods: {
-            ...mapActions('leads', ['resetSearch', 'search','downloadCsv','downloadLog']),
+            ...mapActions('leads', ['resetSearch', 'search','downloadCsv','downloadLog','downloadAccessLog']),
             statusIdToText,
+            onExportAccessLog (item) {
+              this.downloadAccessLog(item.row_id)
+            },
             onExportLog (item) {
                 this.downloadLog(item.row_id)
             },

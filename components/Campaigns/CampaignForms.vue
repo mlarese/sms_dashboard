@@ -80,9 +80,19 @@
             </v-layout>
             <v-layout row wrap class="mt-3">
                 <v-flex>
-                    <v-autocomplete class="field-region" full-width multiple :height="70"   small-chips chips deletable-chips  hide-details :label="$vuetify.t('Region')"  :items="regions" v-model="$record.region"  />
+                  <v-combobox
+                    @change="onInputCity"
+                    multiple dense  small-chips class="hide-dropdown-icon" hide-details :label="$vuetify.t('City')"  chips deletable-chips
+                    v-model="$record.city"  />
+
                 </v-flex>
             </v-layout>
+
+          <v-layout row wrap class="mt-3">
+            <v-flex>
+              <v-autocomplete class="field-region" full-width multiple :height="70"   small-chips chips deletable-chips  hide-details :label="$vuetify.t('Region')"  :items="regions" v-model="$record.region"  />
+            </v-flex>
+          </v-layout>
 
             <v-layout row wrap class="mt-2">
 
@@ -267,6 +277,14 @@ import Vue from "vue";
         methods: {
           onChannelChange () {
             Vue.set(this.$record,'sms_type',null)
+          },
+          onInputCity (item) {
+
+            if(!item[item.length-1]) return
+            let values = item[item.length-1].split(',')
+            if(this.$record.city.length > values.length) return
+            this.$record.city = [...values]
+
           },
           onInputPostalCode (item) {
 

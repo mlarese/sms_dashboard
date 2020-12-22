@@ -7,7 +7,7 @@ import _has from 'lodash/has'
  *
  */
 const menuItems = {
-    statistics: {to: 'statistics', label: 'Statistics'},
+    statistics: {to: 'statistics/bycampaigns', label: 'Statistics'},
     simulator: {to: 'simulator', label: 'Simulator'},
     campaigns: {to: 'campaigns', label: 'Campaigns'},
     leads: {to: 'leads', label: 'Leads'},

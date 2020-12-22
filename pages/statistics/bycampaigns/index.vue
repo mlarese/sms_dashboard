@@ -2,7 +2,7 @@
   <StatisticsList title="Statistics"/>
 </template>
 <script>
-  import StatisticsList from '../../components/Statistics/StatisticsList'
+  import StatisticsList from '../../../components/Statistics/StatisticsList'
   export default {
     components: {
       StatisticsList

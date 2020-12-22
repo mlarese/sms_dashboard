@@ -51,8 +51,13 @@
                     </v-flex>
                 </v-layout>
                 <v-layout rows wrap class="mt-2" >
+
                     <v-flex   sm12 xs12>
-                        <v-autocomplete dense  hide-details :label="$vuetify.t('Region')" multiple chips deletable-chips :items="regions" v-model="filter.region"  />
+                      <v-combobox
+                        @change="onInputCity"
+                        multiple dense  class="hide-dropdown-icon" hide-details :label="$vuetify.t('City')"  chips deletable-chips
+                        v-model="filter.city"  />
+                        <!-- v-autocomplete dense  hide-details :label="$vuetify.t('Region')" multiple chips deletable-chips :items="regions" v-model="filter.region"  /-->
                     </v-flex>
                 </v-layout>
                 <v-layout rows wrap class="mt-2">
@@ -184,13 +189,14 @@
                         <th class="column sortable text-xs-left">LP Name</th>
                         <th class="column sortable text-xs-left">LP Type</th>
                         <th class="column sortable text-xs-left">Age Range</th>
-                        <th class="column sortable text-xs-left">Region</th>
+                        <th class="column sortable text-xs-left">City</th>
                         <th class="column sortable text-xs-left">CAP</th>
                         <!-- th class="column sortable text-xs-left">CB Activity</th-->
                         <th class="column sortable text-xs-left">Sms Type</th>
                         <th class="column sortable text-xs-left">Ca Qty</th>
                         <th class="column sortable text-xs-left">Pr Qty</th>
                         <th class="column sortable text-xs-left">Leads</th>
+                        <th class="column sortable text-xs-left">Access (%)<br>Overall</th>
                         <th class="column sortable text-xs-left">Conv. (%)<br>Overall</th>
                         <th class="column sortable text-xs-left">Conv. (%)<br>8H</th>
                         <th class="column sortable text-xs-left">Conv. (%)<br>24H</th>
@@ -212,7 +218,8 @@
                     <td>{{ item.lp_name }}</td>
                     <td>{{ item.lp_type | lpType}}</td>
                     <td :title="getAgesRangesList(item.cb_age_range)" v-html="getAgesRanges(item.cb_age_range)"></td>
-                    <td :title="getRegionsRangesList(item.region)" v-html="getRegionsRanges(item.region)"></td>
+                    <td :title="getCityRangesList(item.city)" v-html="getCitesRanges(item.city)"></td>
+                    <!--td :title="getRegionsRangesList(item.region)" v-html="getRegionsRanges(item.region)"></td-->
                     <td :title="getCapsRangesList(item.postal_code)" v-html="getCapsRanges(item.postal_code)"></td>
 
                     <!-- td>{{ item.cb_activity_level }}</td-->
@@ -221,9 +228,11 @@
                     <td>{{ item.cb_target_quantity_processed | number}}</td>
                     <td>{{ item.leads_count }}</td>
                     <td>
+                        <span v-if="item.cb_target_quantity_processed>0">{{ item.access_overall/item.cb_target_quantity_processed | number('0.000%')}}</span>
+                    </td>
+                    <td>
                         <span v-if="item.cb_target_quantity_processed>0">{{ item.leads_count/item.cb_target_quantity_processed | number('0.000%')}}</span>
                     </td>
-
                     <td>
                         <span v-if="item.cb_target_quantity_processed>0">{{ item.conv_8/item.cb_target_quantity_processed | number('0.000%') }}</span>
                     </td>
@@ -271,13 +280,15 @@
                 { text: this.$vuetify.t('LP Name'), value: 'lp_name' },
                 { text: this.$vuetify.t('LP Type'), value: 'lp_type' },
                 { text: this.$vuetify.t('Age Range'), value: 'cb_age_range'},
-                { text: this.$vuetify.t('Region'), value: 'region' },
+                { text: this.$vuetify.t('City'), value: 'city' },
+                //{ text: this.$vuetify.t('Region'), value: 'region' },
                 { text: this.$vuetify.t('CAP'), value: 'postal_code' },
                 // { text: this.$vuetify.t('CB Activity'), value: 'cb_activity_level' },
                 { text: this.$vuetify.t('Sms Type'), value: 'sms_type' },
                 { text: this.$vuetify.t('Ca Qty'), value: 'cb_target_quantity' },
                 { text: this.$vuetify.t('Pr Qty'), value: 'cb_target_quantity_processed' },
                 { text: this.$vuetify.t('Leads'), value: 'leads_count' },
+                { text: this.$vuetify.t('Access (%) Overall'), width: 80, value: 'access_overall' },
                 { text: this.$vuetify.t('Conv. (%) Overall'), width: 80, value: 'conversion' },
                 { text: this.$vuetify.t('Conv. (%) 8H'), sortable: false, width: 80, value: 'conv_8' },
                 { text: this.$vuetify.t('Conv. (%) 24H'),sortable: false,  width: 80, value: 'conv_24' },
@@ -305,10 +316,12 @@
               return this.totalLeadsQty/this.totalProcessedQty * 100
             },
             clicksListHigh () {
-              return this.clicksList.filter(o => o.sms_type === 'High')
+              if(!this.clicksList.filter) return []
+              return this.clicksList.filter(o => o.sms_type === 'High') || []
             },
             clicksListLow () {
-              return this.clicksList.filter(o => o.sms_type === 'Low')
+              if(!this.clicksList.filter) return []
+              return this.clicksList.filter(o => o.sms_type === 'Low') || []
             },
             totalProcessedQty () {
                 return _sumBy(this.clicksListHigh, 'cb_target_quantity_processed')
@@ -348,6 +361,14 @@
             ...mapActions('campaigns', ['resetSearch', 'search','delete']),
             onChannelChange () {
               Vue.set(this.filter,'sms_type',null)
+            },
+            onInputCity (item) {
+
+              if(!item[item.length-1]) return
+              let values = item[item.length-1].split(',')
+              if(this.filter.city.length > values.length) return
+              this.filter.city = [...values]
+
             },
             onInputPostalCode (item) {
               if(!item[item.length-1]) return
@@ -391,6 +412,28 @@
                   else if(regions.length > 2) ret =  regions[0]+' '+regions[1] + ' ...'
                 }
                 return ret
+            },
+            getCitesRanges (cities) {
+              //console.dir(cities)
+              let ret = '';
+              if(cities) {
+                if(cities.length === 0) ret = 'All'
+                else if(cities.length === 1) ret = cities[0]
+                else if(cities.length === 2) ret =  cities[0]+', '+cities[1]
+                else if(cities.length > 2) ret =  cities[0]+', '+cities[1] + ' ...'
+              } else {
+                ret = 'All'
+              }
+              return ret
+            },
+            getCityRangesList (cities) {
+              let totalList = ''
+              if(!cities) return ''
+              for (let i = 0; i<cities.length;i++) {
+                totalList+= cities[i] + ' '
+              }
+
+              return totalList
             },
             getRegionsRangesList (regions) {
                 let totalList = ''

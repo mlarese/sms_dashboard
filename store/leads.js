@@ -96,6 +96,26 @@ export const actions = {
             return res
         })
     },
+    downloadAccessLog ({dispatch, commit, state}, id) {
+
+
+      const rec = state.list.find(o => o.row_id === id)
+
+      const str = `{"cid":${rec.campaign_id}, "m": "${rec.msisdn_full}"}`
+      let b64 = encodeURI(  btoa(str) )
+
+      const b64b = decodeURI(  atob(b64) )
+      //console.log(str, b64, b64b)
+      const url = `/api/leadsaccesslog/${b64}`
+
+      let data = state.filter
+      return dispatch('api/get', {url}, root)
+        .then(res => {
+
+          window.location='https://gtg.ai/'+res.data.file
+          return res
+        })
+    },
     downloadLog ({dispatch, commit, state}, id) {
       const url = `/api/leadslog/${id}`
       let data = state.filter

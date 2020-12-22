@@ -1,6 +1,6 @@
 <!--eslint-disable-->
 <template>
-    <GridContainer title="By Campaigns">
+    <GridContainer title="By Leads">
         <div slot="header-right">
         </div>
         <CardPanel slot="container-top">
@@ -42,45 +42,6 @@
 
                     <v-list-tile avatar @click="" >
                         <v-list-tile-avatar>
-                            <v-icon class="blue white--text">textsms</v-icon>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Overall - SMS Sent</v-list-tile-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-chip color="blue" text-color="white">{{ $record.overall_sms_sent | number}}</v-chip>
-                        </v-list-tile-action>
-                    </v-list-tile>
-
-                    <v-list-tile avatar @click="" >
-                        <v-list-tile-avatar>
-                            <v-icon class="blue white--text">textsms</v-icon>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Lp "One-Click" - SMS Sent</v-list-tile-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-chip color="blue" text-color="white">{{ $record.lp_1c_sms_sent | number}}</v-chip>
-                        </v-list-tile-action>
-                    </v-list-tile>
-
-                    <v-list-tile avatar @click="" >
-                        <v-list-tile-avatar>
-                            <v-icon class="blue white--text">textsms</v-icon>
-                        </v-list-tile-avatar>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>Lp "Two-Click" - SMS Sent</v-list-tile-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-chip color="blue" text-color="white">{{ $record.lp_2c_sms_sent | number}}</v-chip>
-                        </v-list-tile-action>
-                    </v-list-tile>
-
-                    <v-divider/>
-
-                    <v-list-tile avatar @click="" >
-                        <v-list-tile-avatar>
                             <v-icon class="teal white--text">textsms</v-icon>
                         </v-list-tile-avatar>
 
@@ -114,58 +75,6 @@
                         </v-list-tile-content>
                         <v-list-tile-action>
                             <v-chip color="teal" text-color="white">{{ $record.lp_2c_leads| number }}</v-chip>
-                        </v-list-tile-action>
-                    </v-list-tile>
-
-                    <v-divider/>
-                    <v-list-tile avatar @click="" >
-                        <v-list-tile-avatar>
-                            <v-icon class="orange white--text">textsms</v-icon>
-                        </v-list-tile-avatar>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>Overall - Conversion (%)</v-list-tile-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-chip color="orange" text-color="white">{{ $record.overall_conv|number('0.000%') }}</v-chip>
-                        </v-list-tile-action>
-                    </v-list-tile>
-
-                    <v-list-tile avatar @click="" >
-                        <v-list-tile-avatar>
-                            <v-icon class="orange white--text">textsms</v-icon>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Lp "One-Click" - Conversion (%)</v-list-tile-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-chip color="orange" text-color="white">{{ $record.lp_1c_conv | number('0.000%')}}</v-chip>
-                        </v-list-tile-action>
-                    </v-list-tile>
-
-                    <v-list-tile avatar @click="" >
-                        <v-list-tile-avatar>
-                            <v-icon class="orange white--text">textsms</v-icon>
-                        </v-list-tile-avatar>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>Lp "Two-Click" - Conversion (%)</v-list-tile-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-chip color="orange" text-color="white">{{ $record.lp_2c_conv | number('0.000%')}}</v-chip>
-                        </v-list-tile-action>
-                    </v-list-tile>
-                    <v-divider/>
-                    <v-list-tile avatar @click="" >
-                        <v-list-tile-avatar>
-                            <v-icon class="red white--text">people</v-icon>
-                        </v-list-tile-avatar>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>Port-Out</v-list-tile-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-chip color="red" text-color="white">{{ $record.portout  | number }}</v-chip>
                         </v-list-tile-action>
                     </v-list-tile>
 
@@ -204,10 +113,10 @@
           this.resetSearch()
         },
         methods: {
-            ...mapActions('campaigns', ['statistics', 'resetSearch']),
+            ...mapActions('campaigns', ['statisticsLeads', 'resetSearch']),
             statusIdToText,
             doSearch () {
-                this.statistics(this.filter)
+                this.statisticsLeads(this.filter)
             },
             doResetSearch () {
               this.resetSearch()
