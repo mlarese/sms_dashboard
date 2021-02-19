@@ -9,7 +9,6 @@
             <div class="">
                 <v-layout rows wrap  >
 
-
                     <v-flex sm3  xs12>
                         <div class="ml-2">
                         <span v-if="filter.creation_datetime && filter.creation_datetime[0]" class="active-label-size" >Creation Datetime</span>&nbsp;
@@ -324,7 +323,7 @@
               return this.clicksList.filter(o => o.sms_type === 'Low') || []
             },
             totalProcessedQty () {
-                return _sumBy(this.clicksListHigh, 'cb_target_quantity_processed')
+                return _sumBy(this.clicksListHigh.filter(o => o.leads_count>0), 'cb_target_quantity_processed')
             },
             totalLeadsQty () {
                 return _sumBy(this.clicksListHigh, 'leads_count')
@@ -336,22 +335,22 @@
                 return _sumBy(this.clicksListHigh, 'counter_2_click')
             },
 
-          totalProcessedQtyLow () {
-            return _sumBy(this.clicksListLow, 'cb_target_quantity_processed')
-          },
-          totalLeadsQtyLow () {
-            return _sumBy(this.clicksListLow, 'leads_count')
-          },
-          total_1_ClikQtyLow () {
-            return _sumBy(this.clicksListLow, 'counter_1_click')
-          },
-          total_2_ClikQtyLow () {
-            return _sumBy(this.clicksListLow, 'counter_2_click')
-          },
-          convPercLow() {
-            if(this.totalProcessedQtyLow === 0) return 0
-            return this.totalLeadsQtyLow/this.totalProcessedQtyLow * 100
-          }
+            totalProcessedQtyLow () {
+              return _sumBy(this.clicksListLow.filter(o => o.leads_count>0), 'cb_target_quantity_processed')
+            },
+            totalLeadsQtyLow () {
+              return _sumBy(this.clicksListLow, 'leads_count')
+            },
+            total_1_ClikQtyLow () {
+              return _sumBy(this.clicksListLow, 'counter_1_click')
+            },
+            total_2_ClikQtyLow () {
+              return _sumBy(this.clicksListLow, 'counter_2_click')
+            },
+            convPercLow() {
+              if(this.totalProcessedQtyLow === 0) return 0
+              return this.totalLeadsQtyLow/this.totalProcessedQtyLow * 100
+            }
 
         },
         created () {
