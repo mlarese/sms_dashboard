@@ -24,7 +24,7 @@
     "notifications": "^0.2.0",
     "npm": "^6.13.1",
     "numeral": "^2.0.6",
-    "nuxt": "^2.0.0",
+    "nuxt": "2.10.2",
     "uuid": "^3.4.0",
     "vue-color": "^2.7.0",
     "vue-filter-number-format": "^2.0.0",

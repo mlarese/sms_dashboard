@@ -1,6 +1,9 @@
 <!--eslint-disable-->
 <template>
+  <div>
     <Brands/>
+  </div>
+
 </template>
 <script>
   import Brands from '../../../components/Settings/Brands'
