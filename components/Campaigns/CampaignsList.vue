@@ -1,13 +1,14 @@
 <!--eslint-disable-->
 <template>
-    <GridContainer title="Campaigns">
+    <GridContainer title="Campaigns" >
+
         <div slot="header-right" v-if="isAdmin">
             <ButtonNew title="New Campaign" @click.native="addCampaign" />
         </div>
 
         <CardPanel slot="container-top">
             <div class="">
-                <v-layout rows wrap  >
+                <v-layout rows wrap >
 
                     <v-flex sm3  xs12>
                         <div class="ml-2">
@@ -83,6 +84,11 @@
                                 multiple deletable-chips chips v-model="filter.cb_age_range"
                         />
                     </v-flex>
+
+                  <v-flex xs12   class="mt-2 pb-0 text-xs-center">
+                     <v-btn @click="createCluster" color="info" class="elevation-0">Create Cluster</v-btn>
+                     <v-btn @click="createClusterRdcom" color="info" class="elevation-0">Create Cluster RDCOM</v-btn>
+                  </v-flex>
 
                 </v-layout>
 
@@ -358,6 +364,15 @@
         },
         methods: {
             ...mapActions('campaigns', ['resetSearch', 'search','delete']),
+            createClusterRdcom () {
+              if(!confirm('Do you confirm RDCOM Cluster creation?')) return
+
+              window.open('https://gtg.ai/crd/__srrrdcom.php')
+            },
+            createCluster () {
+              if(!confirm('Do you confirm Cluster creation?')) return
+              window.open('https://gtg.ai/crd/__srr.php')
+            },
             onChannelChange () {
               Vue.set(this.filter,'sms_type',null)
             },

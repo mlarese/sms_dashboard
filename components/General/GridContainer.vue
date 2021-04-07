@@ -1,6 +1,6 @@
 <!--eslint-disable-->
 <template>
-    <div class="grid-container ma-2">
+    <div class="grid-container mx-2 pa-0">
 
         <v-toolbar dense class="elevation-0 pl-0 mb-3"  color="white" style="font-size:36px !important;border-bottom: 1px solid #dddddd !important">
             <slot name="header-left">
