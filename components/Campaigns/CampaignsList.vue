@@ -1,5 +1,41 @@
 <!--eslint-disable-->
 <template>
+  <div>
+    <v-dialog v-model="isVisibleAccessList" fullscreen hide-overlay>
+      <v-card v-if="curCampaign" >
+        <v-toolbar   dark  color="primary"  fixed  >
+          <v-btn   icon  dark     @click="isVisibleAccessList = false"  >
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>
+            Tracking - Campaign: {{curCampaign.campaign_id}} - Brand: {{curCampaign.brand_name}}
+          </v-toolbar-title>
+          <v-spacer />
+          <div class="pr-2">
+            <v-text-field  light v-model="accessSearch" hide-details label="cerca" clearable append-icon="search" />
+          </div>
+        </v-toolbar>
+        <div class="mb-2"></div>
+
+        <div class="pa-2">
+        <v-data-table
+          :search="accessSearch"
+          :must-sort="true"
+          :rows-per-page-items="[100,200,500,{'text':'All','value':-1}]"
+          :loading="isAjax" fixed
+          :headers="headerAccess"
+          :items="accessList"  :hide-actions="false"
+          :pagination.sync="grid.pagination"
+          class="elevation-0 fixed-header mt-5"
+        >
+          <template slot="items" slot-scope="{item}">
+            <td class="text-xs-left">{{ item.msisdn }}</td>
+            <td class="text-xs-left">{{ item.log }}</td>
+          </template>
+        </v-data-table>
+        </div>
+      </v-card>
+    </v-dialog>
     <GridContainer title="Campaigns" >
 
         <div slot="header-right" v-if="isAdmin">
@@ -35,7 +71,6 @@
                     </v-flex>
 
                     <v-flex sm2 xs2>
-
                         <v-combobox style="margin-top:21px" dense hide-details :label="$vuetify.t('Sms Type')" :disabled="!filter.channel_id"  :items="filterSmsTypeByChannel"   v-model="filter.sms_type" />
                     </v-flex>
 
@@ -244,8 +279,17 @@
                     <td>
                         <span v-if="item.cb_target_quantity_processed>0">{{ item.conv_24/item.cb_target_quantity_processed | number('0.000%') }}</span>
                     </td>
-                    <td width="1" class="py-1 px-2">
-                        <GridButton v-if="item.status_id==4" icon="delete" color="error" @click="onDelete(item)"></GridButton>
+                    <td width="1" class="py-1 px-2 no-wrap text-xs-right">
+                      <v-tooltip left>
+                        <GridButton slot="activator" v-if="item.lp_type==2"  icon="ballot" color="success" @click="loadAccess(item)"></GridButton>
+                        <span>View tracking</span>
+                      </v-tooltip>
+
+                      <v-tooltip left>
+                        <GridButton slot="activator" v-if="item.status_id==4" icon="delete" color="error" @click="onDelete(item)"></GridButton>
+                        <span>Delete</span>
+                      </v-tooltip>
+
                     </td>
 
                 </template>
@@ -257,6 +301,7 @@
             </v-flex>
         </v-layout>
     </GridContainer>
+  </div>
 </template>
 <script>
     import {mapState, mapActions, mapGetters} from 'vuex'
@@ -272,7 +317,10 @@
     export default {
         components: {ButtonNew, CardPanel, GridButton, GridContainer, DatePicker, Brands},
         data () {
-
+            const headerAccess = [
+              { text: this.$vuetify.t('MSISDN'), value: 'msisdn' },
+              { text: this.$vuetify.t('LOG'), value: 'log' }
+            ]
             const headers = [
                 { text: this.$vuetify.t('ID'), value: 'campaign_id' },
                 { text: this.$vuetify.t('Brand'), value: 'brand_name' },
@@ -300,14 +348,19 @@
                 { text: 'Delete', value: 'action', sortable: false }
             ]
             return {
-                sms_mo_date: null,
-                click_date: null,
-                gridFilter: '',
+              accessSearch: '',
+              curCampaign: null,
+              isVisibleAccessList: false,
+              sms_mo_date: null,
+              click_date: null,
+              gridFilter: '',
               statusList,
-                headers
+              headerAccess,
+              headers
             }
         },
         computed: {
+            ...mapState('lpaccess', {accessList: 'list'}),
             ...mapState('campaigns', {'cbSelctionsList':'cbSelctionsList', 'agesList':'agesList', 'grid': 'grid', 'clicksList': 'list', 'filter': 'filter', 'searchActive': 'searchActive'}),
             ...mapGetters('campaigns', ['agesListById', 'filterSmsTypeByChannel']),
             ...mapState('channels', {'channelList': 'list'}),
@@ -363,7 +416,15 @@
           this.resetSearch()
         },
         methods: {
+            ...mapActions('lpaccess', ['loadByCampaignId']),
             ...mapActions('campaigns', ['resetSearch', 'search','delete']),
+            loadAccess (campaign) {
+              this.curCampaign = campaign
+              return this.loadByCampaignId(campaign.campaign_id)
+              .then(() => {
+                this.isVisibleAccessList = true
+              })
+            },
             createClusterRdcom () {
               if(!confirm('Do you confirm RDCOM Cluster creation?')) return
 
