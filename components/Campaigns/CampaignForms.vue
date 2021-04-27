@@ -1,6 +1,6 @@
 <!--eslint-disable-->
 <template>
-    <FormPanel v-bind="$attrs" >
+    <FormPanel v-bind="$attrs" v-if="$record" >
         <div slot="header-right">
             <v-btn outline color="indigo"   @click="$router.go(-1)" >
                 {{$vuetify.t('Back')}}
@@ -48,14 +48,16 @@
             <v-layout row wrap class="mt-2">
               <v-flex xs3>
                 <v-combobox  dense  @change="onChannelChange" hide-details :label="$vuetify.t('Channel')"  :items="channelList" v-model="$record.channel_id" item-text="channel_name" item-value="channel_id" />
-
               </v-flex>
 
+              <v-flex xs3 v-if="$record.channel_id && $record.channel_id.channel_id==='4'">
+                <v-text-field  dense  hide-details :label="$vuetify.t('Adv campaign id')"  v-model="$record.adv_campaign_id"   />
+              </v-flex>
                 <v-flex xs3>
                     <v-combobox dense  hide-details :label="$vuetify.t('Sms Type')" :disabled="!$record.channel_id"  :items="$recordSmsTypeByChannel"   v-model="$record.sms_type" />
                 </v-flex>
 
-                <v-flex xs4>
+                <v-flex xs3>
                     <v-combobox dense  hide-details :label="$vuetify.t('Gender')"  :items="['All', 'M', 'F']"   v-model="$record.cb_gender" />
                 </v-flex>
 
@@ -225,6 +227,7 @@ import Vue from "vue";
             return this.$record.type === 'Immediate'
           },
           isValid () {
+            // console.log('info | $record', this.$record)
             if(!this.$record.brand_id) return false
             if(!this.$record.type) return false
             if( this.$record.cb_age_range.length===0) return false
@@ -233,8 +236,13 @@ import Vue from "vue";
             if(!this.$record.cb_activity_level) return false
             if(!this.$record.cb_selection) return false
             if(!this.$record.channel_id) return false
+            if(this.$record.channel_id.channel_id === '4') {
+              if(!this.$record.adv_campaign_id) return false
+            }
             if(!this.$record.sms_type) return false
             if(!this.isStartDateValid) return false
+
+
             return true
           },
           isStartDateValid () {

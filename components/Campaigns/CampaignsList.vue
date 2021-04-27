@@ -15,7 +15,9 @@
             <v-text-field  light v-model="accessSearch" hide-details label="cerca" clearable append-icon="search" />
           </div>
         </v-toolbar>
-        <div class="mb-2"></div>
+        <div class="mb-4">
+
+        </div>
 
         <div class="pa-2">
         <v-data-table
@@ -236,6 +238,8 @@
                         <th class="column sortable text-xs-left">Ca Qty</th>
                         <th class="column sortable text-xs-left">Pr Qty</th>
                         <th class="column sortable text-xs-left">Leads</th>
+                        <th class="column sortable text-xs-left">Tracking px</th>
+                        <th class="column sortable text-xs-left">Difference</th>
                         <th class="column sortable text-xs-left">Access (%)<br>Overall</th>
                         <th class="column sortable text-xs-left">Conv. (%)<br>Overall</th>
                         <th class="column sortable text-xs-left">Conv. (%)<br>8H</th>
@@ -266,7 +270,9 @@
                     <td>{{ item.sms_type }}</td>
                     <td>{{ item.cb_target_quantity | number}}</td>
                     <td>{{ item.cb_target_quantity_processed | number}}</td>
-                    <td>{{ item.leads_count }}</td>
+                    <td class="bg-orange">{{ item.leads_count | number}}</td>
+                    <td class="bg-orange">{{ item.access_overall | number}}</td>
+                    <td class="bg-orange">{{ item.access_overall-item.leads_count | number}}</td>
                     <td>
                         <span v-if="item.cb_target_quantity_processed>0">{{ item.access_overall/item.cb_target_quantity_processed | number('0.000%')}}</span>
                     </td>
@@ -341,6 +347,8 @@
                 { text: this.$vuetify.t('Ca Qty'), value: 'cb_target_quantity' },
                 { text: this.$vuetify.t('Pr Qty'), value: 'cb_target_quantity_processed' },
                 { text: this.$vuetify.t('Leads'), value: 'leads_count' },
+                { text: this.$vuetify.t('Access'), value: 'access_overall' },
+                { text: this.$vuetify.t('Difference'), value: 'access_overall' },
                 { text: this.$vuetify.t('Access (%) Overall'), width: 80, value: 'access_overall' },
                 { text: this.$vuetify.t('Conv. (%) Overall'), width: 80, value: 'conversion' },
                 { text: this.$vuetify.t('Conv. (%) 8H'), sortable: false, width: 80, value: 'conv_8' },
