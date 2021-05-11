@@ -216,4 +216,16 @@
     .v-input--checkbox .v-input__slot {
         border:0;
     }
+
+    td.bg-orange {
+      background-color: orange;
+    }
+
+    td.bg-red {
+      background-color: red;
+      color: white !important;
+      font-weight: bold;
+    }
+
+
 </style>
