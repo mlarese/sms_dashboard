@@ -230,6 +230,7 @@
                         <th class="column sortable text-xs-left">End Date</th>
                         <th class="column sortable text-xs-left">LP Name</th>
                         <th class="column sortable text-xs-left">LP Type</th>
+                        <th class="column sortable text-xs-left">Tiny url</th>
                         <th class="column sortable text-xs-left">Age Range</th>
                         <th class="column sortable text-xs-left">City</th>
                         <th class="column sortable text-xs-left">CAP</th>
@@ -260,6 +261,7 @@
                     <td>{{ item.end_datetime | dmy}} <br>{{ item.end_datetime  | time }}</td>
                     <td>{{ item.lp_name }}</td>
                     <td>{{ item.lp_type | lpType}}</td>
+                    <td>{{ item.short_url}}</td>
                     <td :title="getAgesRangesList(item.cb_age_range)" v-html="getAgesRanges(item.cb_age_range)"></td>
                     <td :title="getCityRangesList(item.city)" v-html="getCitesRanges(item.city)"></td>
                     <!--td :title="getRegionsRangesList(item.region)" v-html="getRegionsRanges(item.region)"></td-->
@@ -336,6 +338,7 @@
                 { text: this.$vuetify.t('End Date'), value: 'end_datetime.date' },
                 { text: this.$vuetify.t('LP Name'), value: 'lp_name' },
                 { text: this.$vuetify.t('LP Type'), value: 'lp_type' },
+                { text: this.$vuetify.t('Tiny url'), value: 'short_url' },
                 { text: this.$vuetify.t('Age Range'), value: 'cb_age_range'},
                 { text: this.$vuetify.t('City'), value: 'city' },
                 //{ text: this.$vuetify.t('Region'), value: 'region' },

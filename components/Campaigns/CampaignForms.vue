@@ -50,16 +50,25 @@
                 <v-combobox  dense  @change="onChannelChange" hide-details :label="$vuetify.t('Channel')"  :items="channelList" v-model="$record.channel_id" item-text="channel_name" item-value="channel_id" />
               </v-flex>
 
-              <v-flex xs3 v-if="$record.channel_id && $record.channel_id.channel_id==='4'">
+              <v-flex xs2 v-if="$record.channel_id && $record.channel_id.channel_id==='4'">
                 <v-text-field  dense  hide-details :label="$vuetify.t('Adv campaign id')"  v-model="$record.adv_campaign_id"   />
               </v-flex>
-                <v-flex xs3>
+                <v-flex xs2>
                     <v-combobox dense  hide-details :label="$vuetify.t('Sms Type')" :disabled="!$record.channel_id"  :items="$recordSmsTypeByChannel"   v-model="$record.sms_type" />
                 </v-flex>
 
-                <v-flex xs3>
+                <v-flex xs2>
                     <v-combobox dense  hide-details :label="$vuetify.t('Gender')"  :items="['All', 'M', 'F']"   v-model="$record.cb_gender" />
                 </v-flex>
+
+              <v-flex xs3 >
+                <v-checkbox  dense
+                             false-value="0"
+                             true-value="1"
+                             style="position: relative;top:-10px;"
+                             hide-details label="Create Tiny URL"
+                             v-model="$record.use_short_url"/>
+              </v-flex>
 
                 <v-flex sm12 lg6 class="mt-2">
 
